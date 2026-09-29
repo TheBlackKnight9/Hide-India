@@ -1,0 +1,105 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Place {
+  id                 String         @id @default(cuid())
+  title              String
+  slug               String         @unique
+  tagline            String
+  category           String
+  state              String
+  district           String
+  latitude           Float
+  longitude          Float
+  century            String?
+  dynasty            String?
+  history            String         @db.Text
+  folklore           String         @db.Text
+  architecturalStyle String?
+  images             String[]
+  coverImage         String
+  bestTimeToVisit    String?
+  timings            String?
+  entryFee           String?
+  howToReach         String?        @db.Text
+  giTagCraft         String?
+  audioStoryUrl      String?
+  isVerified         Boolean        @default(true)
+  isMajor            Boolean        @default(false)
+  likesCount         Int            @default(0)
+  viewsCount         Int            @default(0)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  events             Event[]
+  reviews            Review[]
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  category    String
+  location    String
+  state       String
+  startDate   DateTime
+  endDate     DateTime
+  description String    @db.Text
+  image       String
+  organizer   String?
+  isAnnual    Boolean   @default(true)
+  placeId     String?
+  place       Place?    @relation(fields: [placeId], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+}
+
+model Story {
+  id              String   @id @default(cuid())
+  title           String
+  author          String   @default("Hide India Cultural Archive")
+  state           String
+  district        String
+  category        String
+  summary         String   @db.Text
+  content         String   @db.Text
+  image           String
+  tags            String[]
+  readTimeMinutes Int      @default(4)
+  createdAt       DateTime @default(now())
+}
+
+model Contribution {
+  id                     String   @id @default(cuid())
+  placeName              String
+  category               String
+  state                  String
+  district               String
+  isMajor                Boolean  @default(false)
+  latitude               Float?
+  longitude              Float?
+  historicalSignificance String   @db.Text
+  folkloreStory          String?  @db.Text
+  images                 String[]
+  submitterName          String
+  submitterEmail         String
+  submitterRole          String?  @default("Heritage Enthusiast")
+  status                 String   @default("pending") // pending, approved, rejected
+  createdAt              DateTime @default(now())
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  authorName  String
+  rating      Int      @default(5)
+  comment     String   @db.Text
+  travelTips  String?  @db.Text
+  visitedDate String?
+  placeId     String
+  place       Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+}
