@@ -1,162 +1,168 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { MapPin, Sparkles, ArrowRight, Compass, Search } from 'lucide-react';
+import { Search, ArrowUpRight } from 'lucide-react';
 import { rajasthanCities } from '../../data/rajasthanCities';
 import { rajasthanFallbackPlaces } from '../../data/rajasthanFallbackPlaces';
 
 export default function CitiesPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState('All');
 
-  const filteredCities = rajasthanCities.filter((city) => {
-    if (!searchTerm.trim()) return true;
-    const q = searchTerm.toLowerCase();
-    return (
-      city.name.toLowerCase().includes(q) ||
-      city.title.toLowerCase().includes(q) ||
-      city.tagline.toLowerCase().includes(q) ||
-      city.crafts.some((c) => c.toLowerCase().includes(q))
-    );
-  });
+  const filteredCities = useMemo(() => {
+    return rajasthanCities.filter((city) => {
+      if (selectedRegion !== 'All' && !city.name.toLowerCase().includes(selectedRegion.toLowerCase())) {
+        return false;
+      }
+      if (searchTerm.trim()) {
+        const q = searchTerm.toLowerCase();
+        const matchName = city.name.toLowerCase().includes(q);
+        const matchTitle = city.title.toLowerCase().includes(q);
+        const matchCraft = city.crafts.some((c) => c.toLowerCase().includes(q));
+        if (!matchName && !matchTitle && !matchCraft) return false;
+      }
+      return true;
+    });
+  }, [selectedRegion, searchTerm]);
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-stone-900 pt-28 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-amber-100/80 border border-amber-200 text-amber-900 text-xs font-semibold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>Royal Cultural Territories</span>
+    <div className="min-h-screen bg-[#0A0B0E] text-white pt-28 sm:pt-32 pb-24 selection:bg-[#E03E3E] selection:text-white">
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div>
+            <span className="text-[10px] font-bold tracking-[0.25em] text-[#E03E3E] uppercase block mb-1">
+              Cultural Geography & Heritage
+            </span>
+            <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-white">
+              ROYAL TERRITORIES
+            </h1>
           </div>
-          <h1 className="font-sans text-4xl sm:text-6xl font-extrabold tracking-tight text-stone-900 mb-4">
-            The 10 Royal Cities of Rajasthan
-          </h1>
-          <p className="text-stone-600 text-base sm:text-lg leading-relaxed">
-            Each historical region preserves its own architectural identity, royal dynasty, subterranean stepwells, and GI-tagged artisan traditions.
-          </p>
 
-          {/* Search bar */}
-          <div className="mt-8 max-w-md mx-auto relative">
-            <Search className="w-4 h-4 text-stone-400 absolute left-4 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search city, craft, or fort name..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 rounded-full bg-white border border-stone-200 shadow-sm text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-900"
-            />
+          <p className="text-xs text-white/50 max-w-sm md:text-right leading-relaxed font-light">
+            Each historical region preserves its own architectural identity, subterranean stepwells, and living craft traditions.
+          </p>
+        </div>
+
+        {/* FLOATING DARK FILTER BAR */}
+        <div className="bg-[#121318] rounded-2xl border border-white/10 shadow-2xl p-3 sm:p-4 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center">
+            {/* Filter 1: City Search */}
+            <div className="px-3 py-1 sm:border-r border-white/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+                City / Craft Keyword
+              </label>
+              <div className="flex items-center space-x-1.5">
+                <Search className="w-3.5 h-3.5 text-white/40 shrink-0" />
+                <input
+                  type="text"
+                  placeholder="Jaipur, Blue Pottery, Bundi..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full bg-transparent text-xs text-white placeholder-white/30 focus:outline-none font-medium"
+                />
+              </div>
+            </div>
+
+            {/* Filter 2: Region Selector */}
+            <div className="px-3 py-1 sm:border-r border-white/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+                Territory
+              </label>
+              <select
+                value={selectedRegion}
+                onChange={(e) => setSelectedRegion(e.target.value)}
+                className="w-full bg-[#121318] text-xs font-medium text-white focus:outline-none cursor-pointer"
+              >
+                <option value="All">All Territories</option>
+                {rajasthanCities.map((c) => (
+                  <option key={c.slug} value={c.name}>{c.name}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Filter 3: Territory info */}
+            <div className="px-3 py-1 sm:border-r border-white/10 hidden lg:block">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+                Territories
+              </label>
+              <p className="text-xs font-semibold text-white/80">
+                13 Documented Regions
+              </p>
+            </div>
+
+            {/* Filter 4: Discover Button */}
+            <div className="px-1">
+              <button
+                type="button"
+                className="w-full py-2.5 px-5 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#E03E3E]/20 flex items-center justify-center space-x-1.5 cursor-pointer"
+              >
+                <span>Discover ({filteredCities.length})</span>
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Cities Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCities.map((city) => {
-            // Count total and hidden places in this city
             const cityPlaces = rajasthanFallbackPlaces.filter((p) =>
               p.district.toLowerCase().includes(city.name.toLowerCase()) ||
               city.name.toLowerCase().includes(p.district.toLowerCase())
             );
-            const hiddenCount = cityPlaces.filter((p) => !p.isMajor).length;
-            const majorCount = cityPlaces.filter((p) => p.isMajor).length;
 
             return (
-              <div
+              <Link
                 key={city.slug}
-                className="group bg-white rounded-3xl overflow-hidden border border-stone-200/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                href={`/cities/${city.slug}`}
+                className="group bg-[#121318] rounded-[24px] overflow-hidden cursor-pointer select-none transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/60 border border-white/8 hover:border-white/20 flex flex-col justify-between"
               >
-                {/* Image Cover */}
-                <div className="relative aspect-[16/10] overflow-hidden">
+                {/* IMAGE ZONE */}
+                <div className="relative overflow-hidden aspect-[4/3]">
                   <img
                     src={city.image}
                     alt={city.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  
-                  {/* Badges */}
-                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-white/90 text-stone-900 shadow-xs">
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#121318] via-black/20 to-transparent pointer-events-none" />
+
+                  {/* Top-Right: Sites count chip */}
+                  <div className="absolute top-3 right-3">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#0A0B0E]/80 backdrop-blur-md text-white border border-white/10 shadow-lg">
+                      {cityPlaces.length} Sites
+                    </span>
+                  </div>
+
+                  {/* Bottom: title + tagline on image */}
+                  <div className="absolute bottom-0 left-0 right-0 px-4 pb-3">
+                    <h3 className="text-white font-black text-xl leading-tight tracking-tight mb-1 group-hover:text-[#E03E3E] transition-colors">
                       {city.name}
-                    </span>
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-black/60 text-white backdrop-blur-md">
-                      {cityPlaces.length} Documented Sites
-                    </span>
-                  </div>
-
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <p className="text-xs font-semibold text-amber-300 uppercase tracking-wider">
-                      {city.title}
-                    </p>
-                    <p className="text-xs text-stone-200 line-clamp-1 mt-0.5 opacity-90">
-                      {city.tagline}
-                    </p>
+                    </h3>
+                    <p className="text-white/60 text-[11px] font-medium line-clamp-1">{city.tagline}</p>
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-2 text-xs text-stone-500 font-medium">
-                      <span>🏛️ {city.dynasty}</span>
-                    </div>
-
-                    <p className="text-xs text-stone-600 line-clamp-3 leading-relaxed">
-                      {city.overview}
-                    </p>
-
-                    {/* Crafts Pills */}
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block mb-1.5">
-                        GI Tagged Crafts & Artisans
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {city.crafts.slice(0, 3).map((craft) => (
-                          <span
-                            key={craft}
-                            className="px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 text-[10px] font-medium"
-                          >
-                            {craft}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                {/* FOOTER */}
+                <div className="px-4 py-3.5 flex items-center justify-between bg-[#121318] border-t border-white/5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/5 text-white/80 border border-white/10">
+                      {city.era}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/5 text-white/80 border border-white/10">
+                      {city.crafts.length} GI Crafts
+                    </span>
                   </div>
 
-                  {/* Footer Action */}
-                  <div className="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between">
-                    <div className="text-[11px] text-stone-500">
-                      <span className="font-semibold text-emerald-700">{hiddenCount} Hidden</span>
-                      <span className="mx-1.5">·</span>
-                      <span className="font-semibold text-stone-700">{majorCount} Major</span>
-                    </div>
-
-                    <Link
-                      href={`/cities/${city.slug}`}
-                      className="inline-flex items-center space-x-1.5 text-xs font-semibold text-stone-900 group-hover:text-amber-700 transition-colors"
-                    >
-                      <span>Explore City Dossier</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                    </Link>
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full shrink-0 transition-all group-hover:scale-105 bg-[#E03E3E] text-white shadow-md shadow-[#E03E3E]/30">
+                    <ArrowUpRight className="w-4 h-4 text-white" />
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
-
-        {filteredCities.length === 0 && (
-          <div className="text-center py-16 bg-white rounded-3xl border border-stone-200 p-8">
-            <Compass className="w-10 h-10 text-stone-300 mx-auto mb-2" />
-            <p className="text-sm font-semibold text-stone-700">No city matched your search "{searchTerm}".</p>
-            <button
-              onClick={() => setSearchTerm('')}
-              className="mt-3 px-4 py-2 bg-stone-900 text-white rounded-full text-xs font-medium"
-            >
-              Clear Search
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

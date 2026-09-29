@@ -35,9 +35,13 @@ module.exports = {
         },
       },
       fontFamily: {
-        heritage: ['"Plus Jakarta Sans"', '"Playfair Display"', 'sans-serif'],
+        sans: ['Raleway', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['"Plus Jakarta Sans"', '"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        cormorant: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        raleway: ['Raleway', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        quicksand: ['Quicksand', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        lemon: ['"Lemon Tuesday"', 'cursive', 'sans-serif'],
+        script: ['"Lemon Tuesday"', 'cursive', 'sans-serif'],
       },
       fontSize: {
         '2xs': ['0.625rem', { lineHeight: '0.875rem' }],

@@ -5,13 +5,9 @@ import Link from 'next/link';
 import {
   Sparkles,
   Clock,
-  MapPin,
-  Compass,
   ArrowRight,
   Printer,
   Bookmark,
-  CheckCircle2,
-  Navigation,
   RefreshCw,
 } from 'lucide-react';
 import { rajasthanFallbackPlaces } from '../../data/rajasthanFallbackPlaces';
@@ -46,14 +42,12 @@ export default function PlannerPage() {
     setIsGenerating(true);
 
     setTimeout(() => {
-      // Find matching places in selected city
       const matchedCityPlaces = rajasthanFallbackPlaces.filter(
         (p) =>
           p.district.toLowerCase().includes(city.toLowerCase()) ||
           city.toLowerCase().includes(p.district.toLowerCase())
       );
 
-      // Prioritize hidden if Zero-Crowd is selected
       let selected = [...matchedCityPlaces];
       if (interests.includes('Zero-Crowd')) {
         selected.sort((a, b) => (a.isMajor === b.isMajor ? 0 : a.isMajor ? 1 : -1));
@@ -68,7 +62,7 @@ export default function PlannerPage() {
         totalSites: stops.length,
         stops: stops.map((place, idx) => ({
           time: idx === 0 ? '09:00 AM – 10:15 AM' : idx === 1 ? '10:30 AM – 11:45 AM' : idx === 2 ? '12:15 PM – 01:45 PM' : '02:30 PM – 04:30 PM',
-          travelTime: idx === 0 ? 'Starting Point' : '15 min scenic auto-rickshaw ride',
+          travelTime: idx === 0 ? 'Starting Point' : '15 min scenic transfer',
           place,
           recommendation: idx === 0
             ? 'Arrive early before shadows lengthen; walk the outer stone steps quietly.'
@@ -81,38 +75,37 @@ export default function PlannerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-stone-900 pt-28 pb-20">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#0A0B0E] text-white pt-28 sm:pt-32 pb-24 selection:bg-[#E03E3E] selection:text-white">
+      <div className="max-w-5xl mx-auto px-6 sm:px-12">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>Time-Budgeted AI Heritage Concierge</span>
-          </div>
-          <h1 className="font-sans text-4xl sm:text-6xl font-extrabold tracking-tight text-stone-900 mb-4">
-            Custom Rajasthan Circuit Planner
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <span className="text-[10px] font-bold tracking-[0.25em] text-[#E03E3E] uppercase block mb-1">
+            Time-Budgeted Concierge Engine
+          </span>
+          <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-white mb-4">
+            AI ROUTE PLANNER
           </h1>
-          <p className="text-stone-600 text-base sm:text-lg leading-relaxed">
-            Have a 2-hour layover in Jodhpur or a half-day in Jaipur? Our AI crafts a zero-crowd heritage route calculating realistic transit times, quiet hours, and unwritten folklore.
+          <p className="text-white/60 text-xs sm:text-sm leading-relaxed max-w-2xl mx-auto font-light">
+            Have a 2-hour layover in Jodhpur or a half-day in Jaipur? Our AI crafts a zero-crowd heritage route calculating transit times, quiet hours, and unwritten folklore.
           </p>
         </div>
 
         {/* Input Configuration Card */}
-        <div className="bg-white rounded-3xl border border-stone-200/80 p-6 sm:p-8 shadow-xs mb-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-[#121318] rounded-3xl border border-white/10 p-6 sm:p-10 shadow-2xl mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* City Selection */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">
-                1. Select Royal City
+              <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-2">
+                1. Select Territory
               </label>
               <select
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="w-full px-4 py-3 rounded-2xl bg-stone-50 border border-stone-200 text-sm font-semibold text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900"
+                className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm font-semibold text-white focus:outline-none focus:border-[#E03E3E]"
               >
                 {['Jaipur', 'Jodhpur', 'Udaipur', 'Jaisalmer', 'Bundi', 'Pushkar', 'Bikaner', 'Shekhawati', 'Alwar'].map(
                   (c) => (
-                    <option key={c} value={c}>
+                    <option key={c} value={c} className="bg-[#121318]">
                       {c}
                     </option>
                   )
@@ -122,8 +115,8 @@ export default function PlannerPage() {
 
             {/* Time Budget */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">
-                2. How Much Time Do You Have?
+              <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-2">
+                2. Available Time
               </label>
               <div className="grid grid-cols-4 gap-2">
                 {[
@@ -136,10 +129,10 @@ export default function PlannerPage() {
                     key={item.val}
                     type="button"
                     onClick={() => setHours(item.val)}
-                    className={`py-2.5 rounded-2xl text-xs font-semibold transition-all cursor-pointer ${
+                    className={`py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                       hours === item.val
-                        ? 'bg-stone-900 text-white shadow-xs'
-                        : 'bg-stone-50 text-stone-600 border border-stone-200 hover:border-stone-400'
+                        ? 'bg-[#E03E3E] text-white shadow-md shadow-[#E03E3E]/30'
+                        : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20'
                     }`}
                   >
                     {item.label}
@@ -150,8 +143,8 @@ export default function PlannerPage() {
           </div>
 
           {/* Interests */}
-          <div className="mt-6 pt-6 border-t border-stone-100">
-            <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2.5">
+          <div className="mt-8 pt-8 border-t border-white/5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-3">
               3. Heritage Interests & Travel Style
             </label>
             <div className="flex flex-wrap gap-2">
@@ -162,10 +155,10 @@ export default function PlannerPage() {
                     key={opt}
                     type="button"
                     onClick={() => toggleInterest(opt)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                    className={`px-4 py-2 rounded-full text-xs font-medium transition-all cursor-pointer ${
                       active
-                        ? 'bg-amber-600 text-white shadow-2xs font-semibold'
-                        : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                        ? 'bg-[#E03E3E] text-white font-bold shadow-md shadow-[#E03E3E]/20'
+                        : 'bg-white/5 text-white/70 border border-white/10 hover:border-white/20'
                     }`}
                   >
                     {active ? '✓ ' : '+ '}
@@ -177,20 +170,20 @@ export default function PlannerPage() {
           </div>
 
           {/* Generate Button */}
-          <div className="mt-8 flex justify-center">
+          <div className="mt-10 flex justify-center">
             <button
               onClick={handleGenerate}
               disabled={isGenerating}
-              className="px-8 py-3.5 rounded-full bg-stone-900 hover:bg-black text-white text-xs font-bold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all flex items-center space-x-2 cursor-pointer"
+              className="px-8 py-4 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-[#E03E3E]/30 transition-all flex items-center space-x-2 cursor-pointer active:scale-95"
             >
               {isGenerating ? (
                 <>
-                  <RefreshCw className="w-4 h-4 animate-spin text-amber-400" />
+                  <RefreshCw className="w-4 h-4 animate-spin text-white" />
                   <span>Synthesizing Optimal Circuit...</span>
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4 text-amber-400" />
+                  <Sparkles className="w-4 h-4 text-white" />
                   <span>Generate {city} Itinerary</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
@@ -204,19 +197,19 @@ export default function PlannerPage() {
           <div className="space-y-6 animate-fadeIn">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-sans text-2xl font-bold text-stone-900">
-                  {itinerary.hours}-Hour Visual Circuit for {itinerary.city}
+                <h3 className="headline-werlton text-2xl sm:text-3xl text-white">
+                  {itinerary.hours}-Hour Circuit · {itinerary.city}
                 </h3>
-                <p className="text-xs text-stone-500 mt-0.5">
+                <p className="text-xs text-white/50 mt-0.5 font-light">
                   Optimized for minimal backtracking and zero-crowd cultural immersion
                 </p>
               </div>
 
               <button
                 onClick={() => window.print()}
-                className="px-4 py-2 rounded-full bg-white border border-stone-200 text-xs font-semibold text-stone-700 hover:bg-stone-50 inline-flex items-center space-x-1.5 shadow-xs cursor-pointer"
+                className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-wider text-white hover:bg-white/10 inline-flex items-center space-x-1.5 transition-all cursor-pointer"
               >
-                <Printer className="w-3.5 h-3.5" />
+                <Printer className="w-3.5 h-3.5 text-white/70" />
                 <span>Print Route</span>
               </button>
             </div>
@@ -226,7 +219,7 @@ export default function PlannerPage() {
               {itinerary.stops.map((stop, idx) => (
                 <div
                   key={stop.place.id}
-                  className="bg-white rounded-3xl border border-stone-200/80 p-6 shadow-xs flex flex-col md:flex-row gap-6 items-start"
+                  className="bg-[#121318] rounded-3xl border border-white/8 p-6 shadow-2xl flex flex-col md:flex-row gap-6 items-start"
                 >
                   {/* Image */}
                   <div className="relative w-full md:w-64 aspect-[4/3] rounded-2xl overflow-hidden shrink-0">
@@ -235,7 +228,7 @@ export default function PlannerPage() {
                       alt={stop.place.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute top-3 left-3 bg-stone-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    <div className="absolute top-3 left-3 bg-[#0A0B0E]/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/10">
                       Stop #{idx + 1}
                     </div>
                   </div>
@@ -243,53 +236,53 @@ export default function PlannerPage() {
                   {/* Info */}
                   <div className="flex-1 space-y-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900">
-                        <Clock className="w-3 h-3 text-amber-700" />
+                      <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-bold bg-[#E03E3E]/20 text-[#E03E3E] border border-[#E03E3E]/30">
+                        <Clock className="w-3 h-3 text-[#E03E3E]" />
                         <span>{stop.time}</span>
                       </span>
 
-                      <span className="text-xs text-stone-500 font-medium">
+                      <span className="text-xs text-white/50 font-medium">
                         🚶 {stop.travelTime}
                       </span>
                     </div>
 
                     <div>
-                      <h4 className="font-sans text-xl font-bold text-stone-900">
+                      <h4 className="text-white font-black text-xl leading-tight">
                         {stop.place.title}
                       </h4>
-                      <p className="text-xs text-stone-500 font-medium mt-0.5">
-                        {stop.place.category} · {stop.place.district}
+                      <p className="text-xs text-white/50 font-medium mt-0.5">
+                        {stop.place.district}, Rajasthan
                       </p>
                     </div>
 
-                    <p className="text-xs text-stone-600 leading-relaxed">
+                    <p className="text-xs text-white/60 leading-relaxed font-light">
                       {stop.place.tagline}
                     </p>
 
-                    <div className="bg-stone-50 rounded-2xl p-3 border border-stone-100 text-xs text-stone-700">
-                      <span className="font-bold text-stone-900">💡 Concierge Note: </span>
+                    <div className="bg-white/5 rounded-2xl p-4 border border-white/5 text-xs text-white/70 font-light">
+                      <span className="font-bold text-white">💡 Concierge Field Note: </span>
                       {stop.recommendation}
                     </div>
 
                     <div className="pt-2 flex items-center justify-between">
                       <Link
                         href={`/place/${stop.place.slug}`}
-                        className="text-xs font-semibold text-stone-900 hover:text-amber-700 inline-flex items-center space-x-1"
+                        className="text-xs font-bold uppercase tracking-wider text-[#E03E3E] hover:text-white inline-flex items-center space-x-1"
                       >
-                        <span>View Full Monument Dossier</span>
+                        <span>View Dossier</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Link>
 
                       <button
                         onClick={() => savePlace(stop.place)}
-                        className={`text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center space-x-1 transition-all ${
+                        className={`text-xs font-bold px-3.5 py-1.5 rounded-full inline-flex items-center space-x-1 transition-all ${
                           isSaved(stop.place.id)
-                            ? 'bg-emerald-100 text-emerald-900'
-                            : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                            ? 'bg-[#E03E3E] text-white shadow-md shadow-[#E03E3E]/30'
+                            : 'bg-white/5 text-white/70 hover:bg-white/10 border border-white/10'
                         }`}
                       >
                         <Bookmark className="w-3.5 h-3.5" />
-                        <span>{isSaved(stop.place.id) ? 'Saved' : 'Save to Circuit'}</span>
+                        <span>{isSaved(stop.place.id) ? 'Saved' : 'Save'}</span>
                       </button>
                     </div>
                   </div>
@@ -300,7 +293,7 @@ export default function PlannerPage() {
             <div className="text-center pt-6">
               <Link
                 href="/saved"
-                className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-stone-900 text-white text-xs font-semibold shadow-xs hover:bg-black"
+                className="inline-flex items-center space-x-2 px-8 py-3.5 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-[#E03E3E]/30"
               >
                 <span>View My Full Saved Travelogue Circuit</span>
                 <ArrowRight className="w-3.5 h-3.5" />

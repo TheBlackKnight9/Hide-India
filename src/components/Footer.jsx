@@ -3,38 +3,38 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="bg-stone-900 text-stone-300 pt-16 pb-12 border-t border-stone-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-stone-800">
+    <footer className="bg-[#07080A] text-white/60 pt-16 pb-12 border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
           {/* Brand & Editorial Purpose */}
           <div className="md:col-span-1 space-y-4">
             <div className="flex items-center space-x-2.5">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-amber-500 flex items-center justify-center text-white shadow-sm">
-                <span className="text-xs font-black">✦</span>
+              <div className="w-7 h-7 rounded-md bg-[#E03E3E] flex items-center justify-center text-white shadow-sm shadow-[#E03E3E]/30">
+                <span className="text-[10px] font-black tracking-tighter">HI</span>
               </div>
               <div>
-                <span className="font-sans text-xl font-bold tracking-tight text-white block">
-                  Hide Rajasthan
+                <span className="font-sans text-lg font-black tracking-widest text-white block uppercase">
+                  Hide India
                 </span>
-                <span className="text-[10px] uppercase tracking-wider text-amber-400 font-semibold block">
-                  Royal Cultural Edition
+                <span className="text-[10px] uppercase tracking-wider text-[#E03E3E] font-semibold block">
+                  Heritage Cultural Archive
                 </span>
               </div>
             </div>
-            <p className="text-xs text-stone-400 leading-relaxed">
-              Preserving Rajasthan’s subterranean stepwells, Rajput citadels, Shekhawati havelis, and desert folklore beyond commercial tourist circuits.
+            <p className="text-xs text-white/50 leading-relaxed font-light">
+              Preserving subterranean stepwells, Rajput citadels, Shekhawati havelis, and desert oral folklore beyond commercial tourist circuits.
             </p>
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-stone-800 border border-stone-700 text-[10px] text-amber-300 tracking-wider uppercase font-semibold">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-white/70 tracking-wider uppercase font-semibold">
               <span>SIH25130 · Swadeshi Heritage</span>
             </div>
           </div>
 
           {/* Dedicated Explore Pages */}
           <div>
-            <h4 className="font-sans text-xs font-bold text-white uppercase tracking-wider mb-4">
+            <h4 className="font-sans text-xs font-bold text-white uppercase tracking-widest mb-4">
               Explore Collections
             </h4>
-            <ul className="space-y-2.5 text-xs text-stone-400">
+            <ul className="space-y-2.5 text-xs text-white/60 font-light">
               <li>
                 <Link href="/cities" className="hover:text-white transition-colors">
                   🏛️ The 10 Royal Cities
@@ -63,12 +63,12 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* 10 Major Cities */}
+          {/* Major Territories */}
           <div>
-            <h4 className="font-sans text-xs font-bold text-white uppercase tracking-wider mb-4">
-              City Dossiers
+            <h4 className="font-sans text-xs font-bold text-white uppercase tracking-widest mb-4">
+              Territorial Dossiers
             </h4>
-            <div className="grid grid-cols-2 gap-2 text-xs text-stone-400">
+            <div className="grid grid-cols-2 gap-2 text-xs text-white/60 font-light">
               <Link href="/cities/jaipur" className="hover:text-white transition-colors">Jaipur</Link>
               <Link href="/cities/jodhpur" className="hover:text-white transition-colors">Jodhpur</Link>
               <Link href="/cities/udaipur" className="hover:text-white transition-colors">Udaipur</Link>
@@ -82,13 +82,13 @@ const Footer = () => {
 
           {/* Community & Mission */}
           <div>
-            <h4 className="font-sans text-xs font-bold text-white uppercase tracking-wider mb-4">
+            <h4 className="font-sans text-xs font-bold text-white uppercase tracking-widest mb-4">
               Community & Mission
             </h4>
-            <ul className="space-y-2 text-xs text-stone-400 mb-4">
+            <ul className="space-y-2 text-xs text-white/60 font-light mb-4">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
-                  About Hide Rajasthan & Team
+                  About Hide India & Team
                 </Link>
               </li>
               <li>
@@ -109,20 +109,20 @@ const Footer = () => {
             </ul>
             <Link
               href="/contribute"
-              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-full bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs shadow-xs transition-all"
+              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white font-semibold text-xs shadow-md shadow-[#E03E3E]/20 transition-all cursor-pointer"
             >
               <span>+ Contribute a Gem</span>
             </Link>
           </div>
         </div>
 
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-500">
-          <p>© {new Date().getFullYear()} Hide Rajasthan · Built for Atmanirbhar Bharat & Swadeshi Heritage Preservation.</p>
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40">
+          <p>© {new Date().getFullYear()} Hide India · Built for Atmanirbhar Bharat & Swadeshi Heritage Preservation.</p>
           <div className="flex space-x-6 mt-4 sm:mt-0">
-            <Link href="/hidden-gems" className="hover:text-stone-300">Hidden Gems</Link>
-            <Link href="/landmarks" className="hover:text-stone-300">Major Landmarks</Link>
-            <Link href="/crafts" className="hover:text-stone-300">GI Crafts</Link>
-            <Link href="/about" className="hover:text-stone-300">About SIH</Link>
+            <Link href="/hidden-gems" className="hover:text-white">Hidden Gems</Link>
+            <Link href="/landmarks" className="hover:text-white">Major Landmarks</Link>
+            <Link href="/crafts" className="hover:text-white">GI Crafts</Link>
+            <Link href="/about" className="hover:text-white">About SIH</Link>
           </div>
         </div>
       </div>

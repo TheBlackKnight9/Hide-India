@@ -7,7 +7,7 @@ const fallbackStories = [
   {
     id: 'story-kuldhara',
     title: 'The Midnight Exodus: How 84 Paliwal Villages Vanished in a Single Night',
-    author: 'Kunal Sharma · Hide Rajasthan Research Fellow',
+    author: 'Kunal Sharma · Hide India Research Fellow',
     state: 'Rajasthan',
     district: 'Jaisalmer',
     category: 'Folklore & Legend',
