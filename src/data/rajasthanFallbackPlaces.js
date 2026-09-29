@@ -175,9 +175,9 @@ export const rajasthanFallbackPlaces = [
     "folklore": "When Rao Jodha built the fort, he displaced a hermit named Cheeria Nathji who cursed the citadel with chronic droughts. To ward off the curse, Raja Ram Meghwal voluntarily agreed to be buried alive in the foundations, and his descendants are revered by the royal house to this day.",
     "architecturalStyle": "Monolithic Sheer Cliff Red Sandstone Fortress",
     "images": [
-      "https://upload.wikimedia.org/wikipedia/commons/9/99/Mehrangarh_Fort_sanhita.jpg"
+      "/images/mehrangarh.jpg"
     ],
-    "coverImage": "https://upload.wikimedia.org/wikipedia/commons/9/99/Mehrangarh_Fort_sanhita.jpg",
+    "coverImage": "/images/mehrangarh.jpg",
     "bestTimeToVisit": "Early morning 9:00 AM or late afternoon 3:30 PM for golden rampart views",
     "timings": "9:00 AM – 5:00 PM daily",
     "entryFee": "₹100 (Indians), ₹600 (Foreign nationals)",
@@ -431,9 +431,9 @@ export const rajasthanFallbackPlaces = [
     "folklore": "Before departing, the elders cast an unbreakable curse upon the earth that no one would ever be able to settle or build a life in Kuldhara again. To this day, the ruined sandstone homes stand uninhabited under the desert wind.",
     "architecturalStyle": "Desert Grid Stone Houses & Rainwater Harvesting Wells",
     "images": [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Kuldhara%2C_an_abandoned_village_%2830738705327%29.jpg/1280px-Kuldhara%2C_an_abandoned_village_%2830738705327%29.jpg"
+      "/images/kuldhara.jpg"
     ],
-    "coverImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Kuldhara%2C_an_abandoned_village_%2830738705327%29.jpg/1280px-Kuldhara%2C_an_abandoned_village_%2830738705327%29.jpg",
+    "coverImage": "/images/kuldhara.jpg",
     "bestTimeToVisit": "4:00 PM to 6:00 PM (Visitors must leave before dark per ASI rules)",
     "timings": "8:00 AM – 6:00 PM daily",
     "entryFee": "₹50 per person, ₹50 for vehicle",
@@ -527,9 +527,9 @@ export const rajasthanFallbackPlaces = [
     "folklore": "The underground chambers were cooled by continuous subterranean spring currents, allowing queens to read classical poetry during summer heatwaves.",
     "architecturalStyle": "Multi-Storey Sculptural Stepped Hydro-Sanctuary",
     "images": [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Rani_ji_ki_Baori_Bundi.jpg/1280px-Rani_ji_ki_Baori_Bundi.jpg"
+      "/images/raniji-ki-baori.jpg"
     ],
-    "coverImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Rani_ji_ki_Baori_Bundi.jpg/1280px-Rani_ji_ki_Baori_Bundi.jpg",
+    "coverImage": "/images/raniji-ki-baori.jpg",
     "bestTimeToVisit": "Morning 9:00 AM to noon for direct sunlight down the stepped shaft",
     "timings": "9:00 AM – 5:00 PM daily",
     "entryFee": "₹50 (Indians), ₹200 (Foreigners)",
@@ -943,9 +943,9 @@ export const rajasthanFallbackPlaces = [
     "folklore": "Villagers still believe spirits built the 3,500 steps in a single night so no mortal could ever walk down and return on the same sequence.",
     "architecturalStyle": "Early Medieval Classical Stepped Reservoir",
     "images": [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Chand_Baori_perspective_panorama_%28July_2022%29.jpg/1280px-Chand_Baori_perspective_panorama_%28July_2022%29.jpg"
+      "/images/chand-baori.jpg"
     ],
-    "coverImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Chand_Baori_perspective_panorama_%28July_2022%29.jpg/1280px-Chand_Baori_perspective_panorama_%28July_2022%29.jpg",
+    "coverImage": "/images/chand-baori.jpg",
     "bestTimeToVisit": "October to February (Mid-morning for direct step shadows)",
     "timings": "8:30 AM – 5:30 PM daily",
     "entryFee": "₹25 (Indians), ₹300 (Foreign nationals)",

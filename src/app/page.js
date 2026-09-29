@@ -29,53 +29,53 @@ import { rajasthanCities } from '../data/rajasthanCities';
 
 const DEFAULT_FALLBACK_IMG = 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1600&auto=format&fit=crop';
 
-/* ── 5 Hero Slides for the Werlton "TRAVEL TIME" carousel (Verified High-Res Unsplash CDN) ── */
+/* ── 5 Hero Slides for the Werlton "TRAVEL TIME" carousel (100% Real Authentic Photos) ── */
 const heroSlides = [
   {
     num: '01',
     title: 'KUMBHALGARH WALLS',
     location: 'Rajsamand, Mewar',
-    image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1600&auto=format&fit=crop',
+    image: '/images/kumbhalgarh-wall.jpg',
     tagline: '36 kilometers of continuous stone ramparts standing sentinel above the misty Aravalli ridges.',
   },
   {
     num: '02',
     title: 'CHITTORGARH CITADEL',
     location: 'Chittorgarh, Mewar',
-    image: 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?q=80&w=1600&auto=format&fit=crop',
+    image: '/images/chittorgarh.jpg',
     tagline: 'The grandest fortress of Rajput valor, sacred water kunds, and Vijay Stambha towering in twilight.',
   },
   {
     num: '03',
     title: 'MEHRANGARH CITADEL',
     location: 'Jodhpur, Marwar',
-    image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1600&auto=format&fit=crop',
+    image: '/images/mehrangarh.jpg',
     tagline: 'Perched 400 feet above the blue city, echoing with the ballads of desert balladeers and warrior clans.',
   },
   {
     num: '04',
     title: 'CHAND BAORI STEPS',
     location: 'Abhaneri, Dausa',
-    image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1600&auto=format&fit=crop',
+    image: '/images/chand-baori.jpg',
     tagline: '3,500 symmetrical geometric steps carved into the subterranean earth to harvest monsoon raindrops.',
   },
   {
     num: '05',
     title: 'SONAR QILA FORT',
     location: 'Jaisalmer, Thar Desert',
-    image: 'https://images.unsplash.com/photo-1571536802807-30451e3955d8?q=80&w=1600&auto=format&fit=crop',
+    image: '/images/jaisalmer-fort.jpg',
     tagline: 'A living golden sandstone citadel where one-quarter of the ancient desert city still resides.',
   },
 ];
 
-/* ── Popular 4 Tall Tours (exact Werlton 4-column anatomy with High-Res Unsplash CDN) ── */
+/* ── Popular 4 Tall Tours (100% Real Geographically Accurate Photos) ── */
 const popularTours = [
   {
     id: 'tour-1',
     label: 'TOUR 1',
     title: 'MEHRANGARH',
     subtitle: 'Marwar Citadel Circuit',
-    image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1200&auto=format&fit=crop',
+    image: '/images/mehrangarh.jpg',
     slug: 'mehrangarh-fort-jodhpur',
   },
   {
@@ -83,7 +83,7 @@ const popularTours = [
     label: 'TOUR 2',
     title: 'CHAND BAORI',
     subtitle: '3,500 Steps Geometry',
-    image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200&auto=format&fit=crop',
+    image: '/images/chand-baori.jpg',
     slug: 'chand-baori-abhaneri',
   },
   {
@@ -91,7 +91,7 @@ const popularTours = [
     label: 'TOUR 3',
     title: 'RANIJI KI BAORI',
     subtitle: 'Stepwell of Queen Nathavatji',
-    image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200&auto=format&fit=crop',
+    image: '/images/raniji-ki-baori.jpg',
     slug: 'raniji-ki-baori-bundi',
   },
   {
@@ -99,7 +99,7 @@ const popularTours = [
     label: 'TOUR 4',
     title: 'KULDHARA RUINS',
     subtitle: 'Midnight Exodus Trail',
-    image: 'https://images.unsplash.com/photo-1571536802807-30451e3955d8?q=80&w=1200&auto=format&fit=crop',
+    image: '/images/kuldhara.jpg',
     slug: 'kuldhara-abandoned-village-jaisalmer',
   },
 ];
@@ -413,14 +413,11 @@ export default function HomePage() {
           3. DISCOVER THE WORLD IN A NEW WAY  — Dark Nature Split with Verified High-Res Media
          ═══════════════════════════════════════════════════════ */}
       <section className="relative py-24 px-6 sm:px-12 lg:px-20 overflow-hidden border-t border-b border-white/5">
-        {/* Dark forest/aerial backdrop image */}
+        {/* Dark aerial backdrop image */}
         <div className="absolute inset-0 pointer-events-none opacity-20">
           <img
-            src="https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?q=80&w=1600&auto=format&fit=crop"
+            src="/images/kumbhalgarh-wall.jpg"
             alt="Backdrop"
-            onError={(e) => {
-              e.currentTarget.src = DEFAULT_FALLBACK_IMG;
-            }}
             className="w-full h-full object-cover filter blur-[2px]"
           />
           <div className="absolute inset-0 bg-[#0A0B0E]/90" />
@@ -459,7 +456,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right Column: 2 Staggered Media Cards with Play Icons (High-Res Images with onError fallback) */}
+          {/* Right Column: 2 Staggered Media Cards with Play Icons (100% Real Geographically Accurate Photos) */}
           <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <motion.div
               whileHover={{ y: -4, scale: 1.02 }}
@@ -468,12 +465,9 @@ export default function HomePage() {
               className="group relative rounded-2xl overflow-hidden aspect-[4/3] cursor-pointer shadow-xl border border-white/10 hover:border-white/30 transition-all"
             >
               <img
-                src="https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200&auto=format&fit=crop"
-                alt="Chand Baori Stepwell"
-                onError={(e) => {
-                  e.currentTarget.src = DEFAULT_FALLBACK_IMG;
-                }}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-[0.7]"
+                src="/images/chand-baori.jpg"
+                alt="Chand Baori Stepwell Abhaneri"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-[0.75]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center">
@@ -493,12 +487,9 @@ export default function HomePage() {
               className="group relative rounded-2xl overflow-hidden aspect-[4/3] cursor-pointer shadow-xl border border-white/10 hover:border-white/30 transition-all sm:translate-y-4"
             >
               <img
-                src="https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop"
+                src="/images/pushkar.jpg"
                 alt="Pushkar Holy Lake"
-                onError={(e) => {
-                  e.currentTarget.src = DEFAULT_FALLBACK_IMG;
-                }}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-[0.7]"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-[0.75]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center">
