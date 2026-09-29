@@ -76,21 +76,21 @@ export default function CityDetailPage({ params }) {
       (c) =>
         c.city.toLowerCase().includes(city.name.toLowerCase()) ||
         city.name.toLowerCase().includes(c.city.toLowerCase())
-    );
+      );
   }, [city]);
 
   return (
-    <div className="min-h-screen bg-[#0A0B0E] text-white pb-24">
+    <div className="min-h-screen bg-[#0A0B0E] text-white pb-24 selection:bg-[#E03E3E] selection:text-white">
       {/* ─────────────────────────────────────────────────────────────
           1. CINEMATIC CITY HERO WITH DOCKED FILTER CAPSULE
          ───────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[60vh] sm:min-h-[70vh] flex flex-col justify-between p-6 sm:p-12 overflow-hidden bg-stone-950">
+      <section className="relative min-h-[60vh] sm:min-h-[70vh] flex flex-col justify-between p-6 sm:p-12 overflow-hidden bg-black">
         <img
           src={city.image}
           alt={city.name}
-          className="absolute inset-0 w-full h-full object-cover scale-102 transition-transform duration-1000"
+          className="absolute inset-0 w-full h-full object-cover scale-102 transition-transform duration-1000 filter brightness-[0.55] contrast-[1.1]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B0E] via-black/40 to-black/60 pointer-events-none" />
 
         {/* Top Breadcrumb Navigation */}
         <div className="relative z-10 pt-20 flex items-center justify-between">
@@ -115,7 +115,7 @@ export default function CityDetailPage({ params }) {
             <span>{city.era}</span>
           </div>
 
-          <h1 className="font-sans text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white leading-tight uppercase">
+          <h1 className="headline-werlton text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white leading-tight uppercase">
             {city.name}
           </h1>
 
@@ -145,18 +145,18 @@ export default function CityDetailPage({ params }) {
                 </p>
               </div>
               <div className="p-1">
-                <p className="font-sans text-2xl sm:text-3xl font-extrabold text-stone-900">
+                <p className="font-sans text-2xl sm:text-3xl font-extrabold text-white">
                   {majorPlaces.length}
                 </p>
-                <p className="text-[10px] font-semibold text-stone-500 uppercase tracking-wider mt-0.5">
+                <p className="text-[10px] font-semibold text-white/50 uppercase tracking-wider mt-0.5">
                   Major Landmarks
                 </p>
               </div>
               <div className="p-1">
-                <p className="font-sans text-2xl sm:text-3xl font-extrabold text-amber-700">
+                <p className="font-sans text-2xl sm:text-3xl font-extrabold text-[#E03E3E]">
                   {city.crafts.length}
                 </p>
-                <p className="text-[10px] font-semibold text-stone-500 uppercase tracking-wider mt-0.5">
+                <p className="text-[10px] font-semibold text-white/50 uppercase tracking-wider mt-0.5">
                   GI-Tagged Crafts
                 </p>
               </div>
@@ -169,24 +169,23 @@ export default function CityDetailPage({ params }) {
           2. SECTION: "PICK THE PLACE IN [CITY]"
          ───────────────────────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
-        {/* Header matching reference */}
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-amber-100/80 text-amber-900 text-xs font-semibold uppercase tracking-wider mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>{city.name} Cultural Circuit</span>
-            </div>
-            <h2 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-stone-900">
+            <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
+              {city.name} Cultural Circuit
+            </span>
+            <h2 className="headline-werlton text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
               Pick the Place in {city.name}
             </h2>
           </div>
 
-          <p className="text-sm text-stone-500 max-w-sm md:text-right leading-relaxed">
+          <p className="text-sm text-white/60 max-w-sm md:text-right leading-relaxed font-light">
             {city.overview}
           </p>
         </div>
 
-        {/* FLOATING FILTER BAR MATCHING SCREENSHOT */}
+        {/* FLOATING FILTER BAR */}
         <div className="bg-[#121318] rounded-2xl border border-white/10 shadow-2xl p-3 sm:p-4 mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center">
             {/* Filter 1: Place search */}
@@ -198,10 +197,10 @@ export default function CityDetailPage({ params }) {
                 <Search className="w-3.5 h-3.5 text-white/40 shrink-0" />
                 <input
                   type="text"
-                  placeholder={`Search ${city.name} places...`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-transparent text-xs text-white placeholder-white/30 focus:outline-none font-medium"
+                  placeholder="Filter name or dynasty..."
+                  className="w-full bg-transparent text-xs text-white placeholder-white/30 focus:outline-none"
                 />
               </div>
             </div>
@@ -214,40 +213,51 @@ export default function CityDetailPage({ params }) {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full bg-[#121318] text-xs font-medium text-white focus:outline-none cursor-pointer"
+                className="w-full bg-transparent text-xs text-white font-medium focus:outline-none cursor-pointer"
               >
-                <option value="All">All Categories</option>
-                <option value="Stepwell">Stepwells (Baoris)</option>
-                <option value="Forgotten Fort">Forts & Citadels</option>
-                <option value="Ancient Temple">Ancient Temples</option>
-                <option value="Living Crafts & Handloom">Living Crafts</option>
+                <option value="All" className="bg-[#121318] text-white">All Heritage Types</option>
+                <option value="Stepwell" className="bg-[#121318] text-white">Subterranean Baoris</option>
+                <option value="Fort" className="bg-[#121318] text-white">Hill Bastions & Citadels</option>
+                <option value="Palace" className="bg-[#121318] text-white">Royal Sanctuaries</option>
+                <option value="Temple" className="bg-[#121318] text-white">Sacred Shrines</option>
+                <option value="Craft" className="bg-[#121318] text-white">Living GI Craft Clusters</option>
               </select>
             </div>
 
             {/* Filter 3: Tab Selector */}
-            <div className="px-3 py-1 sm:border-r border-white/10">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
-                Crowd Quotient
-              </label>
-              <select
-                value={activeTab}
-                onChange={(e) => setActiveTab(e.target.value)}
-                className="w-full bg-[#121318] text-xs font-medium text-white focus:outline-none cursor-pointer"
-              >
-                <option value="all">All Sites ({cityPlaces.length})</option>
-                <option value="hidden">Zero-Crowd Gems ({hiddenPlaces.length})</option>
-                <option value="major">Major Landmarks ({majorPlaces.length})</option>
-              </select>
-            </div>
-
-            {/* Filter 4: Discover Action */}
-            <div className="px-1">
-              <button
-                type="button"
-                className="w-full py-2.5 px-5 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#E03E3E]/20 flex items-center justify-center space-x-1.5 cursor-pointer"
-              >
-                <span>Discover ({filteredPlaces.length})</span>
-              </button>
+            <div className="px-3 py-1 flex items-center justify-between sm:col-span-2">
+              <div className="flex items-center space-x-1 bg-white/5 p-1 rounded-xl w-full border border-white/10">
+                <button
+                  onClick={() => setActiveTab('all')}
+                  className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    activeTab === 'all'
+                      ? 'bg-[#E03E3E] text-white shadow-sm'
+                      : 'text-white/50 hover:text-white'
+                  }`}
+                >
+                  All ({cityPlaces.length})
+                </button>
+                <button
+                  onClick={() => setActiveTab('hidden')}
+                  className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    activeTab === 'hidden'
+                      ? 'bg-[#E03E3E] text-white shadow-sm'
+                      : 'text-white/50 hover:text-white'
+                  }`}
+                >
+                  Zero-Crowd ({hiddenPlaces.length})
+                </button>
+                <button
+                  onClick={() => setActiveTab('major')}
+                  className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    activeTab === 'major'
+                      ? 'bg-[#E03E3E] text-white shadow-sm'
+                      : 'text-white/50 hover:text-white'
+                  }`}
+                >
+                  Landmarks ({majorPlaces.length})
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -260,12 +270,12 @@ export default function CityDetailPage({ params }) {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-white rounded-3xl border border-stone-200 p-8 shadow-xs">
-            <Compass className="w-12 h-12 text-stone-300 mx-auto mb-3" />
-            <h3 className="font-sans font-bold text-base text-stone-800">
+          <div className="text-center py-20 bg-[#121318] rounded-3xl border border-white/10 p-8 shadow-2xl">
+            <Compass className="w-12 h-12 text-white/30 mx-auto mb-3" />
+            <h3 className="headline-werlton text-lg text-white">
               No matching sanctuaries in {city.name}
             </h3>
-            <p className="text-xs text-stone-500 mt-1 max-w-sm mx-auto">
+            <p className="text-xs text-white/50 mt-1 max-w-sm mx-auto font-light">
               Reset the category or crowd filter to explore all {cityPlaces.length} documented sites.
             </p>
             <button
@@ -274,7 +284,7 @@ export default function CityDetailPage({ params }) {
                 setSelectedCategory('All');
                 setSearchQuery('');
               }}
-              className="mt-4 px-5 py-2 rounded-full bg-stone-900 text-white text-xs font-semibold cursor-pointer"
+              className="mt-4 px-6 py-2.5 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider cursor-pointer shadow-md shadow-[#E03E3E]/30 transition-all"
             >
               Reset Filters
             </button>
@@ -287,15 +297,15 @@ export default function CityDetailPage({ params }) {
          ───────────────────────────────────────────────────────────── */}
       {cityCrafts.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="bg-stone-900 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-stone-800">
+          <div className="bg-[#121318] text-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-white/10">
             <div className="max-w-2xl mb-8">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-1">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#E03E3E] block mb-1">
                 Atmanirbhar Bharat · Swadeshi Lineage
               </span>
-              <h3 className="font-sans text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
+              <h3 className="headline-werlton text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
                 GI Tagged Crafts of {city.name}
               </h3>
-              <p className="text-stone-300 text-sm mt-2 leading-relaxed">
+              <p className="text-white/70 text-sm mt-2 leading-relaxed font-light">
                 Generational artisan communities creating royal masterpieces. Buy directly from clusters without retail markups.
               </p>
             </div>
@@ -307,21 +317,21 @@ export default function CityDetailPage({ params }) {
                   className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#E03E3E]">
                       {craft.giTag}
                     </span>
-                    <span className="text-[11px] text-stone-400">
+                    <span className="text-[11px] text-white/50">
                       📍 {craft.artisanClusters}
                     </span>
                   </div>
-                  <h4 className="font-sans text-lg font-bold text-white mb-2">
+                  <h4 className="headline-werlton text-lg text-white mb-2">
                     {craft.name}
                   </h4>
-                  <p className="text-xs text-stone-300 leading-relaxed mb-4">
+                  <p className="text-xs text-white/70 leading-relaxed mb-4 font-light">
                     {craft.description}
                   </p>
-                  <div className="text-[11px] text-amber-200/90 pt-3 border-t border-white/10">
-                    <span className="font-semibold">Associated Heritage:</span>{' '}
+                  <div className="text-[11px] text-white/60 pt-3 border-t border-white/10">
+                    <span className="font-semibold text-white/90">Associated Heritage:</span>{' '}
                     {craft.monuments.join(', ')}
                   </div>
                 </div>
@@ -331,7 +341,7 @@ export default function CityDetailPage({ params }) {
             <div className="mt-8 text-center">
               <Link
                 href="/crafts"
-                className="inline-flex items-center space-x-2 text-xs font-semibold text-amber-300 hover:text-white uppercase tracking-wider"
+                className="inline-flex items-center space-x-2 text-xs font-semibold text-[#E03E3E] hover:text-white uppercase tracking-wider transition-colors"
               >
                 <span>Explore All Rajasthan GI Crafts</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -345,18 +355,18 @@ export default function CityDetailPage({ params }) {
           4. EXPLORE OTHER REGIONS
          ───────────────────────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="flex flex-col sm:flex-row items-center justify-between border-t border-stone-200 pt-8 gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between border-t border-white/10 pt-8 gap-4">
           <div>
-            <h4 className="font-sans font-bold text-lg text-stone-900">
+            <h4 className="headline-werlton text-lg text-white">
               Explore More Royal Territories
             </h4>
-            <p className="text-xs text-stone-500">
+            <p className="text-xs text-white/60 font-light">
               Discover other sovereign dynasties, stepwells, and desert landscapes
             </p>
           </div>
           <Link
             href="/cities"
-            className="px-6 py-2.5 rounded-full bg-stone-900 hover:bg-black text-white text-xs font-semibold shadow-xs inline-flex items-center space-x-1.5 transition-all"
+            className="px-6 py-3 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-[#E03E3E]/30 inline-flex items-center space-x-1.5 transition-all"
           >
             <span>View All 13 Territories</span>
             <ArrowRight className="w-3.5 h-3.5" />

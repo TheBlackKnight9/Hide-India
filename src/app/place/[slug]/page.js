@@ -242,19 +242,19 @@ export default function PlaceDetailPage() {
 
   if (loading) {
     return (
-      <div className="max-w-5xl mx-auto px-4 py-36 text-center">
-        <div className="w-10 h-10 border-3 border-stone-900 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="font-sans text-stone-600 text-base">Unveiling Rajasthan heritage dossier...</p>
+      <div className="min-h-screen bg-[#0A0B0E] text-white flex flex-col items-center justify-center py-36">
+        <div className="w-10 h-10 border-3 border-[#E03E3E] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <p className="font-sans text-white/70 text-base font-light">Unveiling Rajasthan heritage dossier...</p>
       </div>
     );
   }
 
   if (!place) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-36 text-center">
-        <h2 className="font-sans text-2xl font-bold text-stone-800">Destination Not Found</h2>
-        <p className="text-stone-500 mt-2 text-sm">The requested heritage dossier could not be located.</p>
-        <Link href="/explore" className="mt-4 inline-block px-5 py-2.5 bg-stone-900 text-white rounded-full text-xs font-semibold">
+      <div className="min-h-screen bg-[#0A0B0E] text-white flex flex-col items-center justify-center py-36 px-4 text-center">
+        <h2 className="headline-werlton text-3xl font-bold text-white">Destination Not Found</h2>
+        <p className="text-white/60 mt-2 text-sm font-light">The requested heritage dossier could not be located.</p>
+        <Link href="/explore" className="mt-6 inline-flex items-center px-6 py-3 bg-[#E03E3E] hover:bg-[#c93232] text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-[#E03E3E]/30">
           Return to Rajasthan Atlas
         </Link>
       </div>
@@ -498,43 +498,43 @@ export default function PlaceDetailPage() {
         </div>
 
         {/* ─────────────────────────────────────────────────────────────
-            6. TAB CONTENT PANELS
+            6. TAB CONTENT PANELS (Pure Werlton Dark Theme)
            ───────────────────────────────────────────────────────────── */}
         <div className="bg-[#121318] p-6 sm:p-10 rounded-3xl border border-white/10 shadow-2xl space-y-6 text-white">
           {/* TAB 1: HISTORY & ARCHITECTURE */}
           {activeTab === 'history' && (
             <div className="space-y-6 animate-fadeIn">
               <div>
-                <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block mb-1">
+                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
                   Historical Chronicle
                 </span>
-                <h3 className="font-sans text-xl sm:text-2xl font-bold text-stone-900">
+                <h3 className="headline-werlton text-xl sm:text-2xl text-white">
                   Architectural Genesis & Dynastic Lineage
                 </h3>
               </div>
 
-              <div className="prose text-stone-700 text-sm sm:text-base leading-relaxed font-serif whitespace-pre-line">
+              <div className="text-white/80 text-sm sm:text-base leading-relaxed font-sans font-light whitespace-pre-line">
                 {place.history}
               </div>
 
               {/* Materiality Card */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-stone-100">
-                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200/80">
-                  <div className="flex items-center space-x-2 text-stone-900 font-bold text-xs uppercase tracking-wider mb-1.5">
-                    <Layers className="w-4 h-4 text-amber-600" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-white/10">
+                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+                  <div className="flex items-center space-x-2 text-white font-bold text-xs uppercase tracking-wider">
+                    <Layers className="w-4 h-4 text-[#E03E3E]" />
                     <span>Stone & Materiality</span>
                   </div>
-                  <p className="text-xs text-stone-600 leading-relaxed">
+                  <p className="text-xs text-white/70 leading-relaxed font-light">
                     {enriched?.materiality}
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200/80">
-                  <div className="flex items-center space-x-2 text-stone-900 font-bold text-xs uppercase tracking-wider mb-1.5">
-                    <Compass className="w-4 h-4 text-amber-600" />
+                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
+                  <div className="flex items-center space-x-2 text-white font-bold text-xs uppercase tracking-wider">
+                    <Compass className="w-4 h-4 text-[#E03E3E]" />
                     <span>Architectural Style</span>
                   </div>
-                  <p className="text-xs text-stone-600 leading-relaxed">
+                  <p className="text-xs text-white/70 leading-relaxed font-light">
                     {place.architecturalStyle || 'Traditional Rajput & Indo-Islamic Syncretic Architecture'}
                   </p>
                 </div>
@@ -546,21 +546,21 @@ export default function PlaceDetailPage() {
           {activeTab === 'folklore' && (
             <div className="space-y-6 animate-fadeIn">
               <div>
-                <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block mb-1">
+                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
                   Oral Traditions
                 </span>
-                <h3 className="font-sans text-xl sm:text-2xl font-bold text-stone-900 flex items-center space-x-2">
-                  <Sparkles className="w-5 h-5 text-amber-500" />
+                <h3 className="headline-werlton text-xl sm:text-2xl text-white flex items-center space-x-2">
+                  <Sparkles className="w-5 h-5 text-[#E03E3E]" />
                   <span>Oral Legends & Community Folklore</span>
                 </h3>
               </div>
 
-              <div className="p-6 sm:p-8 rounded-2xl bg-amber-50/80 border border-amber-200/60 text-stone-800 text-sm sm:text-base font-serif italic leading-relaxed">
+              <div className="p-6 sm:p-8 rounded-2xl bg-white/5 border border-white/10 text-white/90 text-sm sm:text-base font-light italic leading-relaxed">
                 "{place.folklore || 'Generational villagers in this territory recall songs sung during dry monsoons praising the subterranean waters and guardian spirits who protected this sanctuary.'}"
               </div>
 
-              <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200 text-xs text-stone-600 space-y-2">
-                <p className="font-bold text-stone-900 uppercase tracking-wider text-[10px]">
+              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 text-xs text-white/70 space-y-2 font-light">
+                <p className="font-bold text-white uppercase tracking-wider text-[10px]">
                   Cultural Preservation Note:
                 </p>
                 <p>
@@ -574,43 +574,43 @@ export default function PlaceDetailPage() {
           {activeTab === 'photography' && (
             <div className="space-y-6 animate-fadeIn">
               <div>
-                <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block mb-1">
+                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
                   Visual Guide
                 </span>
-                <h3 className="font-sans text-xl sm:text-2xl font-bold text-stone-900 flex items-center space-x-2">
-                  <Camera className="w-5 h-5 text-stone-700" />
+                <h3 className="headline-werlton text-xl sm:text-2xl text-white flex items-center space-x-2">
+                  <Camera className="w-5 h-5 text-[#E03E3E]" />
                   <span>Photography & Golden Hour Lighting Guide</span>
                 </h3>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-5 rounded-2xl bg-amber-50/50 border border-amber-200/60 space-y-2">
-                  <div className="flex items-center space-x-2 text-amber-900 font-bold text-xs uppercase tracking-wider">
-                    <Sun className="w-4 h-4 text-amber-600" />
+                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="flex items-center space-x-2 text-white font-bold text-xs uppercase tracking-wider">
+                    <Sun className="w-4 h-4 text-[#E03E3E]" />
                     <span>Optimal Lighting Window</span>
                   </div>
-                  <p className="text-xs text-stone-700 leading-relaxed">
+                  <p className="text-xs text-white/70 leading-relaxed font-light">
                     {enriched?.photographyGuide?.bestTime}
                   </p>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
-                  <div className="flex items-center space-x-2 text-stone-900 font-bold text-xs uppercase tracking-wider">
-                    <Eye className="w-4 h-4 text-stone-700" />
+                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+                  <div className="flex items-center space-x-2 text-white font-bold text-xs uppercase tracking-wider">
+                    <Eye className="w-4 h-4 text-[#E03E3E]" />
                     <span>Recommended Vantage Point</span>
                   </div>
-                  <p className="text-xs text-stone-700 leading-relaxed">
+                  <p className="text-xs text-white/70 leading-relaxed font-light">
                     {enriched?.photographyGuide?.angles}
                   </p>
                 </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200 space-y-2 text-xs text-stone-600">
-                <span className="font-bold text-stone-900 uppercase tracking-wider text-[10px] block">
+              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs text-white/70 font-light">
+                <span className="font-bold text-white uppercase tracking-wider text-[10px] block">
                   Equipment & Permission Etiquette
                 </span>
                 <p>{enriched?.photographyGuide?.lighting}</p>
-                <p className="text-stone-500 font-medium pt-1">
+                <p className="text-white/40 font-medium pt-1">
                   {enriched?.photographyGuide?.tripodPolicy}
                 </p>
               </div>
@@ -621,46 +621,46 @@ export default function PlaceDetailPage() {
           {activeTab === 'crowd' && (
             <div className="space-y-6 animate-fadeIn">
               <div>
-                <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider block mb-1">
+                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
                   Pacing & Serenity
                 </span>
-                <h3 className="font-sans text-xl sm:text-2xl font-bold text-stone-900 flex items-center space-x-2">
-                  <Clock className="w-5 h-5 text-emerald-600" />
+                <h3 className="headline-werlton text-xl sm:text-2xl text-white flex items-center space-x-2">
+                  <Clock className="w-5 h-5 text-[#E03E3E]" />
                   <span>Crowd Heatmap & Time Budget Guide</span>
                 </h3>
               </div>
 
               <div className="space-y-3">
-                <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 flex items-start space-x-3 text-xs">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 mt-1 shrink-0" />
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-start space-x-3 text-xs">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 mt-1 shrink-0 shadow-sm shadow-emerald-400/50" />
                   <div>
-                    <strong className="text-emerald-950 font-bold block">Early Morning Calm:</strong>
-                    <span className="text-emerald-800">{enriched?.crowdHeatmap?.earlyMorning}</span>
+                    <strong className="text-emerald-400 font-bold block">Early Morning Calm:</strong>
+                    <span className="text-white/80 font-light">{enriched?.crowdHeatmap?.earlyMorning}</span>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-start space-x-3 text-xs">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-600 mt-1 shrink-0" />
+                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-start space-x-3 text-xs">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400 mt-1 shrink-0 shadow-sm shadow-amber-400/50" />
                   <div>
-                    <strong className="text-amber-950 font-bold block">Midday Excursions:</strong>
-                    <span className="text-amber-800">{enriched?.crowdHeatmap?.midDay}</span>
+                    <strong className="text-amber-400 font-bold block">Midday Excursions:</strong>
+                    <span className="text-white/80 font-light">{enriched?.crowdHeatmap?.midDay}</span>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 flex items-start space-x-3 text-xs">
-                  <span className="w-2.5 h-2.5 rounded-full bg-stone-600 mt-1 shrink-0" />
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start space-x-3 text-xs">
+                  <span className="w-2.5 h-2.5 rounded-full bg-white/60 mt-1 shrink-0" />
                   <div>
-                    <strong className="text-stone-950 font-bold block">Sunset Calms:</strong>
-                    <span className="text-stone-700">{enriched?.crowdHeatmap?.lateAfternoon}</span>
+                    <strong className="text-white font-bold block">Sunset Calms:</strong>
+                    <span className="text-white/80 font-light">{enriched?.crowdHeatmap?.lateAfternoon}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-stone-100 text-xs text-stone-700 flex items-center justify-between">
+              <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs text-white/80 flex items-center justify-between">
                 <span>
-                  <strong>Recommended Pacing:</strong> {enriched?.crowdHeatmap?.recommendedPace}
+                  <strong className="text-white">Recommended Pacing:</strong> {enriched?.crowdHeatmap?.recommendedPace}
                 </span>
-                <span className="font-bold text-emerald-700">
+                <span className="font-bold text-emerald-400">
                   {enriched?.crowdHeatmap?.crowdQuotient}
                 </span>
               </div>
@@ -671,29 +671,29 @@ export default function PlaceDetailPage() {
           {activeTab === 'reach' && (
             <div className="space-y-6 animate-fadeIn">
               <div>
-                <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block mb-1">
+                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
                   Navigation
                 </span>
-                <h3 className="font-sans text-xl sm:text-2xl font-bold text-stone-900">
+                <h3 className="headline-werlton text-xl sm:text-2xl text-white">
                   Directions, Transit & Coordinates
                 </h3>
               </div>
 
-              <p className="text-sm text-stone-700 leading-relaxed">
+              <p className="text-sm text-white/70 leading-relaxed font-light">
                 {place.howToReach || `Located in ${place.district}, Rajasthan. Easily accessible from the main town center by local cab or auto-rickshaw.`}
               </p>
 
-              <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
+              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
                 <div>
-                  <span className="font-bold text-stone-900 block mb-0.5">Exact GPS Coordinates</span>
-                  <span className="text-stone-600 font-mono text-xs">{place.latitude}° N, {place.longitude}° E</span>
+                  <span className="font-bold text-white block mb-0.5">Exact GPS Coordinates</span>
+                  <span className="text-white/60 font-mono text-xs">{place.latitude}° N, {place.longitude}° E</span>
                 </div>
 
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${place.latitude},${place.longitude}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 bg-stone-900 hover:bg-black text-white rounded-full font-semibold transition-all inline-flex items-center space-x-1.5 shadow-xs cursor-pointer"
+                  className="px-5 py-2.5 bg-[#E03E3E] hover:bg-[#c93232] text-white rounded-full font-semibold transition-all inline-flex items-center space-x-1.5 shadow-md shadow-[#E03E3E]/30 cursor-pointer"
                 >
                   <span>Open in Google Maps</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -706,23 +706,23 @@ export default function PlaceDetailPage() {
           {activeTab === 'etiquette' && (
             <div className="space-y-6 animate-fadeIn">
               <div>
-                <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block mb-1">
+                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
                   Responsible Travel
                 </span>
-                <h3 className="font-sans text-xl sm:text-2xl font-bold text-stone-900">
+                <h3 className="headline-werlton text-xl sm:text-2xl text-white">
                   Visitor Etiquette & Local Culinary Pairing
                 </h3>
               </div>
 
               {/* Etiquette Rules */}
               <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-stone-800 block">
+                <span className="text-xs font-bold uppercase tracking-wider text-white/80 block">
                   Heritage Preservation Etiquette:
                 </span>
                 <div className="space-y-2">
                   {enriched?.etiquette.map((rule, idx) => (
-                    <div key={idx} className="flex items-start space-x-2.5 text-xs text-stone-700">
-                      <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <div key={idx} className="flex items-start space-x-2.5 text-xs text-white/70 font-light">
+                      <ShieldCheck className="w-4 h-4 text-[#3EBFA0] shrink-0 mt-0.5" />
                       <span>{rule}</span>
                     </div>
                   ))}
@@ -730,14 +730,14 @@ export default function PlaceDetailPage() {
               </div>
 
               {/* Culinary Pairing */}
-              <div className="pt-4 border-t border-stone-100">
-                <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-start space-x-3 text-xs">
-                  <Utensils className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+              <div className="pt-4 border-t border-white/10">
+                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 flex items-start space-x-3 text-xs">
+                  <Utensils className="w-4 h-4 text-[#E03E3E] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-amber-950 font-bold block mb-1">
+                    <strong className="text-white font-bold block mb-1">
                       Local Culinary Pairing in {place.district}:
                     </strong>
-                    <span className="text-amber-900 leading-relaxed">
+                    <span className="text-white/70 leading-relaxed font-light">
                       {enriched?.culinaryPairing}
                     </span>
                   </div>
@@ -750,15 +750,15 @@ export default function PlaceDetailPage() {
           {activeTab === 'reviews' && (
             <div className="space-y-6 animate-fadeIn">
               {reviewSuccess && (
-                <div className="p-4 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200 flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-600" />
+                <div className="p-4 rounded-2xl bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20 flex items-center space-x-2">
+                  <CheckCircle className="w-4 h-4 text-emerald-400" />
                   <span>Thank you! Your travel note has been added to the Rajasthan dossier.</span>
                 </div>
               )}
 
               {/* Submit Review */}
-              <form onSubmit={handleReviewSubmit} className="p-5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-stone-700">
+              <form onSubmit={handleReviewSubmit} className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-4">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-white/80">
                   Leave a Travel Note or Heritage Tip
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -768,16 +768,16 @@ export default function PlaceDetailPage() {
                     placeholder="Your Name"
                     value={reviewAuthor}
                     onChange={(e) => setReviewAuthor(e.target.value)}
-                    className="px-3 py-2 bg-white border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-stone-900"
+                    className="px-3 py-2 bg-[#121318] border border-white/10 rounded-xl text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#E03E3E]"
                   />
                   <select
                     value={reviewRating}
                     onChange={(e) => setReviewRating(parseInt(e.target.value))}
-                    className="px-3 py-2 bg-white border border-stone-200 rounded-xl text-xs focus:outline-none"
+                    className="px-3 py-2 bg-[#121318] border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-[#E03E3E]"
                   >
-                    <option value={5}>⭐⭐⭐⭐⭐ (Exceptional)</option>
-                    <option value={4}>⭐⭐⭐⭐ (Very Good)</option>
-                    <option value={3}>⭐⭐⭐ (Worth Visiting)</option>
+                    <option value={5} className="bg-[#121318] text-white">⭐⭐⭐⭐⭐ (Exceptional)</option>
+                    <option value={4} className="bg-[#121318] text-white">⭐⭐⭐⭐ (Very Good)</option>
+                    <option value={3} className="bg-[#121318] text-white">⭐⭐⭐ (Worth Visiting)</option>
                   </select>
                 </div>
                 <textarea
@@ -786,12 +786,12 @@ export default function PlaceDetailPage() {
                   placeholder="Share details on crowd timings, photography tips, or respectful visitor etiquette..."
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-stone-900"
+                  className="w-full px-3 py-2 bg-[#121318] border border-white/10 rounded-xl text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#E03E3E]"
                 />
                 <button
                   type="submit"
                   disabled={submittingReview}
-                  className="px-5 py-2.5 rounded-full bg-stone-900 hover:bg-black text-white text-xs font-semibold cursor-pointer transition-all"
+                  className="px-6 py-2.5 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider cursor-pointer transition-all shadow-md shadow-[#E03E3E]/30"
                 >
                   {submittingReview ? 'Submitting...' : 'Post Travel Note'}
                 </button>
@@ -801,17 +801,17 @@ export default function PlaceDetailPage() {
               {place.reviews && place.reviews.length > 0 ? (
                 <div className="space-y-4">
                   {place.reviews.map((rev) => (
-                    <div key={rev.id} className="p-4 rounded-2xl border border-stone-100 bg-white space-y-1 shadow-2xs">
+                    <div key={rev.id} className="p-4 rounded-2xl border border-white/10 bg-white/5 space-y-1">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-bold text-stone-900">{rev.authorName}</span>
-                        <span className="text-amber-500">{'★'.repeat(rev.rating)}</span>
+                        <span className="font-bold text-white">{rev.authorName}</span>
+                        <span className="text-[#E03E3E]">{'★'.repeat(rev.rating)}</span>
                       </div>
-                      <p className="text-xs text-stone-600 leading-relaxed">{rev.comment}</p>
+                      <p className="text-xs text-white/70 leading-relaxed font-light">{rev.comment}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-stone-400 italic">No notes yet. Be the first to add a visitor review.</p>
+                <p className="text-xs text-white/40 italic">No notes yet. Be the first to add a visitor review.</p>
               )}
             </div>
           )}
@@ -820,23 +820,23 @@ export default function PlaceDetailPage() {
         {/* ─────────────────────────────────────────────────────────────
             7. AI CONCIERGE ASSISTANCE CALLOUT
            ───────────────────────────────────────────────────────────── */}
-        <div className="p-6 sm:p-8 bg-stone-900 text-white rounded-3xl border border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+        <div className="p-6 sm:p-8 bg-[#121318] text-white rounded-3xl border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
           <div className="space-y-1.5">
-            <span className="inline-flex items-center space-x-1.5 text-xs text-amber-400 font-semibold">
+            <span className="inline-flex items-center space-x-1.5 text-xs text-[#E03E3E] font-semibold">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Smart Travel Companion</span>
             </span>
-            <h3 className="font-sans text-xl sm:text-2xl font-bold text-white">
+            <h3 className="headline-werlton text-xl sm:text-2xl text-white">
               Need a personalized route including {place.title}?
             </h3>
-            <p className="text-xs sm:text-sm text-stone-300">
+            <p className="text-xs sm:text-sm text-white/70 font-light">
               Our AI Concierge can calculate exact transit times from your hotel or plan a stepwell & artisan trail.
             </p>
           </div>
 
           <button
             onClick={() => setIsAiOpen(true)}
-            className="px-6 py-3 rounded-full bg-white hover:bg-stone-100 text-stone-900 font-bold text-xs uppercase tracking-wider shadow-md transition-all shrink-0 cursor-pointer"
+            className="px-6 py-3 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#E03E3E]/30 transition-all shrink-0 cursor-pointer"
           >
             Ask AI Concierge →
           </button>
@@ -849,17 +849,17 @@ export default function PlaceDetailPage() {
           <div className="space-y-4 pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-0.5">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#E03E3E] block mb-0.5">
                   District Circuit
                 </span>
-                <h3 className="font-sans text-xl sm:text-2xl font-bold text-stone-900">
+                <h3 className="headline-werlton text-xl sm:text-2xl text-white">
                   Nearby Sanctuaries in {place.district}
                 </h3>
               </div>
 
               <Link
                 href={`/cities/${place.district.toLowerCase()}`}
-                className="text-xs font-semibold text-stone-900 hover:text-black uppercase tracking-wider"
+                className="text-xs font-semibold text-white/60 hover:text-white uppercase tracking-wider transition-colors"
               >
                 View All {place.district} Sites →
               </Link>

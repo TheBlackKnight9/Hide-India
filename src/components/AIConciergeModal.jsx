@@ -74,19 +74,19 @@ const AIConciergeModal = ({ isOpen, onClose, initialQuery = '' }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white rounded-3xl border border-stone-200 shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+      <div className="bg-[#121318] text-white rounded-3xl border border-white/10 shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto flex flex-col selection:bg-[#E03E3E] selection:text-white">
         {/* Header */}
-        <div className="p-6 border-b border-stone-100 flex items-center justify-between sticky top-0 bg-white/95 backdrop-blur-md z-10">
+        <div className="p-6 border-b border-white/10 flex items-center justify-between sticky top-0 bg-[#121318]/95 backdrop-blur-md z-10">
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-amber-500 flex items-center justify-center text-white shadow-xs">
+            <div className="w-8 h-8 rounded-full bg-[#E03E3E] flex items-center justify-center text-white shadow-md shadow-[#E03E3E]/30">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h3 className="font-sans text-base font-bold text-stone-900 leading-tight">
+              <h3 className="headline-werlton text-base text-white leading-tight">
                 Rajasthan Time-Budget Concierge
               </h3>
-              <p className="text-[11px] text-stone-500 font-medium">
+              <p className="text-[11px] text-white/50 font-medium">
                 {engineStatus?.mode === 'gemini_api'
                   ? '⚡ Powered by Google Gemini AI'
                   : '✦ Built-in Rajasthan Cultural Knowledge Engine'}
@@ -96,7 +96,7 @@ const AIConciergeModal = ({ isOpen, onClose, initialQuery = '' }) => {
 
           <button
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-stone-100 text-stone-500 hover:text-stone-800 transition-colors"
+            className="p-2 rounded-full hover:bg-white/10 text-white/60 hover:text-white transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -117,12 +117,12 @@ const AIConciergeModal = ({ isOpen, onClose, initialQuery = '' }) => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="e.g. I am in Jaipur for 2 hours, what can I do?"
-              className="w-full pl-4 pr-24 py-3 bg-stone-50 border border-stone-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-stone-900/10 focus:border-stone-400"
+              className="w-full pl-4 pr-24 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#E03E3E]"
             />
             <button
               type="submit"
               disabled={loading || !query.trim()}
-              className="absolute right-1.5 top-1.5 bottom-1.5 px-4 rounded-xl bg-stone-900 hover:bg-black text-white text-xs font-semibold flex items-center space-x-1.5 disabled:opacity-50 cursor-pointer transition-all"
+              className="absolute right-1.5 top-1.5 bottom-1.5 px-4 rounded-xl bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider flex items-center space-x-1.5 disabled:opacity-50 cursor-pointer transition-all shadow-md shadow-[#E03E3E]/30"
             >
               <span>{loading ? 'Curating...' : 'Ask'}</span>
               <Send className="w-3 h-3" />
@@ -131,7 +131,7 @@ const AIConciergeModal = ({ isOpen, onClose, initialQuery = '' }) => {
 
           {/* Quick Prompts */}
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-400 block mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-white/40 block mb-2">
               Popular Circuits:
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -140,7 +140,7 @@ const AIConciergeModal = ({ isOpen, onClose, initialQuery = '' }) => {
                   key={p}
                   type="button"
                   onClick={() => handlePlan(p)}
-                  className="px-3 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium transition-colors text-left"
+                  className="px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-xs font-medium transition-colors text-left border border-white/10 cursor-pointer"
                 >
                   {p}
                 </button>
@@ -151,11 +151,11 @@ const AIConciergeModal = ({ isOpen, onClose, initialQuery = '' }) => {
           {/* Loading Animation */}
           {loading && (
             <div className="py-12 text-center space-y-3">
-              <Sparkles className="w-8 h-8 text-amber-500 animate-spin mx-auto" />
-              <p className="font-sans text-sm font-semibold text-stone-700">
+              <Sparkles className="w-8 h-8 text-[#E03E3E] animate-spin mx-auto" />
+              <p className="font-sans text-sm font-semibold text-white">
                 Calculating travel time & secret sanctuaries...
               </p>
-              <p className="text-xs text-stone-400">
+              <p className="text-xs text-white/50">
                 Cross-referencing Rajasthan heritage archives with zero-crowd timings.
               </p>
             </div>
@@ -163,29 +163,29 @@ const AIConciergeModal = ({ isOpen, onClose, initialQuery = '' }) => {
 
           {/* Error Message */}
           {errorMsg && (
-            <div className="p-4 rounded-2xl bg-red-50 text-red-700 text-xs font-medium border border-red-200">
+            <div className="p-4 rounded-2xl bg-red-500/10 text-[#E03E3E] text-xs font-medium border border-red-500/20">
               {errorMsg}
             </div>
           )}
 
           {/* Result View */}
           {result && !loading && (
-            <div className="space-y-6 pt-2 border-t border-stone-100 animate-fadeIn">
-              <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-5">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-200/60 px-2 py-0.5 rounded-full">
+            <div className="space-y-6 pt-2 border-t border-white/10 animate-fadeIn">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 space-y-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#E03E3E] bg-[#E03E3E]/10 px-2 py-0.5 rounded-full border border-[#E03E3E]/20">
                   Curated Route · {result.duration || 'Flexible'}
                 </span>
-                <h4 className="font-sans text-lg font-bold text-stone-900 mt-2">
+                <h4 className="headline-werlton text-lg text-white mt-2">
                   {result.itineraryTitle}
                 </h4>
-                <p className="text-xs text-stone-700 mt-1 leading-relaxed">
+                <p className="text-xs text-white/70 leading-relaxed font-light">
                   {result.itinerarySummary}
                 </p>
               </div>
 
               {/* Time Slots */}
               <div className="space-y-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-stone-400 block">
+                <span className="text-xs font-bold uppercase tracking-wider text-white/40 block">
                   Time-Sequenced Itinerary:
                 </span>
 
@@ -193,28 +193,28 @@ const AIConciergeModal = ({ isOpen, onClose, initialQuery = '' }) => {
                   {result.timeline?.map((slot, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-2xl border border-stone-200/80 bg-white hover:border-stone-300 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                      className="p-4 rounded-2xl border border-white/10 bg-white/5 hover:border-white/20 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                     >
                       <div className="space-y-1">
                         <div className="flex items-center space-x-2">
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-stone-100 text-stone-700">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/10 text-white/80">
                             {slot.category}
                           </span>
-                          <span className="text-xs text-stone-400">
+                          <span className="text-xs text-white/40">
                             {slot.district}, Rajasthan
                           </span>
                         </div>
 
-                        <h4 className="font-sans font-bold text-base text-stone-900 tracking-tight">
+                        <h4 className="headline-werlton text-base text-white tracking-tight">
                           {slot.title}
                         </h4>
 
-                        <p className="text-xs text-stone-600 leading-relaxed">
+                        <p className="text-xs text-white/70 leading-relaxed font-light">
                           {slot.highlight}
                         </p>
 
                         {slot.giCraft && (
-                          <p className="text-[11px] text-amber-900 font-medium">
+                          <p className="text-[11px] text-[#E03E3E] font-medium">
                             ✦ GI Craft Patronage: {slot.giCraft}
                           </p>
                         )}
@@ -226,7 +226,7 @@ const AIConciergeModal = ({ isOpen, onClose, initialQuery = '' }) => {
                           <Link
                             href={`/place/${slot.slug}`}
                             onClick={onClose}
-                            className="inline-flex items-center space-x-1 px-3.5 py-1.5 rounded-full border border-stone-300 text-stone-900 hover:bg-stone-50 text-xs font-semibold uppercase tracking-wider transition-colors"
+                            className="inline-flex items-center space-x-1 px-4 py-2 rounded-full border border-white/20 text-white hover:bg-[#E03E3E] hover:border-[#E03E3E] text-xs font-semibold uppercase tracking-wider transition-colors"
                           >
                             <span>View Dossier</span>
                             <ArrowRight className="w-3 h-3" />
