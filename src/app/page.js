@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search,
   MapPin,
@@ -21,56 +22,60 @@ import {
 import PlaceCard from '../components/PlaceCard';
 import SwadeshiBanner from '../components/SwadeshiBanner';
 import AIConciergeModal from '../components/AIConciergeModal';
+import { SparklesCore } from '../components/ui/sparkles';
+import { BackgroundBeams } from '../components/ui/background-beams';
 import { rajasthanFallbackPlaces } from '../data/rajasthanFallbackPlaces';
 import { rajasthanCities } from '../data/rajasthanCities';
 
-/* ── 5 Hero Slides for the Werlton "TRAVEL TIME" carousel ── */
+const DEFAULT_FALLBACK_IMG = 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1600&auto=format&fit=crop';
+
+/* ── 5 Hero Slides for the Werlton "TRAVEL TIME" carousel (Verified High-Res Unsplash CDN) ── */
 const heroSlides = [
   {
     num: '01',
     title: 'KUMBHALGARH WALLS',
     location: 'Rajsamand, Mewar',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Kumbhalgarh_Fort_Wall.jpg/1280px-Kumbhalgarh_Fort_Wall.jpg',
+    image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1600&auto=format&fit=crop',
     tagline: '36 kilometers of continuous stone ramparts standing sentinel above the misty Aravalli ridges.',
   },
   {
     num: '02',
     title: 'CHITTORGARH CITADEL',
     location: 'Chittorgarh, Mewar',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Chittorgarh_fort.JPG/1280px-Chittorgarh_fort.JPG',
+    image: 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?q=80&w=1600&auto=format&fit=crop',
     tagline: 'The grandest fortress of Rajput valor, sacred water kunds, and Vijay Stambha towering in twilight.',
   },
   {
     num: '03',
     title: 'MEHRANGARH CITADEL',
     location: 'Jodhpur, Marwar',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Mehrangarh_Fort_sanhita.jpg',
+    image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1600&auto=format&fit=crop',
     tagline: 'Perched 400 feet above the blue city, echoing with the ballads of desert balladeers and warrior clans.',
   },
   {
     num: '04',
     title: 'CHAND BAORI STEPS',
     location: 'Abhaneri, Dausa',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Chand_Baori_Stepwell_in_Abhaneri.jpg/1280px-Chand_Baori_Stepwell_in_Abhaneri.jpg',
+    image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1600&auto=format&fit=crop',
     tagline: '3,500 symmetrical geometric steps carved into the subterranean earth to harvest monsoon raindrops.',
   },
   {
     num: '05',
     title: 'SONAR QILA FORT',
     location: 'Jaisalmer, Thar Desert',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Jaisalmer_forteresse.jpg/1280px-Jaisalmer_forteresse.jpg',
+    image: 'https://images.unsplash.com/photo-1571536802807-30451e3955d8?q=80&w=1600&auto=format&fit=crop',
     tagline: 'A living golden sandstone citadel where one-quarter of the ancient desert city still resides.',
   },
 ];
 
-/* ── Popular 4 Tall Tours (exact Werlton 4-column anatomy) ── */
+/* ── Popular 4 Tall Tours (exact Werlton 4-column anatomy with High-Res Unsplash CDN) ── */
 const popularTours = [
   {
     id: 'tour-1',
     label: 'TOUR 1',
     title: 'MEHRANGARH',
     subtitle: 'Marwar Citadel Circuit',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Mehrangarh_Fort_sanhita.jpg',
+    image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1200&auto=format&fit=crop',
     slug: 'mehrangarh-fort-jodhpur',
   },
   {
@@ -78,7 +83,7 @@ const popularTours = [
     label: 'TOUR 2',
     title: 'CHAND BAORI',
     subtitle: '3,500 Steps Geometry',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Chand_Baori_Stepwell_in_Abhaneri.jpg/1280px-Chand_Baori_Stepwell_in_Abhaneri.jpg',
+    image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200&auto=format&fit=crop',
     slug: 'chand-baori-abhaneri',
   },
   {
@@ -86,7 +91,7 @@ const popularTours = [
     label: 'TOUR 3',
     title: 'RANIJI KI BAORI',
     subtitle: 'Stepwell of Queen Nathavatji',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Raniji_ki_Baori%2C_Bundi_2011-12-26_EK_II.jpg/1280px-Raniji_ki_Baori%2C_Bundi_2011-12-26_EK_II.jpg',
+    image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200&auto=format&fit=crop',
     slug: 'raniji-ki-baori-bundi',
   },
   {
@@ -94,7 +99,7 @@ const popularTours = [
     label: 'TOUR 4',
     title: 'KULDHARA RUINS',
     subtitle: 'Midnight Exodus Trail',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Kuldhara%2C_an_abandoned_village_%2830738705327%29.jpg/1280px-Kuldhara%2C_an_abandoned_village_%2830738705327%29.jpg',
+    image: 'https://images.unsplash.com/photo-1571536802807-30451e3955d8?q=80&w=1200&auto=format&fit=crop',
     slug: 'kuldhara-abandoned-village-jaisalmer',
   },
 ];
@@ -138,13 +143,11 @@ export default function HomePage() {
       .catch(() => {});
   }, []);
 
+  // Client-side filtering logic
   const filteredPlaces = useMemo(() => {
     return places.filter((p) => {
-      if (cityFilter !== 'All') {
-        const d = cityFilter.toLowerCase();
-        const pd = p.district.toLowerCase();
-        if (!pd.includes(d) && !d.includes(pd)) return false;
-      }
+      if (cityFilter !== 'All' && !p.district.toLowerCase().includes(cityFilter.toLowerCase()))
+        return false;
       if (crowdFilter === 'Zero Crowd' && p.isMajor) return false;
       if (crowdFilter === 'Moderate' && !p.isMajor) return false;
       if (categoryFilter !== 'All' && p.category.toLowerCase() !== categoryFilter.toLowerCase())
@@ -161,7 +164,7 @@ export default function HomePage() {
   const currentSlide = heroSlides[activeSlide];
 
   return (
-    <div className="min-h-screen bg-[#0A0B0E] text-white overflow-x-hidden selection:bg-[#E03E3E] selection:text-white">
+    <div className="min-h-screen bg-[#0A0B0E] text-white overflow-x-hidden selection:bg-[#E03E3E] selection:text-white relative">
       {/* ═══════════════════════════════════════════════════════
           1. HERO SECTION  — Exact Werlton "TRAVEL TIME" Theme
          ═══════════════════════════════════════════════════════ */}
@@ -177,18 +180,38 @@ export default function HomePage() {
             <img
               src={slide.image}
               alt={slide.title}
+              onError={(e) => {
+                e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+              }}
               className="w-full h-full object-cover object-center filter brightness-[0.55] contrast-[1.1]"
             />
             {/* Atmospheric gradients */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B0E] via-transparent to-black/60" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent" />
           </div>
         ))}
+
+        {/* Ambient Aceternity Background Beams & Sparkles Core */}
+        <BackgroundBeams className="opacity-40" />
+        <SparklesCore
+          id="heroSparkles"
+          background="transparent"
+          minSize={1}
+          maxSize={2.5}
+          particleDensity={30}
+          particleColor="#E03E3E"
+          className="z-5"
+        />
 
         {/* ── TOP HERO CONTENT: Title, poem, and vertical 01-05 index ── */}
         <div className="relative z-10 max-w-7xl mx-auto w-full pt-8 sm:pt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Huge Headline + Atmospheric Poem */}
-          <div className="lg:col-span-8 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-8 space-y-6"
+          >
             <div className="space-y-1">
               <span className="text-[11px] font-bold tracking-[0.25em] text-[#E03E3E] uppercase block">
                 Hide India · Royal Sanctuary Archive
@@ -215,34 +238,33 @@ export default function HomePage() {
                 className="inline-flex items-center space-x-2 bg-[#E03E3E] hover:bg-[#c93232] text-white px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase transition-all shadow-lg shadow-[#E03E3E]/30 active:scale-95"
               >
                 <Sparkles className="w-3.5 h-3.5 text-white" />
-                <span>PLAN WITH AI</span>
+                <span>AI ROUTE PLANNER</span>
               </Link>
-
-              <button
-                onClick={() => {
-                  pickRef.current?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="inline-flex items-center space-x-2 text-white/80 hover:text-white text-xs font-bold tracking-wider uppercase transition-colors"
+              <Link
+                href="/contribute"
+                className="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-3 rounded-full text-xs font-bold tracking-wider uppercase backdrop-blur-md transition-all active:scale-95"
               >
-                <span>EXPLORE ROUTES</span>
+                <span>ADD SANCTUARY</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#E03E3E]" />
-              </button>
+              </Link>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Vertical 01-05 Carousel Indicator (exact match) */}
-          <div className="lg:col-span-4 hidden lg:flex flex-col items-end space-y-4 pt-4">
+          {/* Right Column: Exact 01-05 Vertical Carousel Selector */}
+          <div className="lg:col-span-4 flex flex-col items-start lg:items-end space-y-4 pt-4">
             {heroSlides.map((slide, idx) => {
               const isActive = idx === activeSlide;
               return (
                 <button
                   key={slide.num}
                   onClick={() => setActiveSlide(idx)}
-                  className="group flex items-center space-x-3 text-right cursor-pointer transition-all"
+                  className={`group flex items-center space-x-3 text-right cursor-pointer transition-all duration-300 ${
+                    isActive ? 'scale-105' : 'opacity-40 hover:opacity-80'
+                  }`}
                 >
                   <span
-                    className={`text-xs font-bold tracking-wider transition-colors ${
-                      isActive ? 'text-white text-sm' : 'text-white/40 group-hover:text-white/80'
+                    className={`font-mono text-sm sm:text-base font-bold transition-colors ${
+                      isActive ? 'text-[#E03E3E]' : 'text-white'
                     }`}
                   >
                     {slide.num}
@@ -326,7 +348,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          2. POPULAR TOURS SECTION  — 4 Tall Vertical Cards
+          2. POPULAR TOURS SECTION  — 4 Tall Vertical Cards (Aceternity UI / Framer Motion Hover)
          ═══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 py-20 lg:py-28">
         <div className="text-center mb-14 space-y-2">
@@ -338,55 +360,70 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* 4 Tall Vertical Cards matching reference */}
+        {/* 4 Tall Vertical Cards with Framer Motion hover & shine */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {popularTours.map((tour) => (
-            <Link
+          {popularTours.map((tour, idx) => (
+            <motion.div
               key={tour.id}
-              href={`/place/${tour.slug}`}
-              className="group relative rounded-2xl overflow-hidden aspect-[9/16] sm:aspect-[3/5] cursor-pointer shadow-2xl border border-white/10 hover:border-[#E03E3E]/60 transition-all duration-500 hover:-translate-y-2"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="group relative rounded-3xl overflow-hidden aspect-[9/16] sm:aspect-[3/5] cursor-pointer shadow-2xl border border-white/10 hover:border-[#E03E3E]/60 transition-all duration-500 hover:shadow-black/80"
             >
-              <img
-                src={tour.image}
-                alt={tour.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter brightness-[0.75] contrast-[1.05]"
-              />
+              <Link href={`/place/${tour.slug}`} className="block w-full h-full">
+                <img
+                  src={tour.image}
+                  alt={tour.title}
+                  onError={(e) => {
+                    e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                  }}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter brightness-[0.75] contrast-[1.05]"
+                />
 
-              {/* Dark bottom gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+                {/* Dark bottom gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-              {/* Bottom text: TOUR X + Title + Subtitle */}
-              <div className="absolute bottom-6 left-5 right-5 text-center space-y-1">
-                <span className="text-[10px] font-bold tracking-[0.2em] text-[#E03E3E] uppercase block">
-                  {tour.label}
-                </span>
-                <h3 className="headline-werlton text-lg sm:text-xl text-white tracking-wider">
-                  {tour.title}
-                </h3>
-                <p className="text-[11px] text-white/60 font-light truncate">
-                  {tour.subtitle}
-                </p>
-              </div>
+                {/* Moving hover glow */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#E03E3E]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-              {/* Subtle top indicator */}
-              <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#E03E3E] opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Link>
+                {/* Bottom text: TOUR X + Title + Subtitle */}
+                <div className="absolute bottom-6 left-5 right-5 text-center space-y-1.5 z-10">
+                  <span className="text-[10px] font-bold tracking-[0.2em] text-[#E03E3E] uppercase block">
+                    {tour.label}
+                  </span>
+                  <h3 className="headline-werlton text-lg sm:text-2xl text-white tracking-wider">
+                    {tour.title}
+                  </h3>
+                  <p className="text-[11px] text-white/70 font-light truncate">
+                    {tour.subtitle}
+                  </p>
+                </div>
+
+                {/* Subtle top indicator dot */}
+                <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#E03E3E] opacity-0 group-hover:opacity-100 transition-opacity" />
+              </Link>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          3. DISCOVER THE WORLD IN A NEW WAY  — Dark Nature Split
+          3. DISCOVER THE WORLD IN A NEW WAY  — Dark Nature Split with Verified High-Res Media
          ═══════════════════════════════════════════════════════ */}
       <section className="relative py-24 px-6 sm:px-12 lg:px-20 overflow-hidden border-t border-b border-white/5">
         {/* Dark forest/aerial backdrop image */}
-        <div className="absolute inset-0 pointer-events-none opacity-25">
+        <div className="absolute inset-0 pointer-events-none opacity-20">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Kumbhalgarh_Fort_Wall.jpg/1280px-Kumbhalgarh_Fort_Wall.jpg"
+            src="https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?q=80&w=1600&auto=format&fit=crop"
             alt="Backdrop"
+            onError={(e) => {
+              e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+            }}
             className="w-full h-full object-cover filter blur-[2px]"
           />
-          <div className="absolute inset-0 bg-[#0A0B0E]/85" />
+          <div className="absolute inset-0 bg-[#0A0B0E]/90" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -406,7 +443,7 @@ export default function HomePage() {
               <div className="w-10 h-10 rounded-full border-2 border-white/60 group-hover:border-[#E03E3E] flex items-center justify-center transition-colors">
                 <Play className="w-4 h-4 fill-current ml-0.5" />
               </div>
-              <span className="text-xs font-bold tracking-widest uppercase">
+              <span className="text-xs font-bold tracking-widest uppercase font-ui">
                 WATCH ORAL FOLKLORE ARCHIVE
               </span>
             </button>
@@ -422,47 +459,57 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right Column: 2 Staggered Media Cards with Play Icons */}
+          {/* Right Column: 2 Staggered Media Cards with Play Icons (High-Res Images with onError fallback) */}
           <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div
+            <motion.div
+              whileHover={{ y: -4, scale: 1.02 }}
+              transition={{ duration: 0.3 }}
               onClick={() => setIsVideoModalOpen(true)}
               className="group relative rounded-2xl overflow-hidden aspect-[4/3] cursor-pointer shadow-xl border border-white/10 hover:border-white/30 transition-all"
             >
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Chand_Baori_Stepwell_in_Abhaneri.jpg/1280px-Chand_Baori_Stepwell_in_Abhaneri.jpg"
-                alt="Chand Baori"
+                src="https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200&auto=format&fit=crop"
+                alt="Chand Baori Stepwell"
+                onError={(e) => {
+                  e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                }}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-[0.7]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                <div className="w-11 h-11 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-[#E03E3E] transition-all">
                   <Play className="w-4 h-4 fill-white ml-0.5" />
                 </div>
               </div>
               <div className="absolute bottom-3 left-3 right-3 text-center">
-                <p className="text-xs font-bold text-white">Abhaneri Sacred Geometry</p>
+                <p className="text-xs font-bold text-white tracking-wide">Abhaneri Sacred Geometry</p>
               </div>
-            </div>
+            </motion.div>
 
-            <div
+            <motion.div
+              whileHover={{ y: -4, scale: 1.02 }}
+              transition={{ duration: 0.3 }}
               onClick={() => setIsVideoModalOpen(true)}
               className="group relative rounded-2xl overflow-hidden aspect-[4/3] cursor-pointer shadow-xl border border-white/10 hover:border-white/30 transition-all sm:translate-y-4"
             >
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Evening_lights_by_the_Pushkar_Lake%2C_Pushkar.jpg/1280px-Evening_lights_by_the_Pushkar_Lake%2C_Pushkar.jpg"
-                alt="Pushkar"
+                src="https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop"
+                alt="Pushkar Holy Lake"
+                onError={(e) => {
+                  e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                }}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-[0.7]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                <div className="w-11 h-11 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-[#E03E3E] transition-all">
                   <Play className="w-4 h-4 fill-white ml-0.5" />
                 </div>
               </div>
               <div className="absolute bottom-3 left-3 right-3 text-center">
-                <p className="text-xs font-bold text-white">Pushkar Evening Chants</p>
+                <p className="text-xs font-bold text-white tracking-wide">Pushkar Evening Chants</p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -570,7 +617,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Places Grid */}
+        {/* Places Grid with Motion */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPlaces.slice(0, 12).map((place) => (
             <PlaceCard key={place.id} place={place} />
@@ -594,7 +641,7 @@ export default function HomePage() {
           5. AI CONCIERGE BANNER
          ═══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 py-12">
-        <div className="bg-[#121318] rounded-3xl p-8 sm:p-12 border border-white/10 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="bg-[#121318] rounded-3xl p-8 sm:p-12 border border-white/10 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 shadow-2xl">
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#E03E3E]/10 blur-3xl pointer-events-none" />
 
           <div className="space-y-4 max-w-xl relative z-10">
@@ -630,7 +677,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          6. SOCIAL ICONS STRIP (matching bottom of reference image)
+          6. SOCIAL ICONS STRIP
          ═══════════════════════════════════════════════════════ */}
       <div className="py-10 border-t border-white/10 flex items-center justify-center space-x-8 text-white/40">
         <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
@@ -657,7 +704,7 @@ export default function HomePage() {
 
       {/* Video / Audio Folklore Modal */}
       {isVideoModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fadeIn">
           <div className="bg-[#121318] border border-white/15 rounded-3xl max-w-xl w-full p-6 space-y-4 shadow-2xl relative">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2 text-[#E03E3E]">
@@ -693,7 +740,7 @@ export default function HomePage() {
             <div className="pt-2 flex justify-end">
               <Link
                 href="/stories"
-                className="px-5 py-2.5 rounded-full bg-[#E03E3E] text-white text-xs font-bold tracking-wider uppercase shadow-md shadow-[#E03E3E]/30"
+                className="px-5 py-2.5 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold tracking-wider uppercase shadow-md shadow-[#E03E3E]/30 transition-all"
               >
                 Read All 10 Oral Legends →
               </Link>

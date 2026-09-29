@@ -305,6 +305,9 @@ export default function PlaceDetailPage() {
           <img
             src={coverImg}
             alt={place.title}
+            onError={(e) => {
+              e.currentTarget.src = 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1600&auto=format&fit=crop';
+            }}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B0E] via-black/30 to-black/30 pointer-events-none" />
