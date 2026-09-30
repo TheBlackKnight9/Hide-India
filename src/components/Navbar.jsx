@@ -3,29 +3,39 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Bookmark, Sparkles, Menu, X, Plus } from 'lucide-react';
+import {
+  Compass,
+  Landmark,
+  Layers,
+  Shield,
+  Sparkles,
+  BookOpen,
+  Flame,
+  Bookmark,
+  Plus,
+  Menu,
+  X
+} from 'lucide-react';
 import { useSaved } from '../context/SavedContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { savedPlaces } = useSaved();
 
+  // Close mobile drawer on route change
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    setIsOpen(false);
+  }, [pathname]);
 
   const navLinks = [
-    { name: 'MAIN',        path: '/' },
-    { name: 'CITIES',      path: '/cities' },
-    { name: 'HIDDEN GEMS', path: '/hidden-gems' },
-    { name: 'LANDMARKS',   path: '/landmarks' },
-    { name: 'GI CRAFTS',   path: '/crafts' },
-    { name: 'FESTIVALS',   path: '/events' },
-    { name: 'STORIES',     path: '/stories' },
+    { name: 'EXPLORE',     path: '/',            icon: Compass },
+    { name: 'CITIES',      path: '/cities',       icon: Landmark },
+    { name: 'STEPWELLS',   path: '/hidden-gems',  icon: Layers },
+    { name: 'CITADELS',    path: '/landmarks',    icon: Shield },
+    { name: 'GI CRAFTS',   path: '/crafts',       icon: Sparkles },
+    { name: 'STORIES',     path: '/stories',      icon: BookOpen },
+    { name: 'FESTIVALS',   path: '/events',       icon: Flame },
   ];
 
   const isActive = (path) => {
@@ -34,118 +44,145 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-      <div
-        className={`mx-auto flex items-center justify-between px-5 sm:px-8 lg:px-12 transition-all duration-300 ${
-          scrolled
-            ? 'py-3.5 bg-[#0A0B0E]/90 backdrop-blur-2xl border-b border-white/10 shadow-2xl'
-            : 'py-5 bg-transparent'
-        }`}
+    <header className="fixed top-0 left-0 right-0 z-50 pt-3 sm:pt-4 px-3 sm:px-6 pointer-events-none flex flex-col items-center">
+      {/* ── THREEUI SYLVA FLOATING DOCK (Matches media_1790741345547.png) ── */}
+      <nav
+        className="sylva-dock pointer-events-auto max-w-full overflow-x-auto scrollbar-none"
+        aria-label="Primary Navigation"
       >
-        {/* LEFT: Logo - Werlton style with red mark */}
-        <Link href="/" className="flex items-center space-x-2.5 group shrink-0">
-          <div className="w-6 h-6 rounded-md bg-[#E03E3E] flex items-center justify-center text-white shadow-md shadow-[#E03E3E]/30 group-hover:scale-105 transition-transform">
-            <span className="text-[10px] font-black tracking-tighter">HI</span>
-          </div>
-          <span className="font-sans font-black text-sm sm:text-base tracking-widest text-white uppercase whitespace-nowrap">
-            Hide India
+        {/* 1. LEFT: Brand Anchor Mark (Porcelain Squircle Knob) */}
+        <Link
+          href="/"
+          className="sylva-dock-mark"
+          title="Hide India - Living Heritage Atlas"
+          aria-label="Hide India Home"
+        >
+          {/* Heritage Architectural Dome / Temple Chhatri Glyph */}
+          <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden="true">
+            <path d="M12 2C9 2 7 5.5 7 8v1.5H5a1 1 0 0 0-1 1V21a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V10.5a1 1 0 0 0-1-1h-2V8c0-2.5-2-6-5-6zm0 2.2c1.8 0 2.8 2 2.9 3.8H9.1C9.2 6.2 10.2 4.2 12 4.2zM8.5 11h7v9h-7v-9z"/>
+          </svg>
+        </Link>
+
+        {/* Brand Label (Hidden on small laptops, visible on wide screens) */}
+        <Link
+          href="/"
+          className="hidden 2xl:flex flex-col ml-1 mr-2 text-left leading-none"
+          title="Hide India Atlas"
+        >
+          <span className="text-[11px] font-black tracking-widest text-[#fbfcf8] uppercase">
+            HIDE INDIA
+          </span>
+          <span className="text-[8px] font-mono tracking-widest text-[#9ca395] uppercase">
+            SANCTUARY
           </span>
         </Link>
 
-        {/* CENTER: Desktop Nav - Minimal uppercase links with red dot */}
-        <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+        {/* 2. CENTER: Desktop Nav Links with Micro-Glyphs */}
+        <div className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => {
             const active = isActive(link.path);
+            const Icon = link.icon;
             return (
               <Link
                 key={link.name}
                 href={link.path}
-                className={`relative py-1 text-[11px] font-bold tracking-widest transition-all whitespace-nowrap ${
-                  active
-                    ? 'text-white'
-                    : 'text-white/60 hover:text-white'
-                }`}
+                className={active ? 'sylva-pill-active' : 'sylva-dock-item'}
               >
+                <Icon className={`w-3.5 h-3.5 shrink-0 ${active ? 'text-[#1c2018]' : ''}`} />
                 <span>{link.name}</span>
-                {active && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#E03E3E] rounded-full" />
-                )}
               </Link>
             );
           })}
-        </nav>
+        </div>
 
-        {/* RIGHT: Actions according to user requirements */}
-        <div className="flex items-center space-x-2.5 shrink-0">
-          {/* Saved counter */}
+        {/* 3. RIGHT: Action Buttons */}
+        <div className="flex items-center gap-1 sm:gap-1.5 ml-1">
+          {/* Saved Places Counter */}
           <Link
             href="/saved"
-            className="relative p-2 rounded-full text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+            className={pathname === '/saved' ? 'sylva-pill-active' : 'sylva-dock-item'}
             title="Saved Heritage Gems"
           >
-            <Bookmark className="w-4 h-4" />
+            <Bookmark className={`w-3.5 h-3.5 text-[#E03E3E] ${pathname === '/saved' ? 'fill-current' : ''}`} />
+            <span className="hidden xl:inline">SAVED</span>
             {savedPlaces.length > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 bg-[#E03E3E] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+              <span className="bg-[#E03E3E] text-white text-[9px] font-bold min-w-[16px] h-4 rounded-full px-1 flex items-center justify-center ml-0.5">
                 {savedPlaces.length}
               </span>
             )}
           </Link>
 
-          {/* Add Contribute Button - Vibrant Red/Coral */}
-          <Link
-            href="/contribute"
-            className="flex items-center space-x-1.5 bg-[#E03E3E] hover:bg-[#c93232] text-white rounded-full px-3.5 sm:px-4 py-2 text-xs font-bold tracking-wide transition-all active:scale-95 shadow-md shadow-[#E03E3E]/20 whitespace-nowrap cursor-pointer"
-            title="Contribute a Hidden Heritage Place"
-          >
-            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span className="hidden sm:inline">Contribute</span>
-          </Link>
-
-          {/* AI Planner CTA Button */}
+          {/* AI Route Planner Button */}
           <Link
             href="/planner"
-            className="hidden md:flex items-center space-x-1.5 bg-white/10 hover:bg-white/20 border border-white/15 text-white rounded-full px-4 py-2 text-xs font-bold tracking-wider transition-all active:scale-95 whitespace-nowrap"
+            className={pathname === '/planner' ? 'sylva-pill-active' : 'sylva-dock-item'}
+            title="AI Heritage Route Planner"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>AI PLANNER</span>
+            <span className="hidden sm:inline">AI PLANNER</span>
           </Link>
 
-          {/* Mobile Hamburger */}
+          {/* Contribute / Add Place CTA */}
+          <Link
+            href="/contribute"
+            className="sylva-dock-btn-accent"
+            title="Contribute a Heritage Gem"
+          >
+            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span className="hidden sm:inline">ADD PLACE</span>
+          </Link>
+
+          {/* Mobile Hamburger Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-full text-white hover:bg-white/10 transition-colors"
+            className="lg:hidden w-9 h-9 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors ml-0.5 cursor-pointer"
+            aria-label="Toggle navigation menu"
           >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Drawer */}
+      {/* ── MOBILE ACCORDION DRAWER (ThreeUI Sylva Floating Sheet) ── */}
       {isOpen && (
-        <div className="lg:hidden mx-4 mt-1 bg-[#121318]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-5 shadow-2xl space-y-2 animate-fadeIn">
+        <div className="lg:hidden pointer-events-auto mt-2 w-full max-w-sm p-4 rounded-3xl bg-[#141812]/95 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-black/60 space-y-1.5 animate-fadeIn text-[#fbfcf8]">
+          <div className="flex items-center justify-between px-3 py-2 border-b border-white/10 mb-2">
+            <span className="text-[10px] font-mono tracking-widest uppercase text-[#9ca395]">
+              Heritage Navigation Atlas
+            </span>
+            <span className="text-[10px] font-bold text-[#E03E3E] uppercase tracking-wider">
+              Hide India
+            </span>
+          </div>
+
           {navLinks.map((link) => {
             const active = isActive(link.path);
+            const Icon = link.icon;
             return (
               <Link
                 key={link.name}
                 href={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center justify-between px-4 py-2.5 rounded-2xl text-xs font-bold tracking-wider transition-all ${
+                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all ${
                   active
-                    ? 'bg-white/10 text-white'
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
+                    ? 'bg-[#fbfcf8] text-[#1c2018] shadow-md shadow-black/20'
+                    : 'text-white/70 hover:text-white hover:bg-white/10'
                 }`}
               >
-                <span>{link.name}</span>
+                <div className="flex items-center space-x-2.5">
+                  <Icon className={`w-4 h-4 ${active ? 'text-[#1c2018]' : 'text-white/60'}`} />
+                  <span>{link.name}</span>
+                </div>
                 {active && <span className="w-1.5 h-1.5 rounded-full bg-[#E03E3E]" />}
               </Link>
             );
           })}
+
           <div className="pt-3 border-t border-white/10 space-y-2">
             <Link
               href="/contribute"
               onClick={() => setIsOpen(false)}
-              className="w-full flex items-center justify-center space-x-2 py-3 rounded-2xl bg-[#E03E3E] text-white text-xs font-bold tracking-wider uppercase shadow-md shadow-[#E03E3E]/30"
+              className="w-full sylva-dock-btn-accent justify-center py-2.5"
             >
               <Plus className="w-4 h-4 stroke-[2.5]" />
               <span>Contribute a Heritage Gem</span>
@@ -153,7 +190,7 @@ const Navbar = () => {
             <Link
               href="/planner"
               onClick={() => setIsOpen(false)}
-              className="w-full flex items-center justify-center space-x-2 py-3 rounded-2xl bg-white/10 text-white text-xs font-bold tracking-wider uppercase border border-white/15"
+              className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-[#fbfcf8] text-xs font-bold tracking-wider uppercase border border-white/10"
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
               <span>Plan with AI</span>

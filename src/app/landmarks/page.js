@@ -56,53 +56,57 @@ export default function LandmarksPage() {
   }, [majorPlaces, selectedDistrict, selectedDuration, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#0A0B0E] text-white pt-28 sm:pt-32 pb-24 selection:bg-[#E03E3E] selection:text-white">
-      <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-          <div>
-            <span className="text-[10px] font-bold tracking-[0.25em] text-[#E03E3E] uppercase block mb-1">
-              Crown Citadels & Architecture
-            </span>
-            <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-white">
-              CITADELS & LANDMARKS
-            </h1>
+    <div className="min-h-screen bg-[#f5f6f1] text-[#23261f] pb-24 selection:bg-[#E8402A] selection:text-white">
+      {/* ── THREEUI ATMOSPHERIC PAGE HEADER ── */}
+      <div className="threeui-page-header">
+        <div className="ghost-watermark -bottom-6 -left-6">CITADELS</div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pt-16 pb-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-2">
+              <span className="text-[11px] font-bold tracking-[0.24em] text-[#E8402A] uppercase block">
+                Crown Bastions & Ramparts
+              </span>
+              <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-[#23261f] tracking-tight">
+                CITADELS & FORTS
+              </h1>
+            </div>
+            <p className="text-xs text-[#7c8177] max-w-md md:text-right leading-relaxed font-light">
+              The grand sovereign fortresses of India. Explore the mirror Sheesh Mahal at Amer, the cliff ramparts of Mehrangarh, and the 36 km Great Wall of Kumbhalgarh.
+            </p>
           </div>
-
-          <p className="text-xs text-white/50 max-w-sm md:text-right leading-relaxed font-light">
-            The grand architectural bastions of India. Explore the mirror Sheesh Mahal at Amer, the cliff ramparts of Mehrangarh, and the 36 km Great Wall of Kumbhalgarh.
-          </p>
         </div>
+      </div>
 
-        {/* FLOATING DARK FILTER BAR */}
-        <div className="bg-[#121318] rounded-2xl border border-white/10 shadow-2xl p-3 sm:p-4 mb-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 -mt-6 relative z-20">
+        {/* FLOATING THREEUI FILTER PANEL */}
+        <div className="threeui-panel p-3 sm:p-4 mb-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center">
             {/* Filter 1: Landmark name input */}
-            <div className="px-3 py-1 sm:border-r border-white/10">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+            <div className="px-3 py-1 sm:border-r border-black/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#7c8177] mb-0.5">
                 Citadel / Palace
               </label>
               <div className="flex items-center space-x-1.5">
-                <Search className="w-3.5 h-3.5 text-white/40 shrink-0" />
+                <Search className="w-3.5 h-3.5 text-[#7c8177] shrink-0" />
                 <input
                   type="text"
                   placeholder="Amer, Mehrangarh, Kumbhalgarh..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-transparent text-xs text-white placeholder-white/30 focus:outline-none font-medium"
+                  className="w-full bg-transparent text-xs text-[#23261f] placeholder-[#7c8177]/60 focus:outline-none font-medium"
                 />
               </div>
             </div>
 
             {/* Filter 2: District */}
-            <div className="px-3 py-1 sm:border-r border-white/10">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+            <div className="px-3 py-1 sm:border-r border-black/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#7c8177] mb-0.5">
                 Territory
               </label>
               <select
                 value={selectedDistrict}
                 onChange={(e) => setSelectedDistrict(e.target.value)}
-                className="w-full bg-[#121318] text-xs font-medium text-white focus:outline-none cursor-pointer"
+                className="w-full bg-[#f5f6f1] text-xs font-medium text-[#23261f] border border-black/10 rounded-lg px-2 py-1 focus:outline-none cursor-pointer"
               >
                 {districts.map((d) => (
                   <option key={d} value={d}>{d === 'All' ? 'All 13 Royal Districts' : d}</option>
@@ -111,14 +115,14 @@ export default function LandmarksPage() {
             </div>
 
             {/* Filter 3: Duration */}
-            <div className="px-3 py-1 sm:border-r border-white/10">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+            <div className="px-3 py-1 sm:border-r border-black/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#7c8177] mb-0.5">
                 Visit Duration
               </label>
               <select
                 value={selectedDuration}
                 onChange={(e) => setSelectedDuration(e.target.value)}
-                className="w-full bg-[#121318] text-xs font-medium text-white focus:outline-none cursor-pointer"
+                className="w-full bg-[#f5f6f1] text-xs font-medium text-[#23261f] border border-black/10 rounded-lg px-2 py-1 focus:outline-none cursor-pointer"
               >
                 <option value="All">Any Duration</option>
                 <option value="HalfDay">Half Day Exploration</option>
@@ -130,7 +134,7 @@ export default function LandmarksPage() {
             <div className="px-1">
               <button
                 type="button"
-                className="w-full py-2.5 px-5 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#E03E3E]/20 flex items-center justify-center space-x-1.5 cursor-pointer"
+                className="w-full sylva-dock-btn-accent justify-center py-2.5"
               >
                 <span>Discover ({filteredPlaces.length})</span>
               </button>
@@ -140,20 +144,20 @@ export default function LandmarksPage() {
 
         {/* Quick Filter Reset / Active Indicators */}
         {(selectedDistrict !== 'All' || selectedDuration !== 'All' || searchQuery) && (
-          <div className="flex items-center space-x-2 mb-6 text-xs text-white/50">
+          <div className="flex items-center space-x-2 mb-6 text-xs text-[#7c8177]">
             <span>Active filters:</span>
             {selectedDistrict !== 'All' && (
-              <span className="px-2.5 py-0.5 bg-white/10 text-white rounded-full font-medium">
+              <span className="px-2.5 py-0.5 bg-black/5 text-[#23261f] rounded-full font-medium border border-black/10">
                 {selectedDistrict}
               </span>
             )}
             {selectedDuration !== 'All' && (
-              <span className="px-2.5 py-0.5 bg-white/10 text-white rounded-full font-medium">
+              <span className="px-2.5 py-0.5 bg-black/5 text-[#23261f] rounded-full font-medium border border-black/10">
                 {selectedDuration}
               </span>
             )}
             {searchQuery && (
-              <span className="px-2.5 py-0.5 bg-white/10 text-white rounded-full font-medium">
+              <span className="px-2.5 py-0.5 bg-black/5 text-[#23261f] rounded-full font-medium border border-black/10">
                 "{searchQuery}"
               </span>
             )}
@@ -163,7 +167,7 @@ export default function LandmarksPage() {
                 setSelectedDuration('All');
                 setSearchQuery('');
               }}
-              className="text-[#E03E3E] font-semibold underline hover:text-white cursor-pointer ml-2"
+              className="text-[#E03E3E] font-semibold underline hover:text-[#23261f] cursor-pointer ml-2"
             >
               Reset all
             </button>
@@ -178,10 +182,10 @@ export default function LandmarksPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-[#121318] rounded-3xl border border-white/10 p-8 shadow-2xl">
-            <Compass className="w-12 h-12 text-white/20 mx-auto mb-3" />
-            <h3 className="font-sans font-bold text-base text-white">No landmarks match your filter</h3>
-            <p className="text-xs text-white/50 mt-1 max-w-sm mx-auto font-light">
+          <div className="text-center py-20 bg-white rounded-3xl border border-black/10 p-8 shadow-xl">
+            <Compass className="w-12 h-12 text-black/20 mx-auto mb-3" />
+            <h3 className="font-sans font-bold text-base text-[#23261f]">No landmarks match your filter</h3>
+            <p className="text-xs text-[#7c8177] mt-1 max-w-sm mx-auto font-light">
               Try adjusting your district or keyword search to view our royal bastions.
             </p>
             <button
@@ -198,12 +202,12 @@ export default function LandmarksPage() {
         )}
 
         {/* Bottom Nav to Hidden Gems */}
-        <div className="mt-14 p-8 bg-[#121318] rounded-3xl border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl">
+        <div className="mt-14 p-8 bg-white rounded-3xl border border-black/10 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
           <div>
-            <h3 className="font-sans text-base font-bold text-white">
+            <h3 className="font-sans text-base font-bold text-[#23261f]">
               Seeking silence and zero crowds?
             </h3>
-            <p className="text-xs text-white/50 mt-0.5 font-light">
+            <p className="text-xs text-[#7c8177] mt-0.5 font-light">
               Explore subterranean stepwells, abandoned ruins, and village artisans in our Hidden Gems archive.
             </p>
           </div>

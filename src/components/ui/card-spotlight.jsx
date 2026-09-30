@@ -27,7 +27,7 @@ export const CardSpotlight = ({
   return (
     <div
       className={cn(
-        'group/spotlight p-6 rounded-3xl relative border border-white/10 bg-[#121318]',
+        'group/spotlight p-6 rounded-3xl relative border border-black/8 bg-white shadow-md text-[#23261f]',
         className
       )}
       onMouseMove={handleMouseMove}

@@ -133,39 +133,42 @@ export default function ContributePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0B0E] text-white pt-28 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 selection:bg-[#E03E3E] selection:text-white">
-      {/* Header */}
-      <div className="max-w-4xl mx-auto mb-10 text-center">
-        <Link
-          href="/explore"
-          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-white/50 hover:text-white mb-4 transition-colors"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Rajasthan Archive</span>
-        </Link>
+    <div className="min-h-screen bg-[#f5f6f1] text-[#23261f] pb-24 selection:bg-[#E8402A] selection:text-white">
+      {/* ── THREEUI ATMOSPHERIC PAGE HEADER ── */}
+      <div className="threeui-page-header">
+        <div className="ghost-watermark -bottom-6 -left-6">CONTRIBUTE</div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-16 pb-4">
+          <Link
+            href="/"
+            className="inline-flex items-center space-x-1.5 text-xs font-semibold text-[#7c8177] hover:text-[#23261f] mb-4 transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Living World</span>
+          </Link>
 
-        <span className="text-[10px] font-bold tracking-[0.25em] text-[#E03E3E] uppercase block mb-1">
-          Community Living Archive
-        </span>
+          <span className="text-[11px] font-bold tracking-[0.24em] text-[#E8402A] uppercase block mb-1">
+            Community Living Heritage Archive
+          </span>
 
-        <h1 className="headline-werlton text-3xl sm:text-5xl text-white mb-3">
-          CONTRIBUTE A SANCTUARY
-        </h1>
-        <p className="text-white/60 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed font-light">
-          Document an unsung stepwell, forgotten Rajput citadel, artisan haveli, or sacred desert grove to help preserve Rajasthan's oral and architectural history.
-        </p>
+          <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-[#23261f] tracking-tight mb-3">
+            CONTRIBUTE A SANCTUARY
+          </h1>
+          <p className="text-[#7c8177] text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed font-light">
+            Document an unsung stepwell, forgotten Rajput citadel, artisan haveli, or sacred desert grove to help preserve Rajasthan's oral and architectural history.
+          </p>
+        </div>
       </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: Submission Form */}
-        <div className="lg:col-span-7 bg-[#121318] p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl">
+        <div className="lg:col-span-7 threeui-card p-6 sm:p-8 shadow-xl">
           {success && (
-            <div className="mb-6 p-5 rounded-2xl bg-white/5 border border-[#3EBFA0]/40 text-white space-y-3 animate-fadeIn">
+            <div className="mb-6 p-5 rounded-2xl bg-white border border-[#3EBFA0]/40 text-[#23261f] space-y-3 animate-fadeIn shadow-md">
               <div className="flex items-start space-x-3">
-                <CheckCircle className="w-5 h-5 text-[#3EBFA0] shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-[#1b8a6b] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-sm text-[#3EBFA0]">Place Successfully Added to Hide India!</h4>
-                  <p className="text-xs text-white/70 mt-1 leading-relaxed font-light">
+                  <h4 className="font-bold text-sm text-[#1b8a6b]">Place Successfully Added to Hide India!</h4>
+                  <p className="text-xs text-[#555c4e] mt-1 leading-relaxed font-light">
                     Thank you for keeping living history alive. Your contributed place has been recorded and submitted to the community heritage catalog.
                   </p>
                 </div>
@@ -180,7 +183,7 @@ export default function ContributePage() {
                 </button>
                 <Link
                   href="/explore"
-                  className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all"
+                  className="px-4 py-2 bg-black/5 hover:bg-black/10 border border-black/10 text-[#23261f] rounded-full text-xs font-bold uppercase tracking-wider transition-all"
                 >
                   Explore All Sanctuaries →
                 </Link>
@@ -196,7 +199,7 @@ export default function ContributePage() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177] mb-1.5">
                 Place / Monument Name *
               </label>
               <input
@@ -206,13 +209,13 @@ export default function ContributePage() {
                 value={formData.placeName}
                 onChange={handleChange}
                 placeholder="e.g. Nagar Sagar Kund or Gatore Ki Chhatriyan"
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#E03E3E] transition-all"
+                className="w-full px-4 py-3 bg-[#f5f6f1] border border-black/10 rounded-2xl text-sm text-[#23261f] placeholder-[#7c8177]/60 focus:outline-none focus:border-[#E03E3E] transition-all"
               />
             </div>
 
             {/* Classification */}
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-2">
+            <div className="p-4 rounded-2xl bg-[#f5f6f1] border border-black/8">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177] mb-2">
                 Classification *
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -221,12 +224,12 @@ export default function ContributePage() {
                   onClick={() => setFormData({ ...formData, isMajor: false })}
                   className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                     !formData.isMajor
-                      ? 'bg-[#E03E3E]/20 border-[#E03E3E] text-white'
-                      : 'bg-white/5 border-white/10 text-white/60 hover:text-white'
+                      ? 'bg-white border-[#E03E3E] text-[#23261f] shadow-xs'
+                      : 'bg-black/5 border-black/10 text-[#7c8177] hover:text-[#23261f]'
                   }`}
                 >
-                  <span className="text-xs font-bold block">✦ Hidden Gem</span>
-                  <p className="text-[11px] text-white/50 mt-1 leading-snug font-light">
+                  <span className="text-xs font-bold block text-[#E03E3E]">✦ Hidden Gem</span>
+                  <p className="text-[11px] text-[#7c8177] mt-1 leading-snug font-light">
                     Uncrowded, secluded sanctuary or lesser-known local secret
                   </p>
                 </button>
@@ -236,12 +239,12 @@ export default function ContributePage() {
                   onClick={() => setFormData({ ...formData, isMajor: true })}
                   className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                     formData.isMajor
-                      ? 'bg-[#E03E3E]/20 border-[#E03E3E] text-white'
-                      : 'bg-white/5 border-white/10 text-white/60 hover:text-white'
+                      ? 'bg-white border-[#E03E3E] text-[#23261f] shadow-xs'
+                      : 'bg-black/5 border-black/10 text-[#7c8177] hover:text-[#23261f]'
                   }`}
                 >
-                  <span className="text-xs font-bold block">🏛️ Major Landmark</span>
-                  <p className="text-[11px] text-white/50 mt-1 leading-snug font-light">
+                  <span className="text-xs font-bold block text-[#23261f]">🏛️ Major Landmark</span>
+                  <p className="text-[11px] text-[#7c8177] mt-1 leading-snug font-light">
                     Prominent, widely recognized citadel, palace, or lake
                   </p>
                 </button>
@@ -250,17 +253,17 @@ export default function ContributePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177] mb-1.5">
                   Category *
                 </label>
                 <select
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-[#121318] border border-white/10 rounded-2xl text-sm text-white focus:outline-none"
+                  className="w-full px-4 py-3 bg-[#f5f6f1] border border-black/10 rounded-2xl text-sm text-[#23261f] focus:outline-none"
                 >
                   {categories.map((cat) => (
-                    <option key={cat} value={cat} className="bg-[#121318]">
+                    <option key={cat} value={cat} className="bg-white text-[#23261f]">
                       {cat === 'Forgotten Fort' ? 'Forts & Citadels' : cat}
                     </option>
                   ))}
@@ -268,17 +271,17 @@ export default function ContributePage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177] mb-1.5">
                   District *
                 </label>
                 <select
                   name="district"
                   value={formData.district}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-[#121318] border border-white/10 rounded-2xl text-sm text-white focus:outline-none"
+                  className="w-full px-4 py-3 bg-[#f5f6f1] border border-black/10 rounded-2xl text-sm text-[#23261f] focus:outline-none"
                 >
                   {rajasthanDistricts.map((dist) => (
-                    <option key={dist} value={dist} className="bg-[#121318]">
+                    <option key={dist} value={dist} className="bg-white text-[#23261f]">
                       {dist}
                     </option>
                   ))}
@@ -289,7 +292,7 @@ export default function ContributePage() {
             {/* GPS Coordinates */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/50">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177]">
                   GPS Coordinates (Optional)
                 </label>
                 <button
@@ -310,7 +313,7 @@ export default function ContributePage() {
                   value={formData.latitude}
                   onChange={handleChange}
                   placeholder="Latitude (e.g. 26.9859)"
-                  className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none"
+                  className="w-full px-3.5 py-2.5 bg-[#f5f6f1] border border-black/10 rounded-xl text-xs text-[#23261f] focus:outline-none"
                 />
                 <input
                   type="number"
@@ -319,13 +322,13 @@ export default function ContributePage() {
                   value={formData.longitude}
                   onChange={handleChange}
                   placeholder="Longitude (e.g. 75.8569)"
-                  className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none"
+                  className="w-full px-3.5 py-2.5 bg-[#f5f6f1] border border-black/10 rounded-xl text-xs text-[#23261f] focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177] mb-1.5">
                 Historical Significance & Architecture *
               </label>
               <textarea
@@ -335,12 +338,12 @@ export default function ContributePage() {
                 value={formData.historicalSignificance}
                 onChange={handleChange}
                 placeholder="Explain the background, century, builders, and why this monument is historically significant..."
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white placeholder-white/30 focus:outline-none"
+                className="w-full px-4 py-3 bg-[#f5f6f1] border border-black/10 rounded-2xl text-sm text-[#23261f] placeholder-[#7c8177]/60 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177] mb-1.5">
                 Oral Folklore & Local Legends
               </label>
               <textarea
@@ -349,16 +352,16 @@ export default function ContributePage() {
                 value={formData.folkloreStory}
                 onChange={handleChange}
                 placeholder="Any oral legends, ghost stories, or community folklore associated with this site?"
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white placeholder-white/30 focus:outline-none"
+                className="w-full px-4 py-3 bg-[#f5f6f1] border border-black/10 rounded-2xl text-sm text-[#23261f] placeholder-[#7c8177]/60 focus:outline-none"
               />
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/50">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177]">
                   Real Image URL *
                 </label>
-                <span className="text-[11px] text-white/40">Direct image link (.jpg / .png)</span>
+                <span className="text-[11px] text-[#7c8177]">Direct image link (.jpg / .png)</span>
               </div>
               <input
                 type="url"
@@ -366,22 +369,22 @@ export default function ContributePage() {
                 value={formData.imageUrl}
                 onChange={handleChange}
                 placeholder="https://upload.wikimedia.org/..."
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white placeholder-white/30 focus:outline-none"
+                className="w-full px-4 py-3 bg-[#f5f6f1] border border-black/10 rounded-2xl text-sm text-[#23261f] placeholder-[#7c8177]/60 focus:outline-none"
               />
-              <p className="text-[11px] text-white/40 mt-1.5 flex items-center space-x-1">
-                <Info className="w-3.5 h-3.5 text-white/40 shrink-0" />
+              <p className="text-[11px] text-[#7c8177] mt-1.5 flex items-center space-x-1">
+                <Info className="w-3.5 h-3.5 text-[#7c8177] shrink-0" />
                 <span>Tip: Right-click any Wikimedia Commons photograph and select "Copy image address".</span>
               </p>
             </div>
 
             {/* Submitter Details */}
-            <div className="pt-4 border-t border-white/10">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-white/40 mb-3">
+            <div className="pt-4 border-t border-black/10">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#7c8177] mb-3">
                 Contributor Info
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-white/50 mb-1">Your Name *</label>
+                  <label className="block text-[11px] font-semibold text-[#7c8177] mb-1">Your Name *</label>
                   <input
                     type="text"
                     name="submitterName"
@@ -389,11 +392,11 @@ export default function ContributePage() {
                     value={formData.submitterName}
                     onChange={handleChange}
                     placeholder="e.g. Kunal Sharma"
-                    className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white"
+                    className="w-full px-3 py-2.5 bg-[#f5f6f1] border border-black/10 rounded-xl text-xs text-[#23261f]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-white/50 mb-1">Your Email *</label>
+                  <label className="block text-[11px] font-semibold text-[#7c8177] mb-1">Your Email *</label>
                   <input
                     type="email"
                     name="submitterEmail"
@@ -401,16 +404,16 @@ export default function ContributePage() {
                     value={formData.submitterEmail}
                     onChange={handleChange}
                     placeholder="email@example.com"
-                    className="w-full px-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white"
+                    className="w-full px-3 py-2.5 bg-[#f5f6f1] border border-black/10 rounded-xl text-xs text-[#23261f]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-white/50 mb-1">Your Role</label>
+                  <label className="block text-[11px] font-semibold text-[#7c8177] mb-1">Your Role</label>
                   <select
                     name="submitterRole"
                     value={formData.submitterRole}
                     onChange={handleChange}
-                    className="w-full px-3 py-2.5 bg-[#121318] border border-white/10 rounded-xl text-xs text-white"
+                    className="w-full px-3 py-2.5 bg-[#f5f6f1] border border-black/10 rounded-xl text-xs text-[#23261f]"
                   >
                     <option value="Local Resident">Local Resident</option>
                     <option value="Heritage Enthusiast">Heritage Enthusiast</option>
@@ -434,19 +437,19 @@ export default function ContributePage() {
 
         {/* Right Column: Live Card Preview */}
         <div className="lg:col-span-5 sticky top-28 space-y-4">
-          <div className="flex items-center space-x-2 text-xs font-bold text-white/50 uppercase tracking-wider">
+          <div className="flex items-center space-x-2 text-xs font-bold text-[#7c8177] uppercase tracking-wider">
             <Eye className="w-4 h-4 text-[#E03E3E]" />
             <span>Live Archive Card Preview</span>
           </div>
 
-          <div className="bg-[#121318] rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
+          <div className="bg-white rounded-3xl border border-black/10 overflow-hidden shadow-xl text-[#23261f]">
             <div className="relative aspect-[16/10]">
               <img
                 src={formData.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/b/b1/20191219_Panna_Meena_ka_Kund_step_well%2C_Amber%2C_Jaipur%2C_1130_9630.jpg'}
                 alt="Preview"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#121318] via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-3 left-4 flex items-center space-x-1 text-white text-xs">
                 <MapPin className="w-3.5 h-3.5 text-[#E03E3E]" />
                 <span>{formData.district || 'Rajasthan'}, Rajasthan</span>
@@ -454,26 +457,26 @@ export default function ContributePage() {
             </div>
 
             <div className="p-5">
-              <h3 className="font-sans text-lg font-bold text-white mb-2">
+              <h3 className="font-sans text-lg font-bold text-[#23261f] mb-2">
                 {formData.placeName || 'Unnamed Rajasthan Marvel'}
               </h3>
-              <p className="text-xs text-white/60 line-clamp-3 leading-relaxed mb-4 font-light">
+              <p className="text-xs text-[#555c4e] line-clamp-3 leading-relaxed mb-4 font-light">
                 {formData.historicalSignificance || 'Your historical summary and significance details will appear here once entered...'}
               </p>
               {formData.folkloreStory && (
-                <div className="p-3 rounded-2xl bg-white/5 border border-white/10 text-[11px] text-white/70 italic mb-4">
+                <div className="p-3 rounded-2xl bg-[#f5f6f1] border border-black/8 text-[11px] text-[#555c4e] italic mb-4">
                   "{formData.folkloreStory}"
                 </div>
               )}
-              <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-white/40">
+              <div className="pt-3 border-t border-black/8 flex items-center justify-between text-[11px] text-[#7c8177]">
                 <span>Contributed by {formData.submitterName || 'You'}</span>
-                <span className="font-semibold text-[#3EBFA0]">Ready to Submit</span>
+                <span className="font-semibold text-[#1b8a6b]">Ready to Submit</span>
               </div>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#121318] border border-white/10 text-xs text-white/60 leading-relaxed shadow-xl font-light">
-            <strong className="text-white block mb-1 font-bold">Preserve Rajasthan Heritage</strong>
+          <div className="p-4 rounded-2xl bg-white border border-black/10 text-xs text-[#555c4e] leading-relaxed shadow-lg font-light">
+            <strong className="text-[#23261f] block mb-1 font-bold">Preserve Rajasthan Heritage</strong>
             Help document unmonitored baoris, cenotaphs, and haveli frescoes. Your contribution helps travelers bypass crowds and experience genuine history.
           </div>
         </div>

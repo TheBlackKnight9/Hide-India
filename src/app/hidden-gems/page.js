@@ -72,53 +72,57 @@ export default function HiddenGemsPage() {
   }, [hiddenPlaces, selectedDistrict, selectedCategory, selectedPace, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#0A0B0E] text-white pt-28 sm:pt-32 pb-24 selection:bg-[#E03E3E] selection:text-white">
-      <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-          <div>
-            <span className="text-[10px] font-bold tracking-[0.25em] text-[#E03E3E] uppercase block mb-1">
-              Zero-Crowd Heritage Archive
-            </span>
-            <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-white">
-              HIDDEN SANCTUARIES
-            </h1>
+    <div className="min-h-screen bg-[#f5f6f1] text-[#23261f] pb-24 selection:bg-[#E8402A] selection:text-white">
+      {/* ── THREEUI ATMOSPHERIC PAGE HEADER ── */}
+      <div className="threeui-page-header">
+        <div className="ghost-watermark -bottom-6 -left-6">BAORIS</div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pt-16 pb-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-2">
+              <span className="text-[11px] font-bold tracking-[0.24em] text-[#E8402A] uppercase block">
+                Zero-Crowd Subterranean Archive
+              </span>
+              <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-[#23261f] tracking-tight">
+                HIDDEN SANCTUARIES
+              </h1>
+            </div>
+            <p className="text-xs text-[#7c8177] max-w-md md:text-right leading-relaxed font-light">
+              Step away from tourist buses. Discover subterranean baoris, abandoned desert ruins, and sacred chambers known only to local keepers.
+            </p>
           </div>
-
-          <p className="text-xs text-white/50 max-w-sm md:text-right leading-relaxed font-light">
-            Step away from tourist buses. Discover subterranean baoris, abandoned desert ruins, and lakeside sanctuaries known only to locals.
-          </p>
         </div>
+      </div>
 
-        {/* FLOATING DARK FILTER BAR */}
-        <div className="bg-[#121318] rounded-2xl border border-white/10 shadow-2xl p-3 sm:p-4 mb-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 -mt-6 relative z-20">
+        {/* FLOATING THREEUI FILTER PANEL */}
+        <div className="threeui-panel p-3 sm:p-4 mb-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 items-center">
             {/* Filter 1: Destination input */}
-            <div className="px-3 py-1 sm:border-r border-white/10">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+            <div className="px-3 py-1 sm:border-r border-black/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#7c8177] mb-0.5">
                 Sanctuary / Keyword
               </label>
               <div className="flex items-center space-x-1.5">
-                <Search className="w-3.5 h-3.5 text-white/40 shrink-0" />
+                <Search className="w-3.5 h-3.5 text-[#7c8177] shrink-0" />
                 <input
                   type="text"
                   placeholder="Baori, stepwell, ruin..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-transparent text-xs text-white placeholder-white/30 focus:outline-none font-medium"
+                  className="w-full bg-transparent text-xs text-[#23261f] placeholder-[#7c8177]/60 focus:outline-none font-medium"
                 />
               </div>
             </div>
 
             {/* Filter 2: Category select */}
-            <div className="px-3 py-1 sm:border-r border-white/10">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+            <div className="px-3 py-1 sm:border-r border-black/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#7c8177] mb-0.5">
                 Category
               </label>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full bg-[#121318] text-xs font-medium text-white focus:outline-none cursor-pointer"
+                className="w-full bg-[#f5f6f1] text-xs font-medium text-[#23261f] border border-black/10 rounded-lg px-2 py-1 focus:outline-none cursor-pointer"
               >
                 {categories.map((c) => (
                   <option key={c} value={c}>
@@ -129,14 +133,14 @@ export default function HiddenGemsPage() {
             </div>
 
             {/* Filter 3: District */}
-            <div className="px-3 py-1 sm:border-r border-white/10">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+            <div className="px-3 py-1 sm:border-r border-black/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#7c8177] mb-0.5">
                 District / Region
               </label>
               <select
                 value={selectedDistrict}
                 onChange={(e) => setSelectedDistrict(e.target.value)}
-                className="w-full bg-[#121318] text-xs font-medium text-white focus:outline-none cursor-pointer"
+                className="w-full bg-[#f5f6f1] text-xs font-medium text-[#23261f] border border-black/10 rounded-lg px-2 py-1 focus:outline-none cursor-pointer"
               >
                 {districts.map((d) => (
                   <option key={d} value={d}>{d === 'All' ? 'All Territories' : d}</option>
@@ -145,14 +149,14 @@ export default function HiddenGemsPage() {
             </div>
 
             {/* Filter 4: Pace / Duration */}
-            <div className="px-3 py-1 sm:border-r border-white/10">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+            <div className="px-3 py-1 sm:border-r border-black/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#7c8177] mb-0.5">
                 Pace / Duration
               </label>
               <select
                 value={selectedPace}
                 onChange={(e) => setSelectedPace(e.target.value)}
-                className="w-full bg-[#121318] text-xs font-medium text-white focus:outline-none cursor-pointer"
+                className="w-full bg-[#f5f6f1] text-xs font-medium text-[#23261f] border border-black/10 rounded-lg px-2 py-1 focus:outline-none cursor-pointer"
               >
                 <option value="All">Any Duration</option>
                 <option value="Quick">Quick Calm (1-2h)</option>
@@ -164,7 +168,7 @@ export default function HiddenGemsPage() {
             <div className="px-1">
               <button
                 type="button"
-                className="w-full py-2.5 px-5 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#E03E3E]/20 flex items-center justify-center space-x-1.5 cursor-pointer"
+                className="w-full sylva-dock-btn-accent justify-center py-2.5"
               >
                 <span>Discover ({filteredPlaces.length})</span>
               </button>
@@ -174,25 +178,25 @@ export default function HiddenGemsPage() {
 
         {/* Quick Filter Reset / Active Indicators */}
         {(selectedDistrict !== 'All' || selectedCategory !== 'All' || selectedPace !== 'All' || searchQuery) && (
-          <div className="flex items-center space-x-2 mb-6 text-xs text-white/50">
+          <div className="flex items-center space-x-2 mb-6 text-xs text-[#7c8177]">
             <span>Active filters:</span>
             {selectedDistrict !== 'All' && (
-              <span className="px-2.5 py-0.5 bg-white/10 text-white rounded-full font-medium">
+              <span className="px-2.5 py-0.5 bg-black/5 text-[#23261f] rounded-full font-medium border border-black/10">
                 {selectedDistrict}
               </span>
             )}
             {selectedCategory !== 'All' && (
-              <span className="px-2.5 py-0.5 bg-white/10 text-white rounded-full font-medium">
+              <span className="px-2.5 py-0.5 bg-black/5 text-[#23261f] rounded-full font-medium border border-black/10">
                 {selectedCategory}
               </span>
             )}
             {selectedPace !== 'All' && (
-              <span className="px-2.5 py-0.5 bg-white/10 text-white rounded-full font-medium">
+              <span className="px-2.5 py-0.5 bg-black/5 text-[#23261f] rounded-full font-medium border border-black/10">
                 {selectedPace}
               </span>
             )}
             {searchQuery && (
-              <span className="px-2.5 py-0.5 bg-white/10 text-white rounded-full font-medium">
+              <span className="px-2.5 py-0.5 bg-black/5 text-[#23261f] rounded-full font-medium border border-black/10">
                 "{searchQuery}"
               </span>
             )}
@@ -203,7 +207,7 @@ export default function HiddenGemsPage() {
                 setSelectedPace('All');
                 setSearchQuery('');
               }}
-              className="text-[#E03E3E] font-semibold underline hover:text-white cursor-pointer ml-2"
+              className="text-[#E03E3E] font-semibold underline hover:text-[#23261f] cursor-pointer ml-2"
             >
               Reset all
             </button>
@@ -218,10 +222,10 @@ export default function HiddenGemsPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 bg-[#121318] rounded-3xl border border-white/10 p-8 shadow-2xl">
-            <Compass className="w-12 h-12 text-white/20 mx-auto mb-3" />
-            <h3 className="font-sans font-bold text-base text-white">No hidden gems match your filter</h3>
-            <p className="text-xs text-white/50 mt-1 max-w-sm mx-auto font-light">
+          <div className="text-center py-20 bg-white rounded-3xl border border-black/10 p-8 shadow-xl">
+            <Compass className="w-12 h-12 text-black/20 mx-auto mb-3" />
+            <h3 className="font-sans font-bold text-base text-[#23261f]">No hidden gems match your filter</h3>
+            <p className="text-xs text-[#7c8177] mt-1 max-w-sm mx-auto font-light">
               Try adjusting the district or category filter, or reset to view all {hiddenPlaces.length} secret places.
             </p>
             <button
@@ -239,12 +243,12 @@ export default function HiddenGemsPage() {
         )}
 
         {/* Bottom Nav to Landmarks */}
-        <div className="mt-14 p-8 bg-[#121318] rounded-3xl border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl">
+        <div className="mt-14 p-8 bg-white rounded-3xl border border-black/10 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
           <div>
-            <h3 className="font-sans text-base font-bold text-white">
+            <h3 className="font-sans text-base font-bold text-[#23261f]">
               Also looking for Iconic Citadels & Palaces?
             </h3>
-            <p className="text-xs text-white/50 mt-0.5 font-light">
+            <p className="text-xs text-[#7c8177] mt-0.5 font-light">
               Explore Mehrangarh, Amer Fort, Kumbhalgarh, and Sonar Qila in our Major Landmarks archive.
             </p>
           </div>

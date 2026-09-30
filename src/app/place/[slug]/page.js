@@ -28,9 +28,16 @@ import {
   MessageSquare,
   HelpCircle,
   Eye,
+  Volume2,
+  VolumeX,
+  Play,
+  Pause,
+  X,
+  Maximize2
 } from 'lucide-react';
 import { useSaved } from '../../../context/SavedContext';
 import PlaceCard from '../../../components/PlaceCard';
+import PlaceLivingHero from '../../../components/PlaceLivingHero';
 import AIConciergeModal from '../../../components/AIConciergeModal';
 import { rajasthanFallbackPlaces } from '../../../data/rajasthanFallbackPlaces';
 
@@ -40,7 +47,7 @@ function getEnrichedPlaceDetails(place) {
   // 1. Materiality & Architectural Engineering
   let materiality = place.materiality;
   if (!materiality) {
-    if (place.district === 'Jaipur') materiality = 'Pink & Yellow Dholpur Sandstone with Makrana White Marble inlays and floral fresco stucco';
+    if (place.district === 'Jaipur') materiality = 'Pink and Yellow Dholpur Sandstone with Makrana White Marble inlays and floral fresco stucco';
     else if (place.district === 'Jodhpur') materiality = 'Chittar Sandstone (rose-tinted Golden Red stone) carved with intricate geometric jali lattices';
     else if (place.district === 'Jaisalmer') materiality = 'Golden Jaisalmer Yellow Sandstone fitted dry without mortar using mortise and tenon joinery';
     else if (place.district === 'Bundi') materiality = 'Local sandstone with painted lime plaster and blue-green mineral pigment murals (Chitrashala school)';
@@ -70,7 +77,7 @@ function getEnrichedPlaceDetails(place) {
   let photographyGuide = place.photographyGuide;
   if (!photographyGuide) {
     photographyGuide = {
-      bestTime: place.category === 'Stepwell' ? '10:00 AM – 12:30 PM (when overhead sunlight reaches the lower geometric steps)' : '6:30 AM – 8:30 AM (Sunrise golden hour) or 4:30 PM – 6:15 PM (Dusk desert glow)',
+      bestTime: place.category === 'Stepwell' ? '10:00 AM - 12:30 PM (when overhead sunlight reaches the lower geometric steps)' : '6:30 AM - 8:30 AM (Sunrise golden hour) or 4:30 PM - 6:15 PM (Dusk desert glow)',
       angles: place.category === 'Stepwell' 
         ? 'Frame symmetrically from the central pavilion landing looking directly down into the diamond stair pattern.'
         : 'Capture wide angles from the approach ramp to emphasize defensive scale against the desert skyline.',
@@ -83,9 +90,9 @@ function getEnrichedPlaceDetails(place) {
   let crowdHeatmap = place.crowdHeatmap;
   if (!crowdHeatmap) {
     crowdHeatmap = {
-      earlyMorning: '7:00 AM – 9:30 AM: Serene Calm (5-10% capacity, ideal for flâneurs & meditation)',
-      midDay: '11:00 AM – 3:30 PM: Moderate / Day excursion travelers (30-60% capacity)',
-      lateAfternoon: '4:00 PM – Sunset: Gentle evening breeze and local prayer calm',
+      earlyMorning: '7:00 AM - 9:30 AM: Serene Calm (5-10% capacity, ideal for flaneurs and meditation)',
+      midDay: '11:00 AM - 3:30 PM: Moderate / Day excursion travelers (30-60% capacity)',
+      lateAfternoon: '4:00 PM - Sunset: Gentle evening breeze and local prayer calm',
       crowdQuotient: place.isMajor ? 'Moderate' : 'Zero Crowd Sanctuary (Highly Peaceful)',
       recommendedPace: place.estimatedTime || '2 Hours Immersive'
     };
@@ -106,7 +113,7 @@ function getEnrichedPlaceDetails(place) {
   // 6. Local Heritage Culinary Pairing
   let culinaryPairing = place.culinaryPairing;
   if (!culinaryPairing) {
-    if (place.district === 'Jaipur') culinaryPairing = 'Pyaaz Kachori & Rawat Lassi at old Johari Bazaar, followed by Ghevar';
+    if (place.district === 'Jaipur') culinaryPairing = 'Pyaaz Kachori and Rawat Lassi at old Johari Bazaar, followed by Ghevar';
     else if (place.district === 'Jodhpur') culinaryPairing = 'Mirchi Vada at Clock Tower, Mawa Kachori, and Makhaniya Lassi';
     else if (place.district === 'Udaipur') culinaryPairing = 'Dal Baati Churma cooked in pure ghee with spicy garlic chutney near Jagdish Chowk';
     else if (place.district === 'Bikaner') culinaryPairing = 'Bhujia, Rasgullas from station road, and authentic Bikaneri Ghevar';
@@ -133,11 +140,13 @@ export default function PlaceDetailPage() {
   const [place, setPlace] = useState(null);
   const [nearby, setNearby] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('history'); 
+  const [activeTab, setActiveTab] = useState('history');
   const [likes, setLikes] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isAiOpen, setIsAiOpen] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [lightboxImg, setLightboxImg] = useState(null);
 
   // Review Form State
   const [reviewAuthor, setReviewAuthor] = useState('');
@@ -242,19 +251,22 @@ export default function PlaceDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0B0E] text-white flex flex-col items-center justify-center py-36">
-        <div className="w-10 h-10 border-3 border-[#E03E3E] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="font-sans text-white/70 text-base font-light">Unveiling Rajasthan heritage dossier...</p>
+      <div className="min-h-screen bg-[#0B0E0C] text-white flex flex-col items-center justify-center py-36">
+        <div className="w-10 h-10 border-3 border-[#3EBFA0] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <p className="font-sans text-white/70 text-base font-light">Unveiling Rajasthan living sanctuary dossier...</p>
       </div>
     );
   }
 
   if (!place) {
     return (
-      <div className="min-h-screen bg-[#0A0B0E] text-white flex flex-col items-center justify-center py-36 px-4 text-center">
+      <div className="min-h-screen bg-[#0B0E0C] text-white flex flex-col items-center justify-center py-36 px-4 text-center">
         <h2 className="headline-werlton text-3xl font-bold text-white">Destination Not Found</h2>
         <p className="text-white/60 mt-2 text-sm font-light">The requested heritage dossier could not be located.</p>
-        <Link href="/explore" className="mt-6 inline-flex items-center px-6 py-3 bg-[#E03E3E] hover:bg-[#c93232] text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-[#E03E3E]/30">
+        <Link
+          href="/explore"
+          className="mt-6 inline-flex items-center px-6 py-3 bg-[#E03E3E] hover:bg-[#c93232] text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-[#E03E3E]/30"
+        >
           Return to Rajasthan Atlas
         </Link>
       </div>
@@ -262,282 +274,166 @@ export default function PlaceDetailPage() {
   }
 
   const saved = isSaved(place.id);
-  const coverImg = place.coverImage || (place.images && place.images[0]);
+  const galleryImages = [
+    place.coverImage,
+    ...(place.images || [])
+  ].filter(Boolean);
+  const uniqueGallery = Array.from(new Set(galleryImages));
 
   return (
-    <div className="min-h-screen pb-24 pt-24 sm:pt-28 bg-[#0A0B0E] text-white selection:bg-[#E03E3E] selection:text-white">
+    <div className="min-h-screen bg-[#f5f6f1] text-[#23261f] selection:bg-[#E03E3E] selection:text-white relative overflow-hidden">
       {/* ─────────────────────────────────────────────────────────────
-          1. TOP BREADCRUMB & METADATA BAR
-         ───────────────────────────────────────────────────────────── */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-        <div className="flex items-center justify-between text-xs text-white/50">
-          <div className="flex items-center space-x-2 truncate">
-            <Link href="/" className="hover:text-white">
-              Home
-            </Link>
-            <span>/</span>
-            <Link href={`/cities/${place.district.toLowerCase()}`} className="hover:text-white">
-              {place.district}
-            </Link>
-            <span>/</span>
-            <span className="font-semibold text-white truncate">{place.title}</span>
-          </div>
+          1. FULL-BLEED 3D LIVING WORLD HERO (Place's Own Photo)
+             - 3,200 Glowing 3D Pollen Motes
+             - Interactive Cursor Spray (Fairy Dust Trail)
+             - Pointer Parallax & 24s Ambient Wall Breathing
+             - Zero Butterfly (only on landing page)
+          ───────────────────────────────────────────────────────────── */}
+      <PlaceLivingHero
+        place={place}
+        likes={likes}
+        hasLiked={hasLiked}
+        handleLike={handleLike}
+        saved={saved}
+        toggleSave={toggleSave}
+        handleShare={handleShare}
+        copied={copied}
+        onOpenFolklore={() => {
+          setActiveTab('folklore');
+          const el = document.getElementById('dossier-content');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
 
-          <div className="flex items-center space-x-2 shrink-0">
-            <button
-              onClick={handleShare}
-              className="p-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-white shadow-2xs flex items-center space-x-1 cursor-pointer"
-              title="Copy dossier link"
-            >
-              <Share2 className="w-3.5 h-3.5" />
-              <span className="text-[10px] font-semibold hidden sm:inline">Share</span>
-            </button>
-            {copied && <span className="text-[10px] text-[#3EBFA0] font-bold">Link Copied!</span>}
-          </div>
-        </div>
+      {/* Ghost Watermark Background Word */}
+      <div className="ghost-watermark text-black/5 select-none pointer-events-none" aria-hidden="true">
+        {place.district}
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        {/* ─────────────────────────────────────────────────────────────
-            2. CINEMATIC COVER PHOTO WITH AMBIENT HERO
-           ───────────────────────────────────────────────────────────── */}
-        <div className="relative aspect-[16/10] sm:aspect-[21/9] rounded-[32px] overflow-hidden bg-black/40 border border-white/10 shadow-2xl">
-          <img
-            src={coverImg}
-            alt={place.title}
-            onError={(e) => {
-              e.currentTarget.src = 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1600&auto=format&fit=crop';
-            }}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B0E] via-black/30 to-black/30 pointer-events-none" />
+      {/* Ambient Sanctuary Glow Orbs */}
+      <div className="absolute top-[90vh] left-1/4 w-96 h-96 rounded-full bg-[#385338]/5 blur-3xl pointer-events-none" />
+      <div className="absolute top-[160vh] right-12 w-96 h-96 rounded-full bg-[#E03E3E]/5 blur-3xl pointer-events-none" />
 
-          {/* Top Actions Only (Pill tags removed as requested) */}
-          <div className="absolute top-4 left-4 right-4 flex items-center justify-end">
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={handleLike}
-                className={`px-3 py-1.5 rounded-full backdrop-blur-md transition-all flex items-center space-x-1.5 text-xs font-semibold cursor-pointer ${
-                  hasLiked ? 'bg-[#E03E3E] text-white shadow-md shadow-[#E03E3E]/40' : 'bg-black/50 text-white hover:bg-black/70 border border-white/15'
-                }`}
-              >
-                <Heart className={`w-3.5 h-3.5 ${hasLiked ? 'fill-current' : ''}`} />
-                <span>{likes}</span>
-              </button>
+      {/* ─────────────────────────────────────────────────────────────
+          2. MAIN DOSSIER BODY (ThreeUI Living Sanctuary Theme)
+         ───────────────────────────────────────────────────────────── */}
+      <main id="dossier-content" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12 relative z-10">
 
-              <button
-                onClick={() => toggleSave(place)}
-                className={`p-2 rounded-full backdrop-blur-md transition-all cursor-pointer ${
-                  saved ? 'bg-[#E03E3E] text-white shadow-md shadow-[#E03E3E]/40' : 'bg-black/50 text-white hover:bg-black/70 border border-white/15'
-                }`}
-                title={saved ? 'Remove from itinerary' : 'Save to itinerary'}
-              >
-                <Bookmark className={`w-4 h-4 ${saved ? 'fill-current' : ''}`} />
-              </button>
+        {/* ── Curator's Field Note & Significance ── */}
+        <section className="threeui-card p-6 sm:p-10 relative overflow-hidden shadow-xl">
+          <div className="flex flex-col sm:flex-row items-start gap-5">
+            <div className="w-12 h-12 rounded-2xl bg-[#1b8a6b]/15 border border-[#1b8a6b]/30 text-[#1b8a6b] flex items-center justify-center shrink-0">
+              <Sparkles className="w-5 h-5 text-[#1b8a6b]" />
             </div>
-          </div>
-
-          {/* Bottom Title & District */}
-          <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
-            <div className="flex items-center space-x-2 text-xs font-medium text-[#E03E3E]">
-              <MapPin className="w-4 h-4" />
-              <span>{place.district}, Rajasthan</span>
-              {place.century && (
-                <>
-                  <span>•</span>
-                  <span>{place.century}</span>
-                </>
-              )}
-            </div>
-            <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight">
-              {place.title}
-            </h1>
-            <p className="text-white/70 text-xs sm:text-base max-w-3xl leading-relaxed font-light drop-shadow">
-              {place.tagline}
-            </p>
-          </div>
-        </div>
-
-        {/* ─────────────────────────────────────────────────────────────
-            3. QUICK HERITAGE SPECS CAPSULE (4 Micro Columns)
-           ───────────────────────────────────────────────────────────── */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-[#121318] p-4 rounded-2xl border border-white/10 shadow-lg">
-            <span className="text-[10px] uppercase font-bold tracking-wider text-white/40 block mb-1">
-              Historical Era
-            </span>
-            <p className="text-xs font-semibold text-white leading-snug">
-              {place.century || 'Medieval Heritage'}
-            </p>
-          </div>
-
-          <div className="bg-[#121318] p-4 rounded-2xl border border-white/10 shadow-lg">
-            <span className="text-[10px] uppercase font-bold tracking-wider text-white/40 block mb-1">
-              Visiting Hours
-            </span>
-            <p className="text-xs font-semibold text-white leading-snug">
-              {place.timings || 'Sunrise to Sunset'}
-            </p>
-          </div>
-
-          <div className="bg-[#121318] p-4 rounded-2xl border border-white/10 shadow-lg">
-            <span className="text-[10px] uppercase font-bold tracking-wider text-white/40 block mb-1">
-              Sanctuary Access
-            </span>
-            <p className="text-xs font-semibold text-white leading-snug">
-              {place.timings ? 'Open for Exploration' : 'Public Heritage Site'}
-            </p>
-          </div>
-
-          <div className="bg-[#121318] p-4 rounded-2xl border border-white/10 shadow-lg">
-            <span className="text-[10px] uppercase font-bold tracking-wider text-white/40 block mb-1">
-              Living GI Craft
-            </span>
-            <p className="text-xs font-semibold text-white leading-snug truncate">
-              {place.giTagCraft || 'Generational Artisan Lineage'}
-            </p>
-          </div>
-        </div>
-
-        {/* ─────────────────────────────────────────────────────────────
-            4. CURATOR'S NOTE & HIGHLIGHT BANNER
-           ───────────────────────────────────────────────────────────── */}
-        <div className="bg-[#121318] p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
-          <div className="flex items-start space-x-3">
-            <div className="w-8 h-8 rounded-full bg-[#E03E3E]/20 text-[#E03E3E] flex items-center justify-center shrink-0 mt-0.5">
-              <Sparkles className="w-4 h-4 text-[#E03E3E]" />
-            </div>
-            <div>
-              <h3 className="headline-werlton text-sm text-white">
-                Curator's Field Note & Significance
-              </h3>
-              <p className="text-xs sm:text-sm text-white/70 leading-relaxed mt-1 font-light italic">
+            <div className="space-y-2">
+              <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-[#1b8a6b] block">
+                Sanctuary Significance - Field Notes
+              </span>
+              <h2 className="headline-werlton text-xl sm:text-2xl text-[#23261f]">
+                Architectural Resilience of {place.title}
+              </h2>
+              <p className="text-sm sm:text-base text-[#555c4e] leading-relaxed font-light italic">
                 "{enriched?.curatorNote}"
               </p>
             </div>
           </div>
+        </section>
+
+        {/* ── Ambient Audio Companion Player ── */}
+        <section className="threeui-panel p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
+          <div className="flex items-center space-x-3.5">
+            <button
+              onClick={() => setIsAudioPlaying(!isAudioPlaying)}
+              className="w-11 h-11 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white flex items-center justify-center shadow-lg shadow-[#E03E3E]/30 transition-all cursor-pointer shrink-0"
+              aria-label={isAudioPlaying ? 'Pause Audio Guide' : 'Play Audio Guide'}
+            >
+              {isAudioPlaying ? (
+                <Pause className="w-4 h-4 fill-current" />
+              ) : (
+                <Play className="w-4 h-4 fill-current ml-0.5" />
+              )}
+            </button>
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#1b8a6b] block">
+                Sonic Archive · Ambient Resonance
+              </span>
+              <p className="text-xs sm:text-sm font-semibold text-[#23261f]">
+                {place.title} Acoustic Atmosphere & Bardic Chants
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2 text-xs text-[#7c8177]">
+            <span className="w-2 h-2 rounded-full bg-[#1b8a6b] animate-pulse" />
+            <span>{isAudioPlaying ? 'Playing Ambient Atmosphere' : 'Click to Immerse in Soundscape'}</span>
+          </div>
+        </section>
+
+        {/* ── 7-Tab Specialized Navigator (ThreeUI Sylva Dock) ── */}
+        <div className="flex justify-center w-full">
+          <div className="sylva-dock w-full sm:w-auto overflow-x-auto scrollbar-none p-1.5 justify-start sm:justify-center">
+            {[
+              { id: 'history', label: 'History & Architecture', icon: Layers },
+              { id: 'folklore', label: 'Oral Folklore & Legends', icon: Sparkles },
+              { id: 'photography', label: 'Photography & Light', icon: Camera },
+              { id: 'crowd', label: 'Crowd Heatmap', icon: Clock },
+              { id: 'reach', label: 'Directions & GPS', icon: Compass },
+              { id: 'etiquette', label: 'Etiquette & Food', icon: Utensils },
+              { id: 'reviews', label: `Travel Notes (${place.reviews?.length || 0})`, icon: MessageSquare },
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={isActive ? 'sylva-pill-active' : 'sylva-dock-item'}
+                >
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#1c2018]' : ''}`} />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* ─────────────────────────────────────────────────────────────
-            5. SPECIALIZED 7-TAB NAVIGATOR (Detailed Content for Every Place)
-           ───────────────────────────────────────────────────────────── */}
-        <div className="flex border-b border-white/10 space-x-2 sm:space-x-4 overflow-x-auto scrollbar-none text-xs font-bold uppercase tracking-wider">
-          <button
-            onClick={() => setActiveTab('history')}
-            className={`pb-3 whitespace-nowrap transition-colors cursor-pointer ${
-              activeTab === 'history'
-                ? 'border-b-2 border-[#E03E3E] text-[#E03E3E]'
-                : 'text-white/40 hover:text-white'
-            }`}
-          >
-            History & Architecture
-          </button>
+        {/* ── Tab Content Panels (ThreeUI Living Sanctuary Cards) ── */}
+        <div className="threeui-card p-6 sm:p-10 space-y-6 text-[#23261f] shadow-xl">
 
-          <button
-            onClick={() => setActiveTab('folklore')}
-            className={`pb-3 whitespace-nowrap transition-colors cursor-pointer ${
-              activeTab === 'folklore'
-                ? 'border-b-2 border-[#E03E3E] text-[#E03E3E]'
-                : 'text-white/40 hover:text-white'
-            }`}
-          >
-            Oral Folklore & Legends
-          </button>
-
-          <button
-            onClick={() => setActiveTab('photography')}
-            className={`pb-3 whitespace-nowrap transition-colors cursor-pointer ${
-              activeTab === 'photography'
-                ? 'border-b-2 border-[#E03E3E] text-[#E03E3E]'
-                : 'text-white/40 hover:text-white'
-            }`}
-          >
-            Photography & Golden Hour
-          </button>
-
-          <button
-            onClick={() => setActiveTab('crowd')}
-            className={`pb-3 whitespace-nowrap transition-colors cursor-pointer ${
-              activeTab === 'crowd'
-                ? 'border-b-2 border-[#E03E3E] text-[#E03E3E]'
-                : 'text-white/40 hover:text-white'
-            }`}
-          >
-            Crowd Heatmap & Time
-          </button>
-
-          <button
-            onClick={() => setActiveTab('reach')}
-            className={`pb-3 whitespace-nowrap transition-colors cursor-pointer ${
-              activeTab === 'reach'
-                ? 'border-b-2 border-[#E03E3E] text-[#E03E3E]'
-                : 'text-white/40 hover:text-white'
-            }`}
-          >
-            Directions & Maps
-          </button>
-
-          <button
-            onClick={() => setActiveTab('etiquette')}
-            className={`pb-3 whitespace-nowrap transition-colors cursor-pointer ${
-              activeTab === 'etiquette'
-                ? 'border-b-2 border-[#E03E3E] text-[#E03E3E]'
-                : 'text-white/40 hover:text-white'
-            }`}
-          >
-            Etiquette & Food Pairing
-          </button>
-
-          <button
-            onClick={() => setActiveTab('reviews')}
-            className={`pb-3 whitespace-nowrap transition-colors cursor-pointer ${
-              activeTab === 'reviews'
-                ? 'border-b-2 border-[#E03E3E] text-[#E03E3E]'
-                : 'text-white/40 hover:text-white'
-            }`}
-          >
-            Travel Notes ({place.reviews?.length || 0})
-          </button>
-        </div>
-
-        {/* ─────────────────────────────────────────────────────────────
-            6. TAB CONTENT PANELS (Pure Werlton Dark Theme)
-           ───────────────────────────────────────────────────────────── */}
-        <div className="bg-[#121318] p-6 sm:p-10 rounded-3xl border border-white/10 shadow-2xl space-y-6 text-white">
           {/* TAB 1: HISTORY & ARCHITECTURE */}
           {activeTab === 'history' && (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="space-y-6">
               <div>
-                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
+                <span className="text-[11px] font-bold text-[#1b8a6b] uppercase tracking-wider block mb-1">
                   Historical Chronicle
                 </span>
-                <h3 className="headline-werlton text-xl sm:text-2xl text-white">
+                <h3 className="headline-werlton text-2xl sm:text-3xl text-[#23261f]">
                   Architectural Genesis & Dynastic Lineage
                 </h3>
               </div>
 
-              <div className="text-white/80 text-sm sm:text-base leading-relaxed font-sans font-light whitespace-pre-line">
+              <div className="text-[#555c4e] text-sm sm:text-base leading-relaxed font-light whitespace-pre-line">
                 {place.history}
               </div>
 
-              {/* Materiality Card */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
-                  <div className="flex items-center space-x-2 text-white font-bold text-xs uppercase tracking-wider">
-                    <Layers className="w-4 h-4 text-[#E03E3E]" />
+              {/* Stone Materiality & Style Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-black/8">
+                <div className="bg-[#f5f6f1] border border-black/8 rounded-2xl p-5 space-y-2 text-[#23261f]">
+                  <div className="flex items-center space-x-2 text-[#23261f] font-bold text-xs uppercase tracking-wider">
+                    <Layers className="w-4 h-4 text-[#1b8a6b]" />
                     <span>Stone & Materiality</span>
                   </div>
-                  <p className="text-xs text-white/70 leading-relaxed font-light">
+                  <p className="text-xs text-[#555c4e] leading-relaxed font-light">
                     {enriched?.materiality}
                   </p>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-1.5">
-                  <div className="flex items-center space-x-2 text-white font-bold text-xs uppercase tracking-wider">
-                    <Compass className="w-4 h-4 text-[#E03E3E]" />
-                    <span>Architectural Style</span>
+                <div className="bg-[#f5f6f1] border border-black/8 rounded-2xl p-5 space-y-2 text-[#23261f]">
+                  <div className="flex items-center space-x-2 text-[#23261f] font-bold text-xs uppercase tracking-wider">
+                    <Compass className="w-4 h-4 text-[#1b8a6b]" />
+                    <span>Architectural Style & Sthapatya</span>
                   </div>
-                  <p className="text-xs text-white/70 leading-relaxed font-light">
+                  <p className="text-xs text-[#555c4e] leading-relaxed font-light">
                     {place.architecturalStyle || 'Traditional Rajput & Indo-Islamic Syncretic Architecture'}
                   </p>
                 </div>
@@ -547,27 +443,27 @@ export default function PlaceDetailPage() {
 
           {/* TAB 2: ORAL FOLKLORE & LEGENDS */}
           {activeTab === 'folklore' && (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="space-y-6">
               <div>
-                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
-                  Oral Traditions
+                <span className="text-[11px] font-bold text-[#1b8a6b] uppercase tracking-wider block mb-1">
+                  Living Memory
                 </span>
-                <h3 className="headline-werlton text-xl sm:text-2xl text-white flex items-center space-x-2">
-                  <Sparkles className="w-5 h-5 text-[#E03E3E]" />
-                  <span>Oral Legends & Community Folklore</span>
+                <h3 className="headline-werlton text-2xl sm:text-3xl text-[#23261f] flex items-center space-x-2">
+                  <Sparkles className="w-5 h-5 text-[#1b8a6b]" />
+                  <span>Oral Legends & Community Memory</span>
                 </h3>
               </div>
 
-              <div className="p-6 sm:p-8 rounded-2xl bg-white/5 border border-white/10 text-white/90 text-sm sm:text-base font-light italic leading-relaxed">
+              <div className="threeui-panel p-6 sm:p-8 text-[#555c4e] text-sm sm:text-base font-light italic leading-relaxed shadow-sm">
                 "{place.folklore || 'Generational villagers in this territory recall songs sung during dry monsoons praising the subterranean waters and guardian spirits who protected this sanctuary.'}"
               </div>
 
-              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 text-xs text-white/70 space-y-2 font-light">
-                <p className="font-bold text-white uppercase tracking-wider text-[10px]">
-                  Cultural Preservation Note:
+              <div className="bg-[#f5f6f1] border border-black/8 rounded-2xl p-5 text-xs text-[#555c4e] space-y-2 font-light">
+                <p className="font-bold text-[#23261f] uppercase tracking-wider text-[10px]">
+                  Bardic Heritage Preservation:
                 </p>
                 <p>
-                  Oral histories in Rajasthan are preserved by generational bards (Bhats and Charans) who memorize centuries of genealogy and folklore without writing them in formal state archives.
+                  Oral histories across Rajasthan have been memorized and performed across millennia by bards (Charans and Bhats), who maintain unwritten genealogies and heroic ballads passed from elder to apprentice.
                 </p>
               </div>
             </div>
@@ -575,45 +471,45 @@ export default function PlaceDetailPage() {
 
           {/* TAB 3: PHOTOGRAPHY & GOLDEN HOUR */}
           {activeTab === 'photography' && (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="space-y-6">
               <div>
-                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
-                  Visual Guide
+                <span className="text-[11px] font-bold text-[#1b8a6b] uppercase tracking-wider block mb-1">
+                  Lighting & Perspective
                 </span>
-                <h3 className="headline-werlton text-xl sm:text-2xl text-white flex items-center space-x-2">
-                  <Camera className="w-5 h-5 text-[#E03E3E]" />
+                <h3 className="headline-werlton text-2xl sm:text-3xl text-[#23261f] flex items-center space-x-2">
+                  <Camera className="w-5 h-5 text-[#1b8a6b]" />
                   <span>Photography & Golden Hour Lighting Guide</span>
                 </h3>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
-                  <div className="flex items-center space-x-2 text-white font-bold text-xs uppercase tracking-wider">
-                    <Sun className="w-4 h-4 text-[#E03E3E]" />
+                <div className="bg-[#f5f6f1] border border-black/8 rounded-2xl p-5 space-y-2 text-[#23261f]">
+                  <div className="flex items-center space-x-2 text-[#23261f] font-bold text-xs uppercase tracking-wider">
+                    <Sun className="w-4 h-4 text-[#1b8a6b]" />
                     <span>Optimal Lighting Window</span>
                   </div>
-                  <p className="text-xs text-white/70 leading-relaxed font-light">
+                  <p className="text-xs text-[#555c4e] leading-relaxed font-light">
                     {enriched?.photographyGuide?.bestTime}
                   </p>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
-                  <div className="flex items-center space-x-2 text-white font-bold text-xs uppercase tracking-wider">
-                    <Eye className="w-4 h-4 text-[#E03E3E]" />
+                <div className="bg-[#f5f6f1] border border-black/8 rounded-2xl p-5 space-y-2 text-[#23261f]">
+                  <div className="flex items-center space-x-2 text-[#23261f] font-bold text-xs uppercase tracking-wider">
+                    <Eye className="w-4 h-4 text-[#1b8a6b]" />
                     <span>Recommended Vantage Point</span>
                   </div>
-                  <p className="text-xs text-white/70 leading-relaxed font-light">
+                  <p className="text-xs text-[#555c4e] leading-relaxed font-light">
                     {enriched?.photographyGuide?.angles}
                   </p>
                 </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs text-white/70 font-light">
-                <span className="font-bold text-white uppercase tracking-wider text-[10px] block">
+              <div className="threeui-panel p-5 space-y-2 text-xs text-[#555c4e] font-light shadow-sm">
+                <span className="font-bold text-[#23261f] uppercase tracking-wider text-[10px] block">
                   Equipment & Permission Etiquette
                 </span>
                 <p>{enriched?.photographyGuide?.lighting}</p>
-                <p className="text-white/40 font-medium pt-1">
+                <p className="text-[#7c8177] font-medium pt-1">
                   {enriched?.photographyGuide?.tripodPolicy}
                 </p>
               </div>
@@ -622,48 +518,48 @@ export default function PlaceDetailPage() {
 
           {/* TAB 4: CROWD HEATMAP & TIME */}
           {activeTab === 'crowd' && (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="space-y-6">
               <div>
-                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
-                  Pacing & Serenity
+                <span className="text-[11px] font-bold text-[#1b8a6b] uppercase tracking-wider block mb-1">
+                  Optimal Serenity Window
                 </span>
-                <h3 className="headline-werlton text-xl sm:text-2xl text-white flex items-center space-x-2">
-                  <Clock className="w-5 h-5 text-[#E03E3E]" />
+                <h3 className="headline-werlton text-2xl sm:text-3xl text-[#23261f] flex items-center space-x-2">
+                  <Clock className="w-5 h-5 text-[#1b8a6b]" />
                   <span>Crowd Heatmap & Time Budget Guide</span>
                 </h3>
               </div>
 
               <div className="space-y-3">
-                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-start space-x-3 text-xs">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 mt-1 shrink-0 shadow-sm shadow-emerald-400/50" />
+                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start space-x-3 text-xs text-emerald-950">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 mt-1 shrink-0 shadow-sm shadow-emerald-500/50" />
                   <div>
-                    <strong className="text-emerald-400 font-bold block">Early Morning Calm:</strong>
-                    <span className="text-white/80 font-light">{enriched?.crowdHeatmap?.earlyMorning}</span>
+                    <strong className="text-emerald-900 font-bold block">Early Morning Calm:</strong>
+                    <span className="text-emerald-800 font-light">{enriched?.crowdHeatmap?.earlyMorning}</span>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-start space-x-3 text-xs">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400 mt-1 shrink-0 shadow-sm shadow-amber-400/50" />
+                <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 flex items-start space-x-3 text-xs text-amber-950">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500 mt-1 shrink-0 shadow-sm shadow-amber-500/50" />
                   <div>
-                    <strong className="text-amber-400 font-bold block">Midday Excursions:</strong>
-                    <span className="text-white/80 font-light">{enriched?.crowdHeatmap?.midDay}</span>
+                    <strong className="text-amber-900 font-bold block">Midday Excursions:</strong>
+                    <span className="text-amber-800 font-light">{enriched?.crowdHeatmap?.midDay}</span>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start space-x-3 text-xs">
-                  <span className="w-2.5 h-2.5 rounded-full bg-white/60 mt-1 shrink-0" />
+                <div className="bg-[#f5f6f1] border border-black/8 rounded-2xl p-4 flex items-start space-x-3 text-xs text-[#23261f]">
+                  <span className="w-2.5 h-2.5 rounded-full bg-black/40 mt-1 shrink-0" />
                   <div>
-                    <strong className="text-white font-bold block">Sunset Calms:</strong>
-                    <span className="text-white/80 font-light">{enriched?.crowdHeatmap?.lateAfternoon}</span>
+                    <strong className="text-[#23261f] font-bold block">Sunset Calms:</strong>
+                    <span className="text-[#555c4e] font-light">{enriched?.crowdHeatmap?.lateAfternoon}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs text-white/80 flex items-center justify-between">
+              <div className="threeui-panel p-4 text-xs text-[#555c4e] flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-sm">
                 <span>
-                  <strong className="text-white">Recommended Pacing:</strong> {enriched?.crowdHeatmap?.recommendedPace}
+                  <strong className="text-[#23261f]">Recommended Pacing:</strong> {enriched?.crowdHeatmap?.recommendedPace}
                 </span>
-                <span className="font-bold text-emerald-400">
+                <span className="font-bold text-[#1b8a6b]">
                   {enriched?.crowdHeatmap?.crowdQuotient}
                 </span>
               </div>
@@ -672,31 +568,31 @@ export default function PlaceDetailPage() {
 
           {/* TAB 5: DIRECTIONS & MAPS */}
           {activeTab === 'reach' && (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="space-y-6">
               <div>
-                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
-                  Navigation
+                <span className="text-[11px] font-bold text-[#1b8a6b] uppercase tracking-wider block mb-1">
+                  Access & Transit
                 </span>
-                <h3 className="headline-werlton text-xl sm:text-2xl text-white">
+                <h3 className="headline-werlton text-2xl sm:text-3xl text-[#23261f]">
                   Directions, Transit & Coordinates
                 </h3>
               </div>
 
-              <p className="text-sm text-white/70 leading-relaxed font-light">
+              <p className="text-sm text-[#555c4e] leading-relaxed font-light">
                 {place.howToReach || `Located in ${place.district}, Rajasthan. Easily accessible from the main town center by local cab or auto-rickshaw.`}
               </p>
 
-              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
+              <div className="threeui-panel p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs shadow-sm">
                 <div>
-                  <span className="font-bold text-white block mb-0.5">Exact GPS Coordinates</span>
-                  <span className="text-white/60 font-mono text-xs">{place.latitude}° N, {place.longitude}° E</span>
+                  <span className="font-bold text-[#23261f] block mb-0.5">Exact GPS Coordinates</span>
+                  <span className="text-[#7c8177] font-mono text-xs">{place.latitude}° N, {place.longitude}° E</span>
                 </div>
 
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${place.latitude},${place.longitude}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 bg-[#E03E3E] hover:bg-[#c93232] text-white rounded-full font-semibold transition-all inline-flex items-center space-x-1.5 shadow-md shadow-[#E03E3E]/30 cursor-pointer"
+                  className="px-5 py-2.5 bg-[#23261f] hover:bg-black text-white rounded-full font-bold transition-all inline-flex items-center space-x-1.5 shadow-md cursor-pointer"
                 >
                   <span>Open in Google Maps</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -707,25 +603,25 @@ export default function PlaceDetailPage() {
 
           {/* TAB 6: ETIQUETTE & CULINARY PAIRING */}
           {activeTab === 'etiquette' && (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="space-y-6">
               <div>
-                <span className="text-[11px] font-bold text-[#E03E3E] uppercase tracking-wider block mb-1">
+                <span className="text-[11px] font-bold text-[#1b8a6b] uppercase tracking-wider block mb-1">
                   Responsible Travel
                 </span>
-                <h3 className="headline-werlton text-xl sm:text-2xl text-white">
+                <h3 className="headline-werlton text-2xl sm:text-3xl text-[#23261f]">
                   Visitor Etiquette & Local Culinary Pairing
                 </h3>
               </div>
 
               {/* Etiquette Rules */}
               <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-white/80 block">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#23261f] block">
                   Heritage Preservation Etiquette:
                 </span>
                 <div className="space-y-2">
                   {enriched?.etiquette.map((rule, idx) => (
-                    <div key={idx} className="flex items-start space-x-2.5 text-xs text-white/70 font-light">
-                      <ShieldCheck className="w-4 h-4 text-[#3EBFA0] shrink-0 mt-0.5" />
+                    <div key={idx} className="flex items-start space-x-2.5 text-xs text-[#555c4e] font-light">
+                      <ShieldCheck className="w-4 h-4 text-[#1b8a6b] shrink-0 mt-0.5" />
                       <span>{rule}</span>
                     </div>
                   ))}
@@ -733,14 +629,14 @@ export default function PlaceDetailPage() {
               </div>
 
               {/* Culinary Pairing */}
-              <div className="pt-4 border-t border-white/10">
-                <div className="p-5 rounded-2xl bg-white/5 border border-white/10 flex items-start space-x-3 text-xs">
+              <div className="pt-4 border-t border-black/8">
+                <div className="bg-[#f5f6f1] border border-black/8 rounded-2xl p-5 flex items-start space-x-3 text-xs text-[#23261f]">
                   <Utensils className="w-4 h-4 text-[#E03E3E] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-white font-bold block mb-1">
+                    <strong className="text-[#23261f] font-bold block mb-1">
                       Local Culinary Pairing in {place.district}:
                     </strong>
-                    <span className="text-white/70 leading-relaxed font-light">
+                    <span className="text-[#555c4e] leading-relaxed font-light">
                       {enriched?.culinaryPairing}
                     </span>
                   </div>
@@ -751,17 +647,17 @@ export default function PlaceDetailPage() {
 
           {/* TAB 7: REVIEWS & NOTES */}
           {activeTab === 'reviews' && (
-            <div className="space-y-6 animate-fadeIn">
+            <div className="space-y-6">
               {reviewSuccess && (
-                <div className="p-4 rounded-2xl bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20 flex items-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-400" />
+                <div className="p-4 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200 flex items-center space-x-2">
+                  <CheckCircle className="w-4 h-4 text-emerald-600" />
                   <span>Thank you! Your travel note has been added to the Rajasthan dossier.</span>
                 </div>
               )}
 
               {/* Submit Review */}
-              <form onSubmit={handleReviewSubmit} className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-white/80">
+              <form onSubmit={handleReviewSubmit} className="threeui-panel p-5 space-y-4 shadow-sm">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#23261f]">
                   Leave a Travel Note or Heritage Tip
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -771,16 +667,16 @@ export default function PlaceDetailPage() {
                     placeholder="Your Name"
                     value={reviewAuthor}
                     onChange={(e) => setReviewAuthor(e.target.value)}
-                    className="px-3 py-2 bg-[#121318] border border-white/10 rounded-xl text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#E03E3E]"
+                    className="px-3 py-2 bg-[#f5f6f1] border border-black/10 rounded-xl text-xs text-[#23261f] placeholder-[#7c8177]/60 focus:outline-none focus:border-[#E03E3E]"
                   />
                   <select
                     value={reviewRating}
                     onChange={(e) => setReviewRating(parseInt(e.target.value))}
-                    className="px-3 py-2 bg-[#121318] border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-[#E03E3E]"
+                    className="px-3 py-2 bg-[#f5f6f1] border border-black/10 rounded-xl text-xs text-[#23261f] focus:outline-none focus:border-[#E03E3E]"
                   >
-                    <option value={5} className="bg-[#121318] text-white">⭐⭐⭐⭐⭐ (Exceptional)</option>
-                    <option value={4} className="bg-[#121318] text-white">⭐⭐⭐⭐ (Very Good)</option>
-                    <option value={3} className="bg-[#121318] text-white">⭐⭐⭐ (Worth Visiting)</option>
+                    <option value={5}>⭐⭐⭐⭐⭐ (Exceptional)</option>
+                    <option value={4}>⭐⭐⭐⭐ (Very Good)</option>
+                    <option value={3}>⭐⭐⭐ (Worth Visiting)</option>
                   </select>
                 </div>
                 <textarea
@@ -789,7 +685,7 @@ export default function PlaceDetailPage() {
                   placeholder="Share details on crowd timings, photography tips, or respectful visitor etiquette..."
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
-                  className="w-full px-3 py-2 bg-[#121318] border border-white/10 rounded-xl text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#E03E3E]"
+                  className="w-full px-3 py-2 bg-[#f5f6f1] border border-black/10 rounded-xl text-xs text-[#23261f] placeholder-[#7c8177]/60 focus:outline-none focus:border-[#E03E3E]"
                 />
                 <button
                   type="submit"
@@ -804,67 +700,102 @@ export default function PlaceDetailPage() {
               {place.reviews && place.reviews.length > 0 ? (
                 <div className="space-y-4">
                   {place.reviews.map((rev) => (
-                    <div key={rev.id} className="p-4 rounded-2xl border border-white/10 bg-white/5 space-y-1">
+                    <div key={rev.id} className="bg-[#f5f6f1] border border-black/8 rounded-2xl p-4 space-y-1">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-bold text-white">{rev.authorName}</span>
-                        <span className="text-[#E03E3E]">{'★'.repeat(rev.rating)}</span>
+                        <span className="font-bold text-[#23261f]">{rev.authorName}</span>
+                        <span className="text-[#1b8a6b]">{'★'.repeat(rev.rating)}</span>
                       </div>
-                      <p className="text-xs text-white/70 leading-relaxed font-light">{rev.comment}</p>
+                      <p className="text-xs text-[#555c4e] leading-relaxed font-light">{rev.comment}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-white/40 italic">No notes yet. Be the first to add a visitor review.</p>
+                <p className="text-xs text-[#7c8177] italic">No notes yet. Be the first to add a visitor review.</p>
               )}
             </div>
           )}
         </div>
 
-        {/* ─────────────────────────────────────────────────────────────
-            7. AI CONCIERGE ASSISTANCE CALLOUT
-           ───────────────────────────────────────────────────────────── */}
-        <div className="p-6 sm:p-8 bg-[#121318] text-white rounded-3xl border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
-          <div className="space-y-1.5">
-            <span className="inline-flex items-center space-x-1.5 text-xs text-[#E03E3E] font-semibold">
+        {/* ── Verified Photographic Perspectives ── */}
+        {uniqueGallery.length > 0 && (
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#1b8a6b] block mb-0.5">
+                  Visual Archive
+                </span>
+                <h3 className="headline-werlton text-xl sm:text-2xl text-[#23261f]">
+                  Photographic Angles & Perspectives
+                </h3>
+              </div>
+              <span className="text-xs text-[#7c8177]">{uniqueGallery.length} Verified Perspectives</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {uniqueGallery.map((imgUrl, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => setLightboxImg(imgUrl)}
+                  className="threeui-card group relative aspect-[16/10] overflow-hidden cursor-pointer shadow-md"
+                >
+                  <img
+                    src={imgUrl}
+                    alt={`${place.title} perspective ${idx + 1}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-95 group-hover:brightness-100"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                    <span className="text-xs font-semibold text-white flex items-center space-x-1.5">
+                      <Maximize2 className="w-3.5 h-3.5 text-white" />
+                      <span>Expand High-Res View</span>
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── AI Concierge Route Callout ── */}
+        <section className="threeui-card p-6 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+          <div className="space-y-2">
+            <span className="inline-flex items-center space-x-1.5 text-xs text-[#1b8a6b] font-semibold">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Smart Travel Companion</span>
+              <span>Time-Budgeted Itinerary Concierge</span>
             </span>
-            <h3 className="headline-werlton text-xl sm:text-2xl text-white">
+            <h3 className="headline-werlton text-2xl sm:text-3xl text-[#23261f]">
               Need a personalized route including {place.title}?
             </h3>
-            <p className="text-xs sm:text-sm text-white/70 font-light">
-              Our AI Concierge can calculate exact transit times from your hotel or plan a stepwell & artisan trail.
+            <p className="text-xs sm:text-sm text-[#555c4e] font-light max-w-xl">
+              Tell our AI how many hours you have in {place.district}. It calculates live transit times and pairs this site with zero-crowd stepwells and artisan workshops.
             </p>
           </div>
 
           <button
             onClick={() => setIsAiOpen(true)}
-            className="px-6 py-3 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#E03E3E]/30 transition-all shrink-0 cursor-pointer"
+            className="px-7 py-3.5 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#E03E3E]/30 transition-all shrink-0 cursor-pointer hover:scale-105"
           >
-            Ask AI Concierge →
+            Launch AI Itinerary →
           </button>
-        </div>
+        </section>
 
-        {/* ─────────────────────────────────────────────────────────────
-            8. NEARBY SANCTUARIES IN DISTRICT (Clickable PlaceCards)
-           ───────────────────────────────────────────────────────────── */}
+        {/* ── Nearby Sister Sanctuaries in District ── */}
         {nearby && nearby.length > 0 && (
-          <div className="space-y-4 pt-6">
+          <section className="space-y-6 pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#E03E3E] block mb-0.5">
-                  District Circuit
+                <span className="text-xs font-bold uppercase tracking-wider text-[#1b8a6b] block mb-0.5">
+                  Territory Circuit
                 </span>
-                <h3 className="headline-werlton text-xl sm:text-2xl text-white">
+                <h3 className="headline-werlton text-2xl sm:text-3xl text-[#23261f]">
                   Nearby Sanctuaries in {place.district}
                 </h3>
               </div>
 
               <Link
                 href={`/cities/${place.district.toLowerCase()}`}
-                className="text-xs font-semibold text-white/60 hover:text-white uppercase tracking-wider transition-colors"
+                className="threeui-panel px-4 py-2 text-xs font-semibold text-[#23261f] hover:bg-black/5 uppercase tracking-wider transition-colors shadow-xs"
               >
-                View All {place.district} Sites →
+                Explore All {place.district} Sites →
               </Link>
             </div>
 
@@ -873,9 +804,31 @@ export default function PlaceDetailPage() {
                 <PlaceCard key={nearPlace.id} place={nearPlace} />
               ))}
             </div>
-          </div>
+          </section>
         )}
-      </div>
+      </main>
+
+      {/* Lightbox Modal */}
+      {lightboxImg && (
+        <div
+          onClick={() => setLightboxImg(null)}
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out animate-fadeIn"
+        >
+          <div className="relative max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl border border-white/20">
+            <img
+              src={lightboxImg}
+              alt="Sanctuary Expanded Perspective"
+              className="w-full h-full object-contain"
+            />
+            <button
+              onClick={() => setLightboxImg(null)}
+              className="absolute top-4 right-4 p-2 rounded-full bg-black/60 text-white hover:bg-black/90 cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* AI Concierge Modal */}
       <AIConciergeModal

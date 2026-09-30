@@ -27,53 +27,57 @@ export default function CitiesPage() {
   }, [selectedRegion, searchTerm]);
 
   return (
-    <div className="min-h-screen bg-[#0A0B0E] text-white pt-28 sm:pt-32 pb-24 selection:bg-[#E03E3E] selection:text-white">
-      <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-          <div>
-            <span className="text-[10px] font-bold tracking-[0.25em] text-[#E03E3E] uppercase block mb-1">
-              Cultural Geography & Heritage
-            </span>
-            <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-white">
-              ROYAL TERRITORIES
-            </h1>
+    <div className="min-h-screen bg-[#f5f6f1] text-[#23261f] pb-24 selection:bg-[#E8402A] selection:text-white">
+      {/* ── THREEUI ATMOSPHERIC PAGE HEADER ── */}
+      <div className="threeui-page-header">
+        <div className="ghost-watermark -bottom-6 -left-6">TERRITORIES</div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pt-16 pb-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-2">
+              <span className="text-[11px] font-bold tracking-[0.24em] text-[#E8402A] uppercase block">
+                Cultural Geography & Sovereign Lineages
+              </span>
+              <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-[#23261f] tracking-tight">
+                ROYAL TERRITORIES
+              </h1>
+            </div>
+            <p className="text-xs text-[#7c8177] max-w-md md:text-right leading-relaxed font-light">
+              Each historical region preserves its own architectural identity, subterranean baoris, and living craft traditions across Rajasthan.
+            </p>
           </div>
-
-          <p className="text-xs text-white/50 max-w-sm md:text-right leading-relaxed font-light">
-            Each historical region preserves its own architectural identity, subterranean stepwells, and living craft traditions.
-          </p>
         </div>
+      </div>
 
-        {/* FLOATING DARK FILTER BAR */}
-        <div className="bg-[#121318] rounded-2xl border border-white/10 shadow-2xl p-3 sm:p-4 mb-10">
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 -mt-6 relative z-20">
+        {/* FLOATING THREEUI FILTER PANEL */}
+        <div className="threeui-panel p-3 sm:p-4 mb-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center">
             {/* Filter 1: City Search */}
-            <div className="px-3 py-1 sm:border-r border-white/10">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+            <div className="px-3 py-1 sm:border-r border-black/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#7c8177] mb-0.5">
                 City / Craft Keyword
               </label>
               <div className="flex items-center space-x-1.5">
-                <Search className="w-3.5 h-3.5 text-white/40 shrink-0" />
+                <Search className="w-3.5 h-3.5 text-[#7c8177] shrink-0" />
                 <input
                   type="text"
                   placeholder="Jaipur, Blue Pottery, Bundi..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full bg-transparent text-xs text-white placeholder-white/30 focus:outline-none font-medium"
+                  className="w-full bg-transparent text-xs text-[#23261f] placeholder-[#7c8177]/60 focus:outline-none font-medium"
                 />
               </div>
             </div>
 
             {/* Filter 2: Region Selector */}
-            <div className="px-3 py-1 sm:border-r border-white/10">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+            <div className="px-3 py-1 sm:border-r border-black/10">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#7c8177] mb-0.5">
                 Territory
               </label>
               <select
                 value={selectedRegion}
                 onChange={(e) => setSelectedRegion(e.target.value)}
-                className="w-full bg-[#121318] text-xs font-medium text-white focus:outline-none cursor-pointer"
+                className="w-full bg-[#f5f6f1] text-xs font-medium text-[#23261f] border border-black/10 rounded-lg px-2 py-1 focus:outline-none cursor-pointer"
               >
                 <option value="All">All Territories</option>
                 {rajasthanCities.map((c) => (
@@ -83,11 +87,11 @@ export default function CitiesPage() {
             </div>
 
             {/* Filter 3: Territory info */}
-            <div className="px-3 py-1 sm:border-r border-white/10 hidden lg:block">
-              <label className="block text-[10px] uppercase tracking-wider font-semibold text-white/40 mb-0.5">
+            <div className="px-3 py-1 sm:border-r border-black/10 hidden lg:block">
+              <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#7c8177] mb-0.5">
                 Territories
               </label>
-              <p className="text-xs font-semibold text-white/80">
+              <p className="text-xs font-semibold text-[#23261f]">
                 13 Documented Regions
               </p>
             </div>
@@ -116,7 +120,7 @@ export default function CitiesPage() {
               <Link
                 key={city.slug}
                 href={`/cities/${city.slug}`}
-                className="group bg-[#121318] rounded-[24px] overflow-hidden cursor-pointer select-none transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/60 border border-white/8 hover:border-white/20 flex flex-col justify-between"
+                className="group bg-white rounded-[24px] overflow-hidden cursor-pointer select-none transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/8 border border-black/8 hover:border-black/20 flex flex-col justify-between"
               >
                 {/* IMAGE ZONE */}
                 <div className="relative overflow-hidden aspect-[4/3]">
@@ -126,11 +130,11 @@ export default function CitiesPage() {
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#121318] via-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
                   {/* Top-Right: Sites count chip */}
                   <div className="absolute top-3 right-3">
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#0A0B0E]/80 backdrop-blur-md text-white border border-white/10 shadow-lg">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/90 backdrop-blur-md text-[#23261f] border border-black/10 shadow-lg">
                       {cityPlaces.length} Sites
                     </span>
                   </div>
@@ -140,17 +144,17 @@ export default function CitiesPage() {
                     <h3 className="text-white font-black text-xl leading-tight tracking-tight mb-1 group-hover:text-[#E03E3E] transition-colors">
                       {city.name}
                     </h3>
-                    <p className="text-white/60 text-[11px] font-medium line-clamp-1">{city.tagline}</p>
+                    <p className="text-white/80 text-[11px] font-medium line-clamp-1">{city.tagline}</p>
                   </div>
                 </div>
 
                 {/* FOOTER */}
-                <div className="px-4 py-3.5 flex items-center justify-between bg-[#121318] border-t border-white/5">
+                <div className="px-4 py-3.5 flex items-center justify-between bg-white border-t border-black/5">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/5 text-white/80 border border-white/10">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#f5f6f1] text-[#555c4e] border border-black/8">
                       {city.era}
                     </span>
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/5 text-white/80 border border-white/10">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#f5f6f1] text-[#555c4e] border border-black/8">
                       {city.crafts.length} GI Crafts
                     </span>
                   </div>

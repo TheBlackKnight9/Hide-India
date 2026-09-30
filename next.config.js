@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -12,6 +14,11 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
       },
     ],
+  },
+  webpack: (config) => {
+    config.resolve.alias['@designcodeio/threeui/style.css'] = path.resolve(__dirname, 'src/shaders/threeui.css');
+    config.resolve.alias['@designcodeio/threeui'] = path.resolve(__dirname, 'src/shaders/index.ts');
+    return config;
   },
 };
 

@@ -61,7 +61,7 @@ export default function PlannerPage() {
         hours,
         totalSites: stops.length,
         stops: stops.map((place, idx) => ({
-          time: idx === 0 ? '09:00 AM – 10:15 AM' : idx === 1 ? '10:30 AM – 11:45 AM' : idx === 2 ? '12:15 PM – 01:45 PM' : '02:30 PM – 04:30 PM',
+          time: idx === 0 ? '09:00 AM - 10:15 AM' : idx === 1 ? '10:30 AM - 11:45 AM' : idx === 2 ? '12:15 PM - 01:45 PM' : '02:30 PM - 04:30 PM',
           travelTime: idx === 0 ? 'Starting Point' : '15 min scenic transfer',
           place,
           recommendation: idx === 0
@@ -75,37 +75,44 @@ export default function PlannerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0B0E] text-white pt-28 sm:pt-32 pb-24 selection:bg-[#E03E3E] selection:text-white">
-      <div className="max-w-5xl mx-auto px-6 sm:px-12">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-[10px] font-bold tracking-[0.25em] text-[#E03E3E] uppercase block mb-1">
-            Time-Budgeted Concierge Engine
-          </span>
-          <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-white mb-4">
-            AI ROUTE PLANNER
-          </h1>
-          <p className="text-white/60 text-xs sm:text-sm leading-relaxed max-w-2xl mx-auto font-light">
-            Have a 2-hour layover in Jodhpur or a half-day in Jaipur? Our AI crafts a zero-crowd heritage route calculating transit times, quiet hours, and unwritten folklore.
-          </p>
+    <div className="min-h-screen bg-[#f5f6f1] text-[#23261f] pb-24 selection:bg-[#E03E3E] selection:text-white">
+      {/* ── THREEUI ATMOSPHERIC PAGE HEADER ── */}
+      <div className="threeui-page-header">
+        <div className="ghost-watermark -bottom-6 -left-6">CIRCUITS</div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pt-16 pb-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-2">
+              <span className="text-[11px] font-bold tracking-[0.24em] text-[#E03E3E] uppercase block">
+                Time-Budgeted Concierge Engine
+              </span>
+              <h1 className="headline-werlton text-3xl sm:text-5xl lg:text-6xl text-[#23261f] tracking-tight">
+                AI ROUTE PLANNER
+              </h1>
+            </div>
+            <p className="text-xs text-[#7c8177] max-w-md md:text-right leading-relaxed font-light">
+              Have a 2-hour layover in Jodhpur or a half-day in Jaipur? Our AI crafts a zero-crowd heritage route calculating transit times, quiet hours, and unwritten folklore.
+            </p>
+          </div>
         </div>
+      </div>
 
+      <div className="max-w-5xl mx-auto px-6 sm:px-12 -mt-6 relative z-20">
         {/* Input Configuration Card */}
-        <div className="bg-[#121318] rounded-3xl border border-white/10 p-6 sm:p-10 shadow-2xl mb-12">
+        <div className="threeui-card p-6 sm:p-10 mb-12 shadow-xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* City Selection */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177] mb-2">
                 1. Select Territory
               </label>
               <select
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm font-semibold text-white focus:outline-none focus:border-[#E03E3E]"
+                className="w-full px-4 py-3 rounded-2xl bg-[#f5f6f1] border border-black/10 text-sm font-semibold text-[#23261f] focus:outline-none focus:border-[#E03E3E]"
               >
                 {['Jaipur', 'Jodhpur', 'Udaipur', 'Jaisalmer', 'Bundi', 'Pushkar', 'Bikaner', 'Shekhawati', 'Alwar'].map(
                   (c) => (
-                    <option key={c} value={c} className="bg-[#121318]">
+                    <option key={c} value={c} className="bg-white text-[#23261f]">
                       {c}
                     </option>
                   )
@@ -115,10 +122,10 @@ export default function PlannerPage() {
 
             {/* Time Budget */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177] mb-2">
                 2. Available Time
               </label>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="sylva-dock w-full justify-between p-1.5">
                 {[
                   { label: '1 Hour', val: '1' },
                   { label: '2 Hours', val: '2' },
@@ -129,13 +136,9 @@ export default function PlannerPage() {
                     key={item.val}
                     type="button"
                     onClick={() => setHours(item.val)}
-                    className={`py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                      hours === item.val
-                        ? 'bg-[#E03E3E] text-white shadow-md shadow-[#E03E3E]/30'
-                        : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20'
-                    }`}
+                    className={hours === item.val ? 'sylva-pill-active flex-1 justify-center' : 'sylva-dock-item flex-1 justify-center'}
                   >
-                    {item.label}
+                    <span>{item.label}</span>
                   </button>
                 ))}
               </div>
@@ -143,8 +146,8 @@ export default function PlannerPage() {
           </div>
 
           {/* Interests */}
-          <div className="mt-8 pt-8 border-t border-white/5">
-            <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-3">
+          <div className="mt-8 pt-8 border-t border-black/8">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#7c8177] mb-3">
               3. Heritage Interests & Travel Style
             </label>
             <div className="flex flex-wrap gap-2">
@@ -155,10 +158,10 @@ export default function PlannerPage() {
                     key={opt}
                     type="button"
                     onClick={() => toggleInterest(opt)}
-                    className={`px-4 py-2 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                    className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer ${
                       active
-                        ? 'bg-[#E03E3E] text-white font-bold shadow-md shadow-[#E03E3E]/20'
-                        : 'bg-white/5 text-white/70 border border-white/10 hover:border-white/20'
+                        ? 'bg-[#23261f] text-white shadow-md'
+                        : 'bg-black/5 text-[#555c4e] border border-black/8 hover:bg-black/10 hover:text-[#23261f]'
                     }`}
                   >
                     {active ? '✓ ' : '+ '}
@@ -174,7 +177,7 @@ export default function PlannerPage() {
             <button
               onClick={handleGenerate}
               disabled={isGenerating}
-              className="px-8 py-4 rounded-full bg-[#E03E3E] hover:bg-[#c93232] text-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-[#E03E3E]/30 transition-all flex items-center space-x-2 cursor-pointer active:scale-95"
+              className="sylva-dock-btn-accent px-8 py-3.5 text-xs font-bold uppercase tracking-wider flex items-center space-x-2"
             >
               {isGenerating ? (
                 <>
@@ -183,8 +186,8 @@ export default function PlannerPage() {
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4 text-white" />
-                  <span>Generate {city} Itinerary</span>
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <span>Generate {city} Sanctuary Route</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
@@ -197,19 +200,19 @@ export default function PlannerPage() {
           <div className="space-y-6 animate-fadeIn">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="headline-werlton text-2xl sm:text-3xl text-white">
+                <h3 className="headline-werlton text-2xl sm:text-3xl text-[#23261f]">
                   {itinerary.hours}-Hour Circuit · {itinerary.city}
                 </h3>
-                <p className="text-xs text-white/50 mt-0.5 font-light">
+                <p className="text-xs text-[#7c8177] mt-0.5 font-light">
                   Optimized for minimal backtracking and zero-crowd cultural immersion
                 </p>
               </div>
 
               <button
                 onClick={() => window.print()}
-                className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-wider text-white hover:bg-white/10 inline-flex items-center space-x-1.5 transition-all cursor-pointer"
+                className="px-4 py-2 rounded-full bg-black/5 border border-black/10 text-xs font-bold uppercase tracking-wider text-[#23261f] hover:bg-black/10 inline-flex items-center space-x-1.5 transition-all cursor-pointer"
               >
-                <Printer className="w-3.5 h-3.5 text-white/70" />
+                <Printer className="w-3.5 h-3.5 text-[#7c8177]" />
                 <span>Print Route</span>
               </button>
             </div>
@@ -219,7 +222,7 @@ export default function PlannerPage() {
               {itinerary.stops.map((stop, idx) => (
                 <div
                   key={stop.place.id}
-                  className="bg-[#121318] rounded-3xl border border-white/8 p-6 shadow-2xl flex flex-col md:flex-row gap-6 items-start"
+                  className="threeui-card p-6 flex flex-col md:flex-row gap-6 items-start shadow-xl"
                 >
                   {/* Image */}
                   <div className="relative w-full md:w-64 aspect-[4/3] rounded-2xl overflow-hidden shrink-0">
@@ -228,7 +231,7 @@ export default function PlannerPage() {
                       alt={stop.place.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute top-3 left-3 bg-[#0A0B0E]/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/10">
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-[#23261f] text-[10px] font-bold px-2.5 py-1 rounded-full border border-black/10 shadow-xs">
                       Stop #{idx + 1}
                     </div>
                   </div>
@@ -236,38 +239,38 @@ export default function PlannerPage() {
                   {/* Info */}
                   <div className="flex-1 space-y-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-bold bg-[#E03E3E]/20 text-[#E03E3E] border border-[#E03E3E]/30">
+                      <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-bold bg-[#E03E3E]/15 text-[#E03E3E] border border-[#E03E3E]/25">
                         <Clock className="w-3 h-3 text-[#E03E3E]" />
                         <span>{stop.time}</span>
                       </span>
 
-                      <span className="text-xs text-white/50 font-medium">
+                      <span className="text-xs text-[#7c8177] font-medium">
                         🚶 {stop.travelTime}
                       </span>
                     </div>
 
                     <div>
-                      <h4 className="text-white font-black text-xl leading-tight">
+                      <h4 className="text-[#23261f] font-black text-xl leading-tight">
                         {stop.place.title}
                       </h4>
-                      <p className="text-xs text-white/50 font-medium mt-0.5">
+                      <p className="text-xs text-[#7c8177] font-medium mt-0.5">
                         {stop.place.district}, Rajasthan
                       </p>
                     </div>
 
-                    <p className="text-xs text-white/60 leading-relaxed font-light">
+                    <p className="text-xs text-[#555c4e] leading-relaxed font-light">
                       {stop.place.tagline}
                     </p>
 
-                    <div className="bg-white/5 rounded-2xl p-4 border border-white/5 text-xs text-white/70 font-light">
-                      <span className="font-bold text-white">💡 Concierge Field Note: </span>
+                    <div className="bg-[#f5f6f1] rounded-2xl p-4 border border-black/8 text-xs text-[#555c4e] font-light">
+                      <span className="font-bold text-[#23261f]">💡 Concierge Field Note: </span>
                       {stop.recommendation}
                     </div>
 
                     <div className="pt-2 flex items-center justify-between">
                       <Link
                         href={`/place/${stop.place.slug}`}
-                        className="text-xs font-bold uppercase tracking-wider text-[#E03E3E] hover:text-white inline-flex items-center space-x-1"
+                        className="text-xs font-bold uppercase tracking-wider text-[#E03E3E] hover:text-[#23261f] inline-flex items-center space-x-1"
                       >
                         <span>View Dossier</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -278,7 +281,7 @@ export default function PlannerPage() {
                         className={`text-xs font-bold px-3.5 py-1.5 rounded-full inline-flex items-center space-x-1 transition-all ${
                           isSaved(stop.place.id)
                             ? 'bg-[#E03E3E] text-white shadow-md shadow-[#E03E3E]/30'
-                            : 'bg-white/5 text-white/70 hover:bg-white/10 border border-white/10'
+                            : 'bg-black/5 text-[#555c4e] hover:bg-black/10 border border-black/10'
                         }`}
                       >
                         <Bookmark className="w-3.5 h-3.5" />
